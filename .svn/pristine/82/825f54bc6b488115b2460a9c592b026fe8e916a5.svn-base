@@ -1,0 +1,112 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
+
+@WebServlet("/send.do")
+public class EmailCheckServlet extends HttpServlet{
+
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Properties props = System.getProperties();
+		props.put("mail.smtp.user", "rodjfuqek1");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		
+		Authenticator auth = new MyAuthentication();
+		
+		//session 생성
+		Session session = Session.getDefaultInstance(props, auth);
+		MimeMessage msg = new MimeMessage(session);
+		JSONObject object = new JSONObject();
+		try {
+			// 편지 보낸 시간
+			msg.setSentDate(new Date());
+			
+			InternetAddress from = new InternetAddress("rodjfuqek1@gmail.com");
+			
+			
+			// 이메일 발신자
+			msg.setFrom(from);
+			
+			
+			// 이메일 수신자
+			String email = req.getParameter("receiver");
+			InternetAddress to = new InternetAddress(email);
+			msg.setRecipient(Message.RecipientType.TO, to);
+			
+			// 이메일 제목
+			msg.setSubject("핫플레이스 회원가입 인증번호 발송", "UTF-8");
+			
+			
+			// 이메일 내용
+			String codeCheck = "" + getRandom();
+			msg.setText("인증번호 : " + codeCheck, "UTF-8");
+			
+			
+			// 이메일 헤더
+			msg.setHeader("content-Type", "text/html");
+			
+			
+			// 메일 보내기
+			javax.mail.Transport.send(msg);
+			System.err.println("보냄!");
+			
+			object.put("code", 1);
+			object.put("code_check", codeCheck);
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			object.put("code", 2);
+			
+		} finally {
+			resp.getWriter().println(object.toJSONString());
+		}
+	}
+	
+	
+	class MyAuthentication extends Authenticator {
+		
+		PasswordAuthentication pa;
+		
+		public MyAuthentication() {
+			String id = "rodjfuqek1";
+			String pw = "dmfktckck!1";
+			
+			pa = new PasswordAuthentication(id,	pw);
+		}
+		
+		public PasswordAuthentication getPasswordAuthentication() {
+			return pa;
+		}
+	}
+	
+	private int getRandom(){
+		int random = 0;
+		random = (int) Math.floor((Math.random()*(99999-10000+1)))+10000;
+		return random;
+	}
+	
+}

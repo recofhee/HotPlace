@@ -1,0 +1,176 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+canvas {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+#chartjs-tooltip {
+  opacity: 1;
+  position: absolute;
+  background: rgba(0, 0, 0, .7);
+  color: white;
+  border-radius: 3px;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+  pointer-events: none;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+
+#chartjs-radar{
+  width : 60%;
+  height: 60%;
+}
+
+.chartjs-tooltip-key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+}
+</style>
+<title>Insert title here</title>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+<script>
+</script>
+</head>
+<body>
+
+<script type="text/javascript"> 
+
+
+var randomScalingFactor = function() {
+	return Math.round(Math.random() * 100);
+};
+
+var color = Chart.helpers.color;
+var config = {
+	type: 'radar',
+	data: {
+		datasets: [{
+			label: 'My First dataset',
+			data: [
+			]
+		}, {
+			label: 'My Second dataset',
+			data: [
+			]
+		}]
+	},
+	options: {
+		scale: {
+			ticks: {
+				beginAtZero: true
+			}
+		}
+	}
+};
+
+window.onload = function() {
+	window.myRadar = new Chart(document.getElementById('canvas'), config);
+};
+
+document.getElementById('randomizeData').addEventListener('click', function() {
+	config.data.datasets.forEach(function(dataset) {
+		dataset.data = dataset.data.map(function() {
+			return randomScalingFactor();
+		});
+	});
+
+	window.myRadar.update();
+});
+
+var colorNames = Object.keys(window.chartColors);
+document.getElementById('addDataset').addEventListener('click', function() {
+	var colorName = colorNames[config.data.datasets.length % colorNames.length];
+	var newColor = window.chartColors[colorName];
+
+	var newDataset = {
+		label: 'Dataset ' + config.data.datasets.length,
+		borderColor: newColor,
+		backgroundColor: color(newColor).alpha(0.2).rgbString(),
+		pointBorderColor: newColor,
+		data: [],
+	};
+
+	for (var index = 0; index < config.data.labels.length; ++index) {
+		newDataset.data.push(randomScalingFactor());
+	}
+
+	config.data.datasets.push(newDataset);
+	window.myRadar.update();
+});
+
+document.getElementById('addData').addEventListener('click', function() {
+	if (config.data.datasets.length > 0) {
+		config.data.labels.push('dataset #' + config.data.labels.length);
+
+		config.data.datasets.forEach(function(dataset) {
+			dataset.data.push(randomScalingFactor());
+		});
+
+		window.myRadar.update();
+	}
+});
+
+document.getElementById('removeDataset').addEventListener('click', function() {
+	config.data.datasets.splice(0, 1);
+	window.myRadar.update();
+});
+
+document.getElementById('removeData').addEventListener('click', function() {
+	config.data.labels.pop(); // remove the label first
+
+	config.data.datasets.forEach(function(dataset) {
+		dataset.data.pop();
+	});
+
+	window.myRadar.update();
+});
+
+
+        
+
+document.getElementById('canvas');
+$.ajax("chart",{
+	dataType : 'json',	
+	success : function(data){
+		new Chart(ctx, {
+			type: 'radar',
+			data: {
+				datasets: [{
+					label: 'man',
+					data: 
+					[
+					]
+				}, {
+					label: 'girl',
+					data: 
+					[
+					]
+				}]
+			},
+			options: {
+				scale: {
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			}
+		});
+	}
+});
+
+</script>
+<canvas id="canvas" width="762" height="381" class="chartjs-render-monitor" style="display: block; width: 762px; height: 381px;"></canvas>
+</body>
+</html>

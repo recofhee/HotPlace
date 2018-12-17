@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+section {
+	text-align: center;
+}
+.cb-detail {
+    padding: 0 50px;
+}
+.cbd-header {
+	display: inline-block;
+    text-align: right;
+}
+.cbd-header h1 {
+	font-size: 2.5em;
+	text-align: center;
+}
+.cbd-header span {
+	color: #888;
+}
+.cbd-main {
+    margin: 100px 0;
+}
+.content {
+    line-height: 2;
+    font-size: 18px;
+    text-align: justify;
+}
+.gallery {
+	margin-bottom: 100px !important;
+}
+.tag {
+	margin: 50px 0;
+	text-align: left;
+}
+.tag a {
+    font-size: 18px;
+    font-weight: bold;
+}
+.cbd-main .writer {
+	display: block;
+    position: relative;
+    padding-top: 40px;
+    font-size: 25px;
+    text-align: right;
+}
+.cbd-main .writer:after {
+	display: inline-block;
+    content: "";
+    height: 2px;
+    width: 180px;
+    background: #f8b753;
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+.like {
+	font-size: 40px;
+}
+.pagination {
+    display: flex;
+    justify-content: space-between;
+}
+.pagination a:first-child i {
+	color: #f8b753;
+	margin-right: 10px;
+}
+.pagination a:last-child i {
+	color: #f8b753;
+	margin-left: 10px;
+}
+.pagination a:first-child,
+.pagination a:last-child {
+	border: 1px solid #f8b753;
+	padding: 10px 20px;
+	transition: all .3s;
+}
+.pagination a:nth-child(2) {
+	font-size: 30px;
+}
+.comment {
+	margin: 100px 0;
+	text-align: justify;
+}
+.comment > span {
+	font-size: 30px;
+}
+.comment > span i {
+	color: #f8b753;
+	padding-right: 10px;
+}
+.cm-list {
+	clear: both;
+}
+.cm-view {
+    border-left: 4px solid #f8b753;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+.cm-write input {
+	float: right;
+}
+.cm-writer {
+	display: block;
+    font-weight: bold;
+    color: #444;
+    white-space: nowrap;
+}
+.cm-content {
+    display: block;
+    margin-top: 3px;
+    font-size: 14px;
+}
+.cm-writedate {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* cardBoardWrite */
+.cbWriteForm {
+	text-align: left;
+}

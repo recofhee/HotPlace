@@ -1,0 +1,61 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.HotPlace.dao.CardBoardDao;
+import com.HotPlace.dao.MemberDao;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.vo.CardBoardVo;
+import com.HotPlace.vo.GalleryVo;
+import com.HotPlace.vo.MemberVo;
+import com.HotPlace.vo.Paging;
+import com.HotPlace.vo.PcVo;
+
+@WebServlet("/pcResvBefore")
+public class PcResvBeforeServlet extends HttpServlet {
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		req.setCharacterEncoding("UTF-8");
+		String pc_num = req.getParameter("pc_num");
+		req.setAttribute("pc_num", pc_num);
+		req.getRequestDispatcher("pcResvBefore.jsp").forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		req.setCharacterEncoding("UTF-8");
+		
+		/*MemberDao dao = MemberDao.getInstance();
+		MemberVo vo = dao.getMember("email@email.com");
+		HttpSession session = req.getSession();
+		session.setAttribute("loginUser", vo);*/
+		
+		String pc_num = req.getParameter("pc_num");
+		PcDao dao = PcDao.getInstance();
+		PcVo vo = dao.selectOnePcByNum(pc_num);
+		req.setAttribute("pc", vo);
+		
+		String email = req.getParameter("email");
+		String pw = req.getParameter("pw");
+		String birthY = req.getParameter("birthY");
+		String birthM = req.getParameter("birthM");
+		String birthD = req.getParameter("birthD");
+		
+		String birth = birthY + birthM + birthD;
+		req.setAttribute("birth", birth);
+		
+		req.getRequestDispatcher("pcResv.jsp").forward(req, resp);
+	}
+
+}

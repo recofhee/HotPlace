@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+body{background: url(../images/overwatchbackground.jpg);
+	 background-attachment: fixed;
+	 background-size: cover;}
+section {padding: 15px;
+		 padding-top: 120px;
+		 }
+.wrap{
+	width: 960px;
+	margin: 0 auto;
+	border:  0px solid black;
+	background: url(../images/icon/overwatch.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: .9;
+}
+.bt {
+	position: relative;
+	border: 1px solid white;
+	background: rgb(47,48,49);
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: white;
+	cursor: pointer;
+	margin: 5px;
+}
+.bt:hover{
+	border:1px solid;
+	color: black;
+	background: #e2dcdc;
+}
+h1{
+	color: navy;
+}
+table {
+	border-collapse: collapse;
+	font-size: 12px;
+	line-height: 15px;
+	
+}
+table td, th{
+	border:  1px solid #90b4e63d;
+	padding: 5px;
+	color: white;
+	
+	
+}
+th{
+	background: #9da5b924;
+}
+img{
+	
+}
+a{
+	text-decoration: none;
+	color: black;
+	}
+a:hover {
+	text-decoration: none;
+	color: red;
+	text-shadow: 0 2px 2px #000;
+}
+.td1 td{
+	border-top: 1px solid #90b4e6;
+    border-bottom: 1px solid #90b4e6;
+    background-color: #c3d8f5;
+
+}
+.head {
+	height: 80px;
+    color: white;
+    font-size: 2em;
+}
+
+.h1 {
+	background: url(../images/icon/owboard.png) no-repeat 20px 20px;
+    width: 256px;
+    height: 70px;
+  
+  
+}

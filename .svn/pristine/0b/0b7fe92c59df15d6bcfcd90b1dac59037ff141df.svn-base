@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+body {
+	background-image: url(../images/dia3back.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+section {
+	padding-top: 130px;
+	
+}
+.wrap {
+	width: 960px;
+	background: #02324aad;
+	border: 0px solid black;
+	min-height: 720px;
+	margin: auto;
+	position: relative;
+}
+#servise_text{
+	color: white;
+}
+.first_title{
+	font-size: 20px;
+	margin-top:20px;
+	margin-left:20px;
+	
+}
+.first_title_text_pad{
+	margin-left:40px;
+	margin-right:20px;
+	
+}
+.first_title_text_pad > ol{
+	margin-left:50px;
+}
+#artcle2{
+	width: 99%;
+	border: 0px solid black;
+	margin:5px; 
+	padding:5px;
+	display: block;
+	height: 0 auto;
+	text-align: center;
+	position: inherit;
+	color: white;
+}

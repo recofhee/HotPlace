@@ -1,0 +1,150 @@
+@charset "UTF-8";
+ body{/* background-image: url('../images/starback.jpg');
+	background-repeat:no-repeat;
+    background-size: 100% 100%; */
+    /* background-attachment: fixed; */
+    }
+*{ margin: 0;padding: 0;box-sizing: border-box;}
+#container{width: 100%; margin: 0 auto; padding: 0; height:0 auto;  border: 0px solid black;}
+#container header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #00000066;
+    height: 61px;
+    transition: .3s linear .1s;
+    z-index: 9999;
+}
+#container .header-wrap {
+    position: fixed;
+    transition: .3s linear .1s;
+    color: #222222;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1000px;
+}
+#container nav{position:fixed; z-index: 99999; transition:.3s linear .1s; /* color: #222222; */}
+/* header {top:0; height:0 auto; width: 100%; margin: auto;color:#ddd; } */
+#container header h2{padding: 0px 740px 0px 0px;}
+#container header h2 a{text-decoration: none;}
+/* header h2:hover a{color: red;} */
+/* #container .scrollToggle {background:#eee; color:gray; height: 61px;} */
+#container .scrollToggle {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #eee;
+    height: 61px;
+    color: gray;
+}
+#container .scrollToggle ul li a {color: #3c4990; font-size: 14px;}
+#container .scrollToggle li a:hover, .scrollToggle li a:focus{color: #999; /* text-shadow: 0 0 5px; */ }
+#container .scrollToggle .logout li {color: #444; font-size: 14px;}
+#container .scrollToggle1 {background:#eee; color:#3c4990; box-shadow: 0 2px 4px -2px #bbb; }
+#container .scrollToggle1 li a:hover, .scrollToggle li a:focus{color:gray; /* rgba(91, 192, 222, 0.7) */ /* text-shadow: 0 0 0px; */ }
+#container .scrollToggle1 li a{color: black;}
+#container .scrollToggle1 ul li a:active {color: #3c4990;}
+.mainimg {
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.mainimg a img{height: 50px;}
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    max-width: 50%;
+}
+.login ul{display: flex; justify-content: flex-end;}
+.login li{
+	list-style: none;
+	padding: 10px 15px;
+} 
+.login li a{
+	font-size: 12px;
+    border: 1px solid #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #eee;
+    background: none;
+    text-decoration: none;
+}
+/* .login:hover li{color: red;} */
+#container .scrollToggle ul li a {
+    font-size: 12px !important;
+    border: 1px solid #3c4990;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #3c4990;
+    background: none;
+    text-decoration: none;
+}
+#container .scrollToggle ul li a:hover {
+	font-size: 12px;
+    border: 1px solid #3c4990;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #eee;
+    background: #3c4990;
+    text-decoration: none;
+}
+/* .login li a:active {
+	color: #3c4990;
+} */
+/*로그인후 css*/
+
+.logout ul {padding: 0; margin-left: -270px;}
+.logout li {color: #eee; font-size: 14px;}
+	
+.bot {
+	font-size: 12px;
+    border: 1px solid #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #eee;
+    background: none;
+}
+.bot:hover{color: #eee; background: none;}
+
+.scrollToggle .bot {
+	background: none;
+    font-size: 12px;
+    border: 1px solid #3c4990;
+    padding: 5px 10px;
+    color: #3c4990;
+    border-radius: 4px;
+}
+.scrollToggle .bot:hover{color: #eee; background: #3c4990;}
+.logout li span {
+    color: #eee;
+	margin-right: 10px;
+}
+.scrollToggle .logout li span {
+    color: #3c4990;
+	margin-right: 10px;
+}
+.logout i {
+	color: #eee;
+	margin-right: 10px;
+}
+.scrollToggle .logout i {
+	color: #3c4990;
+	margin-right: 10px;
+}
+/* */	
+
+/* .slider img {width: 100%;height: 500px ;margin-top: -20px;} */
+
+
+
+
+
+

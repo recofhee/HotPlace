@@ -1,0 +1,357 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/member.js"></script>
+<style>
+h2 {
+	font-size: 30px;
+}
+
+.container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.person {
+	height: 500px;
+	width: 930px;
+	margin: 0 auto;
+	border: 2px solid gray;
+}
+
+table td {
+	/* text-align: left; */
+	border: 1px solid gray;
+	font-size: 15px;
+	padding: 5px;
+}
+
+table th {
+	padding-bottom: 10px;
+}
+
+.button {
+	display: inline-block;
+	vertical-align: top;
+	height: 35px;
+	width: 120px;
+	line-height: 34px;
+	padding: 0 25px;
+	font-size: 12px;
+	color: #bbb;
+	text-align: center;
+	text-decoration: none;
+	background-color: #303030;
+	border-radius: 10px;
+	margin-left: 10px;
+	background-image: linear-gradient(to bottom, #3d3d3d, #272727);
+}
+
+.button:active, .button.active {
+	line-height: 34px;
+	color: #ccc;
+}
+
+input[type='text'] {
+	width: 200px;
+	height: 30px;
+	border: 1px solid gray;
+	float: left;
+	font-size: 15px;
+	margin-left: 20px;
+}
+
+input[type='password'] {
+	width: 200px;
+	height: 30px;
+	border: 1px solid gray;
+	float: left;
+	font-size: 15px;
+	margin-left: 20px;
+}
+
+.subCats {
+	display: none;
+	margin-left: 20px;
+}
+
+.signUpButton {
+	position: relative;
+	vertical-align: top;
+	width: 8%;
+	height: 28px;
+	padding: 0;
+	margin-left: 5%;
+	font-size: 17px;
+	color: white;
+	text-align: center;
+	background: #31708f;
+	border: 0;
+	cursor: pointer;
+}
+</style>
+<script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+
+<script>
+/* 이메일 인증 관련 ajax */
+var code_check;
+$(function(){
+	$("#sendAuth").click(function() {
+		$.ajax("send.do", { 
+			data : "receiver=" + $("#receiver").val(),
+			dataType : "json",
+			beforeSend : function() {
+				$("#sendAuth").hide().prev().html("인증번호 발송중");
+			},
+			success : function(data) {
+				if(data.code == 1) {
+					$("#receiver").attr("readeonly", true);
+					$("#sendAuth").prev().html("인증번호 발송 완료");
+					code_check = data.code_check;
+				}
+				else if(data.code == 2) {	
+					$("#sendAuth").show().prev().html("");
+					alert("유효하지 않는 이메일 주소입니다");
+				}
+			}
+		})
+	});
+});
+</script>
+
+<script type="text/javascript">
+/* 이메일 인증 코드 관련 부분 */
+	function checkCode(){
+		var v1 = code_check;
+		var v2 = frm.code.value;
+		
+		if(v1 != v2) {
+			document.getElementById('checkCode').style.color="red";
+			document.getElementById('checkCode').innerHTML="잘못된인증번호";
+			makeNull();
+		} else {
+			document.getElementById('checkCode').style.color="blue";
+			document.getElementById('checkCode').innerHTML="인증되었습니다.";
+			makeReal();
+		}
+		
+	}
+	
+ 
+</script>
+
+<script>
+	$(function() {
+		$(document.frm.nick_name).on("keyup", function() {
+			var idReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/;
+			if (!idReg.test($("input[name=nick_name]").val())) {
+				$(this).next().html("닉네임은 영문자와 한글,숫자만을 입력하세요");
+				
+			} else {
+				$.ajax( {
+					url : "idCheckAjax.do",
+					success : function(data) {
+						if (data == 1) {
+							$(nick_name).next().html("이미 존재하는 닉네임 입니다.");
+							$(document.frm.renick).val("");
+						} else {
+							$(nick_name).next().html("사용 가능")
+							$(document.frm.renick).val($(nick_name).val());
+						}
+					/* console.log(data); */
+					/* console.log(status);
+					alert(xhr); */
+					},
+					error : function(xhr) {
+						console.log(xhr);
+					/* console.log(status);
+					console.log(throws); */
+					},
+					
+					data : "nick_name=" + nick_name.value
+				});
+
+				$(this).next().html("");
+			}
+		})
+	});
+/* 
+	$(function() {
+		$("form").submit(joinCheck);
+	});
+	 */
+	
+	function joinCheck() {
+		if(document.frm.email.value.length == 0) {
+			alert("이메일을 입력해주세요");
+			frm.email.focus();
+			return false;
+		}	
+		 if(document.frm.nick_name.value.length == 0) {
+			alert("닉네임을 써주세요");
+			frm.nick_name.focus();
+			return false;
+		} 
+		if(document.frm.pw.value.length < 4) {
+			alert("비번은 4글자 이상으로!");
+			frm.pw.focus();
+			return false;
+		}
+		if(document.frm.pw.value.length == 0) {
+			alert("비번을 써주세요");
+			frm.pw.focus();
+			return false;
+		}
+		 if(document.frm.pw.value != document.frm.pw_check.value) {
+			alert("비번이 일치하지 않습니다.");
+			frm.pw.focus();
+			return false;
+		}
+		 if(document.frm.phone.value.length == 0) {
+			alert("휴대전화 입력해주세요");
+			frm.phone.focus();
+			return false;
+		}
+		
+		return true;
+		
+	}	
+</script>
+
+<script>
+	function toggleShow(checkbox) {
+		var id = 'subCats' + checkbox.name;
+		var subCats = document.all ? document.all[id] :
+			document.getElementById ? document.getElementById(id) :
+				null;
+		if (subCats) {
+			if (subCats.style.display == '' ||
+				subCats.style.display == 'none')
+				subCats.style.display = 'block';
+			else
+				subCats.style.display = 'none';
+		}
+	}
+	
+
+</script>
+
+
+</head>
+<body>
+
+	<div class="container">
+		<h2 align="center">JOIN</h2>
+		<br>
+
+		<form action="Join2" method="post" name="frm" id="frm" onsubmit="return joinCheck()">
+			<table class="person">
+				<tr>
+					<th style="text-align: left;">개인정보입력</th>
+					<th style="text-align: right;">'v'표시 항목은 필수 입력 항목입니다.</th>
+				</tr>
+				<tr>
+					<td height="20px;" align="center">v이메일</td>
+					<td><input style="margin-left: 20px; height: 30px; width: 197px; font-size: 15px;" type="email" name="email" id="receiver" placeholder="이메일을 입력하세요." size="20"/>
+					<span></span>
+					<input type="button" id="sendAuth" value="인증번호 발송" />
+					</td>
+				</tr>
+				<tr>
+					<td height="20px" align="center"><span>인증번호</span></td>
+					<td><input type="text" name="code" id="code" onkeyup="checkCode()" placeholder="인증번호를 입력하세요."/>
+						<div id="checkCode"></div>
+						<input type="hidden" readonly="readonly" name="code_check" id="code_check" value="<%=request.getAttribute("code") %>"/>	
+						<!-- <input id="hi" type="hidden" value="인증하기"/> -->
+					</td>
+				</tr>
+
+				<tr>
+					<td height="20px" align="center">v닉네임</td>
+					<td><input type="text" name="nick_name" size="20">
+					<span></span>
+					<input type="hidden" name="renick" size="20"></td>
+				</tr>
+				
+				<tr>
+					<td height="20px" align="center">v암호</td>
+					<td><input type="password" name="pw" size="20">공백없는
+						영문,숫자 4글자이상</td>
+				</tr>
+				<tr>
+					<td height="20px" align="center">v암호확인</td>
+					<td><input type="password" name="pw_check" size="20">비밀번호를
+						한번더 입력해주세요.</td>
+				</tr>
+
+				<tr>
+					<td height="20px" align="center">휴대전화</td>
+					<td><input type="text" name="phone" size="20"></td>
+				</tr>
+
+
+				<tr>
+					<td height="160px" width="90px" align="center">체크리스트</td>
+					<td style="vertical-align: top;">
+					<strong><input type="checkbox" name="1" onclick="toggleShow(this)" value="RPG">RPG</strong> <br>
+						<div id="subCats1" class="subCats">
+							<input type="checkbox" name="10" value="메이플스토리">메이플스토리
+							<input type="checkbox" name="11" value="던전앤파이터">던전앤파이터
+							<input type="checkbox" name="12" value="리니지">리니지
+							<input type="checkbox" name="13" value="디아블로3">디아블로3
+							<input type="checkbox" name="14" value="블레이드&소울">블레이드&소울
+							<input type="checkbox" name="15" value="사이퍼즈">사이퍼즈
+							<input type="checkbox" name="16" value="월드 오브 워크래프트">월드 오브 워크래프트
+						</div> 
+						<strong><input type="checkbox" name="2" onclick="toggleShow(this)" value="레이싱/스포츠">레이싱/스포츠</strong> <br>
+						<div id="subCats2" class="subCats">
+							<input type="checkbox" name="20" value="FIFA ONLINE4">FIFA ONLINE 4
+							<input type="checkbox" name="21" value="카트라이더">카트라이더 
+							<input type="checkbox" name="22" value="WWE2K18">WWE2K18 
+							<input type="checkbox" name="23" value="NBA2K18">NBA2K18
+						</div> 
+						<strong><input type="checkbox" name="3" onclick="toggleShow(this)">FPS</strong> <br>
+						<div id="subCats3" class="subCats">
+							<input type="checkbox" name="30" value="배틀그라운드">배틀그라운드
+							<input type="checkbox" name="31" value="오버워치">오버워치 
+							<input type="checkbox" name="32" value="서든어택">서든어택
+						</div> 
+						<strong><input type="checkbox" name="4"	onclick="toggleShow(this)" value="RTS">RTS</strong> <br>
+						<div id="subCats4" class="subCats">
+							<input type="checkbox" name="40" value="리그 오브 레전드">리그 오브 레전드
+							<input type="checkbox" name="41" value="카트라이더">카트라이더
+							<input type="checkbox" name="42" value="스타크래프트">스타크래프트 
+							<input type="checkbox" name="43" value="히어로즈 오브 더 스톰">히어로즈 오브 더 스톰
+							<input type="checkbox" name="44" value="워크래프트3">워크래프트3
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2" align="center">
+					<input type="submit" value="확인" class="signUpButton"> &nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="reset" value="취소" class="signUpButton">
+				</tr>
+
+			</table>
+
+			<%-- <table>
+				<tr>
+					<td colspan="2">${message}</td>
+				</tr>
+			</table> --%>
+		</form>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,61 @@
+package com.HotPlace.vo;
+
+import java.sql.Timestamp;
+
+public class Play_ReviewVo {
+	private String video_url ;
+    private int re_num;
+    private String user_id;
+    private String re_content;
+    private Timestamp reg_date;
+    
+    
+	public String getVideo_url() {
+		return video_url;
+	}
+	public void setVideo_url(String video_url) {
+		this.video_url = video_url;
+	}
+	public int getRe_num() {
+		return re_num;
+	}
+	public void setRe_num(int re_num) {
+		this.re_num = re_num;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getRe_content() {
+		return re_content;
+	}
+	public void setRe_content(String re_content) {
+		this.re_content = re_content;
+	}
+	public Timestamp getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Timestamp reg_date) {
+		this.reg_date = reg_date;
+	}
+	public Play_ReviewVo(String video_url, int re_num, String user_id, String re_content, Timestamp reg_date) {
+		super();
+		this.video_url = video_url;
+		this.re_num = re_num;
+		this.user_id = user_id;
+		this.re_content = re_content;
+		this.reg_date = reg_date;
+	}
+	public Play_ReviewVo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Play_ReviewVo [video_url=" + video_url + ", re_num=" + re_num + ", user_id=" + user_id + ", re_content="
+				+ re_content + ", reg_date=" + reg_date + "]";
+	}
+	
+}

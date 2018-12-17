@@ -1,0 +1,195 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>예약 완료</title>
+<link rel="stylesheet" href="css/bootstrap-grid.css">
+<style type="text/css">
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+section {
+    padding: 100px 0;
+    background-image: url('images/starback.jpg');
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+.pricing-wrapper {
+    position: relative;
+    list-style: none;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
+    padding: 30px 100px;
+}
+.pricing-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 7px;
+    color: #666;
+    font-size: 14px;
+}
+.pricing-header {
+    padding: 0 0 50px;
+    text-align: center;
+    background-color: transparent;
+}
+.columns {
+	margin: 0 auto;
+	background: #00000085;
+    text-align: center;
+	/* min-width: 700px;
+    max-width: 1000px; */
+}
+.columns .pricing-header .price {
+    color: #f8b753 !important;
+    background-color: transparent;
+}
+.pricing-header h2 {
+    font-size: 1.8em;
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-top: 40px;
+}
+.pcInfo {
+	margin-bottom: 30px;
+	color: #666;
+}
+.currency,
+.value {
+	font-size: 3rem;
+	font-weight: 300;
+}
+.value {
+    font-size: 5em;
+    font-weight: 300;
+}
+.currency {
+    color: #f8b753;
+}
+.columns .currency {
+	color: #666;
+}
+.currency {
+    display: inline-block;
+    margin-top: 10px;
+    vertical-align: top;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.pricing-body {
+	color: #666;
+}
+.pricing-features:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.pricing-features span {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: 600;
+}
+.pricing-features li {
+    padding: 1em;
+    font-size: 18px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+}
+.pricing-features span {
+    display: inline-block;
+    margin-bottom: 0;
+}
+.pricing-footer {
+    display: flex;
+	width: 100%;
+    padding: 1.8em 0;
+    text-align: center;
+    z-index: 1;
+    justify-content: center;
+}
+.pricing-footer::after {
+    display: none;
+}
+.columns .button {
+    display: inline-block;
+    padding: 1em 2em;
+    color: #f8b753;
+    border-radius: 8px;
+    font-size: 20px;
+    text-indent: 0;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all .6s;
+}
+.columns .button {
+    background-color: #f8b753;
+	color: #eee;
+	/* flex: 1; */
+	border: 0;
+    width: 200px;
+    margin: 0 10px;
+}
+.columns .button:hover {
+	cursor: pointer;
+	opacity: .8;
+}
+.cancel {
+    background-color: #990000 !important;
+}
+</style>
+</head>
+<body>
+	<section>
+		<div class="col-sm-8 col-md-8 col-lg-8 columns">
+			<ul class="pricing-wrapper">
+				<%-- <li class="pricing-label">No. ${resv.resv_num}</li> --%>
+				<li>
+					<div class="pricing-header">
+						<div class="pcInfo">
+							<h2>${resv.pc_name}</h2>
+							<span>${resv.pc_addr}</span>
+						</div>
+						<div class="price">
+							<span class="currency"></span>
+							<span class="value">${resv.resv_price}</span>
+						</div>
+					</div>
+					<div class="pricing-body">
+						<ul class="pricing-features">
+							<li>이용 세대 : <span>${resv.generation}</span></li>
+							<li>이용 인원 : <span>${resv.maxLen}</span> 명</li>
+							<li>이용 시간 : <span>${resv.resv_hours}</span> 시간</li>
+							<li>이용 일시 : <span>${resv.resv_start}</span> ~ <span>${resv.resv_end}</span></li>
+							<li>선택 좌석 : <span>${resv.seat_num}</span></li>
+							<li>결제 방법 : <span>${resv.payment}</span></li>
+						</ul>
+						<%-- <input type ="hidden" name ="email" value="${loginUser.email}"> --%>
+					</div>
+					<div class="pricing-footer">
+						<input class="button goMain" type="button" value="홈으로">
+						<input class="button resvCancel" type="button" value="예약 취소"> 
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.pricing-footer .goMain').click(function(){
+		location.href = 'main';
+	});
+	$('.pricing-footer .resvCancel').click(function(){
+		location.href = 'pcResvDelete?resv_num=${resv_num}';
+	});
+});
+</script>
+</body>
+</html>

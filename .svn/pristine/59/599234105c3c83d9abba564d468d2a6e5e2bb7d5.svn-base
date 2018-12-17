@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+section {
+	padding-top: 150px;
+}
+
+.sort {
+	text-align: right;
+	font-size: 12px;
+}
+
+.warp {
+	width: 1040px;
+	margin: 30px auto;
+	padding: 0;
+	height: 650px;
+	border: 0px solid black;
+	background: url(../images/starwin.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+.warp h1 {
+	text-align: center;
+}
+
+.tabl {
+	width: 960px;
+	font-size: 13px;
+	/*  border-collapse: collapse; */
+}
+
+.tabl tr, tr td {
+	border-bottom: 1px solid #00000030;
+	text-align: center;
+	padding: 5px 10px;
+	text-align: center;
+	color: white;
+}
+
+.tabl th {
+	height: 34px;
+	padding: 0px 0px;
+	font-size: 12px;
+	text-align: center;
+}
+.tabl tr td a{ color: white;}
+
+.tabl tr td:hover a{color: red;}
+.num ul {
+	text-align: center;
+	margin-top: -55px;
+	padding: 0 420px
+}
+
+.num ul li {
+	display: block;
+	vertical-align: middle;
+	float: left;
+}
+
+.num ul li a {
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px;
+	margin-right: 3px;
+	width: 25px !important;
+	color: #000;
+	font: bold 12px tahoma;
+	border: 1px solid #eee;
+	text-align: center;
+	text-decoration: none;
+	width: 26px;
+}
+
+}
+.num ul li a.now {
+	color: red;
+	background-color:;
+	border: 1px solid;
+}
+
+.num ul li a:hover /* , ul li a:focus */ {
+	color: red;
+	border: 1px solid;
+	background-color:;
+}
+
+.sel {
+	clear: both;
+	float: left;
+	height: 20px;
+	line-height: 22px;
+	border: 1px solid #D0D0D0;
+	color: #666;
+	font-size: 11px;
+	margin-right: -1px;
+}
+
+.st {
+	width: 90%;
+	padding: 14px 0 10px;
+	text-align: left;
+	font-size: 13px;
+}
+
+.bt {
+	position: relative;
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: black;
+	background: white;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.bt:hover {
+	border: 1px solid;
+	color: red;
+}
+
+.title {
+	text-align: center;
+}
+
+.inp {
+	float: left;
+	width: 170px;
+	padding: 0 0 0 6px;
+	height: 20px;
+	background: #F5F5F5;
+	border: 1px solid #D0D0D0;
+}
+
+.btn1 {
+	float: left;
+	position: relative;
+	width: 35px;
+	height: 20px;
+	font-size: 12px;
+	color: #fff;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	background-color: #acacac;
+}
+
+.search1 {
+	position: absolute;
+	margin-left: 360px;
+	margin-top: 40px;
+}
+
+.h1 {
+ background: url(../images/icon/HotPlace.png) no-repeat 90px 29px;
+    width: 300px;
+    height: 123px;
+    position: absolute;
+    background-size: 35%;
+    margin-top: -20px;
+    right: 805px;
+}
+}
+
+.head {height: 120px;}
+.center {padding-top: 120px;}

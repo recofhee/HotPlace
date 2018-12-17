@@ -1,0 +1,182 @@
+package com.HotPlace.vo;
+
+import java.sql.Timestamp;
+
+public class BoardVO {
+	private int num;
+	private int category_num;
+	private String id;
+	private String email;
+	private String title;
+	private String content;
+	private int readcount;	// 조회수
+	private int repcount;	// 리플수
+	private Timestamp writedate;
+	private String file_ori;
+	private String file_modi;
+	private int parent;
+	private int indent;
+	private int step;	//원글인지 답글인지 확인하는
+	private int rec;	//답글끼리의 출력순서
+	private int non_rec;
+
+	
+	public BoardVO() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	
+
+
+	public int getCategory_num() {
+		return category_num;
+	}
+
+	public void setCategory_num(int category_num) {
+		this.category_num = category_num;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getReadcount() {
+		return readcount;
+	}
+
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+
+	public Timestamp getWritedate() {
+		return writedate;
+	}
+
+	public void setWritedate(Timestamp writedate) {
+		this.writedate = writedate;
+	}
+
+	public String getFile_ori() {
+		return file_ori;
+	}
+
+	public void setFile_ori(String file_ori) {
+		this.file_ori = file_ori;
+	}
+
+	public String getFile_modi() {
+		return file_modi;
+	}
+
+	public void setFile_modi(String file_modi) {
+		this.file_modi = file_modi;
+	}
+
+
+	public int getRepcount() {
+		return repcount;
+	}
+
+	public void setRepcount(int repcount) {
+		this.repcount = repcount;
+	}
+
+	public int getRec() {
+		return rec;
+	}
+
+	public void setRec(int rec) {
+		this.rec = rec;
+	}
+
+	public int getNon_rec() {
+		return non_rec;
+	}
+
+	public void setNon_rec(int non_rec) {
+		this.non_rec = non_rec;
+	}
+
+
+	public int getNum() {
+		return num;
+	}
+
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+
+
+	public int getParent() {
+		return parent;
+	}
+
+
+
+
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+
+
+
+
+	public int getIndent() {
+		return indent;
+	}
+
+
+
+	public void setIndent(int indent) {
+		this.indent = indent;
+	}
+
+
+
+	public int getStep() {
+		return step;
+	}
+
+
+
+	public void setStep(int step) {
+		this.step = step;
+	}
+
+	
+	
+	
+}

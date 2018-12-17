@@ -1,0 +1,569 @@
+package com.HotPlace.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import com.HotPlace.util.DBManager;
+import com.HotPlace.vo.CardBoardVo;
+import com.HotPlace.vo.MemberVo;
+import com.HotPlace.vo.PaymentVo;
+import com.HotPlace.vo.PcVo;
+import com.HotPlace.vo.ReplyVo;
+import com.HotPlace.vo.ResvVo;
+import com.HotPlace.vo.SeatVo;
+import com.sun.jmx.snmp.Timestamp;
+
+public class PcDao {
+	private static PcDao dao = new PcDao();
+	private PcDao() {}
+	public static PcDao getInstance() {return dao;}
+	public JSONArray selectPcList(String input) {
+		String sql = "select * from pc"; 
+		if(input != null) sql += " where name like '%" + input +"%' or address like '%" + input +"%'";
+		JSONArray array = new JSONArray();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			System.out.println(rs);
+			while(rs.next()) {
+				JSONObject object = new JSONObject();
+				PcVo pVo = new PcVo();
+				pVo.setPc_imf(rs.getString("information"));
+				pVo.setPc_name(rs.getString("name"));
+				pVo.setPc_seat(rs.getString("seat_type"));
+				pVo.setPc_num(rs.getInt("pc_num"));
+				pVo.setPc_addr(rs.getString("address"));
+				pVo.setX(rs.getString("x"));
+				pVo.setY(rs.getString("y"));
+				pVo.setPrice(rs.getString("price"));
+				pVo.setPictureurl(rs.getString("pc_picture"));
+				
+				object.put("pc_imf", pVo.getPc_imf());
+				object.put("name", pVo.getPc_name());
+				object.put("seat", pVo.getPc_seat());
+				object.put("pc_num", pVo.getPc_num());
+				object.put("addr", pVo.getPc_addr());
+				object.put("x", pVo.getX());
+				object.put("y", pVo.getY());
+				object.put("price", pVo.getPrice());
+				object.put("pictureurl", pVo.getPictureurl());
+				array.add(object);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return array;
+	}
+
+	public PcVo selectOnePcByNum(int pc_num) {
+		String sql = "select * from pc where pc_num = ?";
+		PcVo vo = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			/*int pc_num;
+			private String pc_name;
+			private String pc_addr;
+			private String x;
+			private String y;
+			private String pc_imf;
+			private String pc_seat;
+			private String pictureurl;
+			private String price;*/
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pc_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				vo = new PcVo();
+				vo.setPc_num(rs.getInt("pc_num"));
+				vo.setPc_name(rs.getString("name"));
+				vo.setPc_addr(rs.getString("address"));
+				vo.setX(rs.getString("x"));
+				vo.setY(rs.getString("y"));
+				vo.setPc_imf(rs.getString("information"));
+				vo.setPc_seat(rs.getString("seat_type"));
+				vo.setPrice(rs.getString("price"));
+				vo.setPictureurl(rs.getString("pc_picture"));
+				System.out.println(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return vo;
+	}
+	
+	public void insertReservation(ResvVo Vo) {
+		//String sql1 = "select resv_num_seq.nextval from dual;";
+		String sql = "insert into reservation (resv_idx, resv_num, resv_start, resv_end, seat_idx, seat_num, pc_num, resv_price, generation, resv_hours, resv_email, max_Len, payment) "
+				+ "values(resv_idx_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		try {
+			conn =DBManager.getConnection();
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setInt(1, Vo.getResv_num());
+			pstmt.setString(2, Vo.getResv_start());
+			pstmt.setString(3, Vo.getResv_end());
+			pstmt.setString(4, Vo.getSeat_idx());
+			pstmt.setString(5, Vo.getSeat_num());
+			pstmt.setString(6, Vo.getPc_num());
+			pstmt.setString(7, Vo.getResv_price());
+			pstmt.setString(8, Vo.getGeneration());
+			pstmt.setString(9, Vo.getResv_hours());
+			pstmt.setString(10, Vo.getResv_email());
+			pstmt.setString(11, Vo.getMaxLen());
+			pstmt.setString(12, Vo.getPayment());
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+	}
+	
+	public List<ResvVo> selectResvByNum(String email) {
+		String sql = "SELECT A.*, (SELECT LISTAGG(SEAT_NUM,',') WITHIN GROUP(ORDER BY SEAT_NUM) FROM RESERVATION B WHERE A.RESV_NUM = B.RESV_NUM) AS SEAT_NUMS " + 
+				"FROM (SELECT DISTINCT RESV_NUM, RESV_START, RESV_END, resv_hours, resv_price, pc_num,name, address " + 
+				"FROM (select RESV_NUM, RESV_START, RESV_END, resv_hours, resv_price, pc.pc_num, resv_email, name, address from pc, reservation " + 
+				"where pc.pc_num = reservation.pc_num) WHERE RESV_EMAIL = '"+email+"')A ORDER BY RESV_NUM";
+		//System.out.println(sql);
+		List<ResvVo> list =new ArrayList<ResvVo>();   
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ResvVo vo = new ResvVo();
+				vo.setResv_num(rs.getInt("RESV_NUM"));
+				vo.setResv_start(rs.getString("RESV_START"));
+				vo.setResv_end(rs.getString("RESV_END"));
+				vo.setSeat_num(rs.getString("seat_nums"));
+				vo.setResv_price(rs.getString("resv_price"));
+				vo.setResv_hours(rs.getString("resv_hours"));
+				vo.setPc_name(rs.getString("name"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return list; 
+	}
+	
+	public ResvVo selectOnePcResvByNum(String resv_num) {
+		String sql = "select * from reservation where resv_num= ?";
+		ResvVo vo = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, resv_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				vo = new ResvVo();
+				vo.setResv_num(rs.getInt("resv_num"));
+				vo.setResv_start(rs.getString("resv_start"));
+				vo.setResv_end(rs.getString("resv_end"));
+				vo.setSeat_num(rs.getString("seat_num"));
+				vo.setPc_num(rs.getString("pc_num"));
+				vo.setResv_price(rs.getString("resv_price"));
+				vo.setResv_date(rs.getString("resv_date"));
+				vo.setGeneration(rs.getString("generation"));
+				//vo.setMaxLen(rs.getString("max_len"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return vo;
+	}
+	
+	public int select(){
+		String sql = "select resv_num_seq.nextval from dual";
+		Connection conn =null; //지역변수 초기화
+		PreparedStatement pstmt =null; //지역변수 초기화
+		ResultSet rs =null; //지역변수 초기화
+		int s = 0;
+		try {
+			conn =DBManager.getConnection(); //DB연결
+			pstmt =conn.prepareStatement(sql); //연결해서 쿼리문 넣어서 보냄
+			rs=pstmt.executeQuery(); //rs에 DB에서 가져온 값을 최종적 저장
+			while(rs.next()) { //rs에 값을 다보여줌
+				ResvVo vo = new ResvVo();
+					vo.setResv_num((rs.getInt(1)));
+					s =vo.getResv_num();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBManager.close(conn, pstmt,rs);
+		}
+		return s;
+	}
+	
+	public void deleteResv(String resv_num) {
+		String sql ="delete reservation where resv_num=?";
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		try {
+			conn =DBManager.getConnection();
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, resv_num);
+			pstmt.executeQuery();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+	}
+	
+	public void deletePayment(String resv_num) {
+		String sql ="delete payment where resv_num=?";
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		try {
+			conn =DBManager.getConnection();
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, resv_num);
+			pstmt.executeQuery();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+	}
+	
+	public ResvVo selectOneResvViewNum(int resv_num) {
+		String sql = "SELECT A.*, (SELECT LISTAGG(SEAT_NUM,',') WITHIN GROUP(ORDER BY SEAT_NUM) FROM RESERVATION B WHERE A.RESV_NUM = B.RESV_NUM) AS SEAT_NUMS " + 
+				"FROM (SELECT DISTINCT RESV_NUM, RESV_START, RESV_END, resv_hours, resv_price, pc_num, name, address, generation, max_len, payment, resv_email " + 
+				"FROM (select RESV_NUM, RESV_START, RESV_END, resv_hours, resv_price, pc.pc_num, resv_email, name, address, generation, max_len, payment from pc, reservation " + 
+				"where pc.pc_num = reservation.pc_num) WHERE RESV_num = "+resv_num+")A";
+		ResvVo vo = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				vo = new ResvVo();
+				vo.setResv_start(rs.getString("resv_start"));
+				vo.setResv_end(rs.getString("resv_end"));
+				vo.setSeat_num(rs.getString("seat_nums"));
+				vo.setResv_price(rs.getString("resv_price"));
+				vo.setGeneration(rs.getString("generation"));
+				vo.setPc_name(rs.getString("name"));
+				vo.setResv_hours(rs.getString("resv_hours"));
+				vo.setPc_addr(rs.getString("address"));
+				vo.setMaxLen(rs.getString("max_Len"));
+				vo.setPayment(rs.getString("payment"));
+				vo.setEmail(rs.getString("resv_email"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return vo;
+	}
+	
+	
+	// 한번 이용해서 birth 값이 있는 사람은 PcResvBefore을 패스하기 위해. 
+	public MemberVo checkBirth(String email) {
+		String sql =  "select birth from member where email = ? ";
+		
+		MemberVo vo = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new MemberVo();
+				vo.setBirth(rs.getString("birth"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return vo;
+	}
+	
+	//카드결제방법 
+	public void insertPayment(PaymentVo Vo) {
+		String sql = "insert into payment (pay_num, email, pay_how, pay_date, card_num, card_check, resv_num) "
+				+ "values(pay_seq.nextval,?,?,sysdate,?,?,?)";
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		try {
+			conn =DBManager.getConnection();
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, Vo.getEmail());
+			pstmt.setString(2, Vo.getPay_how());
+			pstmt.setString(3, Arrays.toString(Vo.getCard_num()));
+			pstmt.setString(4, Arrays.toString(Vo.getCard_check()));
+			pstmt.setInt(5, Vo.getResv_num());
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+	}
+	//무통장방법 
+		public void insertPayment1(PaymentVo Vo) {
+			String sql = "insert into payment (pay_num, email, pay_how, pay_date, depositor, bank, resv_num) "
+					+ "values(pay_seq.nextval,?,?,sysdate,?,?,?)";
+			Connection conn =null;
+			PreparedStatement pstmt =null;
+			try {
+				conn =DBManager.getConnection();
+				pstmt =conn.prepareStatement(sql);
+				pstmt.setString(1, Vo.getEmail());
+				pstmt.setString(2, Vo.getPay_how());
+				pstmt.setString(3, Vo.getDepositor());
+				pstmt.setString(4, Vo.getBank());
+				pstmt.setInt(5, Vo.getResv_num());
+				pstmt.executeUpdate();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				DBManager.close(conn, pstmt);
+			}
+		}
+		
+		//현장결제방법 
+		public void insertPayment2(PaymentVo Vo) {
+			String sql = "insert into payment (pay_num, email, pay_how, pay_date, resv_num) "
+					+ "values(pay_seq.nextval,?,?,sysdate,?)";
+			Connection conn =null;
+			PreparedStatement pstmt =null;
+			try {
+				conn =DBManager.getConnection();
+				pstmt =conn.prepareStatement(sql);
+				pstmt.setString(1, Vo.getEmail());
+				pstmt.setString(2, Vo.getPay_how());
+				pstmt.setInt(3, Vo.getResv_num());
+				pstmt.executeUpdate();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				DBManager.close(conn, pstmt);
+			}
+		}
+
+		// pc방 번호에 해당하는 좌석 정보 가져오기
+		public List<SeatVo> selectAllSeatsByPcNum(int pc_num) {
+			
+			String sql = "select * from seat where pc_num = ?";
+			
+			List<SeatVo> list = new ArrayList<>();
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, pc_num);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					SeatVo sVo = new SeatVo();
+					
+					sVo.setSeatNum(rs.getString("seat_num"));
+					sVo.setSeatType(rs.getString("seat_type"));
+					sVo.setIsChoosen(rs.getInt("ischoosen"));
+					
+					list.add(sVo);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt);
+			}
+			return list;
+		}
+		
+		// 좌석이 예약되면 isChoosen 상태 값 1로 변경 (=> 좌석 예약 불가)
+		public void updateSeatStateOne(String pcNum, String seatNum) {
+			String sql = "update seat set ischoosen = 1 where pc_num = ? and seat_num = ?";
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, pcNum);
+				pstmt.setString(2, seatNum);
+				
+				pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt);
+			}
+		}
+		
+		// 예약일 지나면 choosen 상태 값 0으로 변경 (=> 좌석 예약 가능)
+		public void updateSeatStateZero() {
+			String sql = "update seat " + 
+					"set ischoosen = 0 " + 
+					"where " + 
+					"    ischoosen = 1 " + 
+					"and seat_idx in ( " + 
+					"    select seat_idx " + 
+					"    from reservation " + 
+					"    where to_date(resv_end, 'YYYY/MM/dd HH24:MI') <= sysdate" + 
+					")";
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt);
+			}
+		}
+		
+		// 예약 취소하면 choosen 상태 값 0으로 변경 (=> 좌석 예약 가능)
+		public void updateSeatStateZero(String resvNum) {
+			String sql = "update seat " + 
+					"set ischoosen = 0 " + 
+					"where " + 
+					"    ischoosen = 1 " + 
+					"and seat_idx in ( " + 
+					"    select seat_idx " + 
+					"    from reservation " + 
+					"    where resv_num = ?" + 
+					")";
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, resvNum);
+				
+				pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt);
+			}
+		}
+		
+		// pc_num, seat_num으로 좌석 정보 가져오기
+		public SeatVo selectOneSeatByNum(String pcNum, String seatNum) {
+			String sql = "select * " + 
+						 "from seat " + 
+						 "where pc_num = ? and seat_num = ?";
+			
+			SeatVo sVo = null;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, pcNum);
+				pstmt.setString(2, seatNum);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					sVo = new SeatVo();
+					
+					sVo.setSeatIdx(rs.getString("seat_idx"));
+					sVo.setSeatNum(rs.getString("seat_num"));
+					sVo.setPcNum(rs.getString("pc_num"));
+					sVo.setSeatType(rs.getString("seat_type"));
+					sVo.setIsChoosen(rs.getInt("ischoosen"));
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+			return sVo;
+		}
+		
+		// pc_num, seat_num으로 좌석 인덱스 가져오기
+		public String selectOneSeatIdxByNum(String pcNum, String seatNum) {
+			String result = "";
+			String sql = "select seat_idx " + 
+					 "from seat " + 
+					 "where pc_num = ? and seat_num = ?";
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, pcNum);
+				pstmt.setString(2, seatNum);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					result = rs.getString(1);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+			return result;
+		}
+}

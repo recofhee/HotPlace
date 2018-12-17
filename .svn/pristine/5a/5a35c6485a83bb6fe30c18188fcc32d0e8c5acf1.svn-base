@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>고객센터</title>
+<link href="css/foot_service_center.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".content").hide();
+		//content 클래스를 가진 div를 표시/숨김(토글)
+		$(".heading").click(function() {
+			$(this).next(".content").slideToggle(500);
+		});
+	});
+</script>
+</head>
+<body>
+	<%@ include file="../header.jsp"%>
+	<section>
+	<div class="wrap">
+		<!-- <div class="layer1"> -->
+		<div class="service">
+			<p class="heading">프로젝트 관련</p>
+			<div class="content">
+				<p>조장 : 김성환</p>
+				<p>부조장 : 김희수</p>
+				<p>조원 : 박은천</p>
+				<p>조원 : 류지태</p>
+				<p>조원 : 최광훈</p>
+				<p>조원 : 이도근</p>
+			</div>
+
+			<p class="heading">회원 관련</p>
+			<div class="content">
+				<p>기능 : 류지태</p>
+				<p>화면 : 류지태, 박은천</p>
+			</div>
+
+			<p class="heading">PC방 예약 관련</p>
+			<div class="content">
+				<p>기능 : 김성환, 김희수</p>
+				<p>화면 : 박은천</p>
+			</div>
+
+			<p class="heading">게임 영상 관련</p>
+			<div class="content">
+				<p>기능 : 이도근</p>
+				<p>화면 : 박은천, 이도근</p>
+			</div>
+
+			<p class="heading">갤러리/차트 관련</p>
+			<div class="content">
+				<p>기능 : 김희수</p>
+				<p>화면 : 박은천, 김희수</p>
+			</div>
+
+			<p class="heading">게시판 관련</p>
+			<div class="content">
+				<p>기능 : 최광훈</p>
+				<p>화면 : 박은천, 최광훈</p>
+			</div>
+
+		</div>
+	<div class="service1">rkskekskekskk</div>
+	</div>
+	<!-- </div> -->
+</section>
+	<%@ include file="../footer.jsp"%>
+</body>
+</html>

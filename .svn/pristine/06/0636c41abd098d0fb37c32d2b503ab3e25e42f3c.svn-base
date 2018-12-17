@@ -1,0 +1,114 @@
+<%@page import="java.nio.channels.SeekableByteChannel"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="widht=device-width,user-scalable=no">
+<title>Header</title>
+
+<link href="css/layout.css?ver=1" rel="stylesheet">
+<link href="css/nav.css?ver=3" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
+
+<script>
+	$(function() {
+		$(window).on("scroll", function() {
+			if (this.scrollY < 100) {
+				$("header h2 span").removeClass("header-scrollToggle");
+				$("header").removeClass("scrollToggle");
+				$("nav").removeClass("scrollToggle1");
+			} else {
+				$("header h2 span").addClass("header-scrollToggle")
+				$("header").addClass("scrollToggle");
+				$("nav").addClass("scrollToggle1");
+			}
+		});
+	})
+</script>
+</head>
+<body>
+	<div id="container">
+
+		<header>
+			<h2 class="mainimg">
+				<a href='main'><img src="images/icon/HotPlace.png" title="HotPlace"
+					style=""></a>
+			</h2>
+			<div class="login">
+				<ul>
+					<c:if test="${empty loginUser}">
+						<li><a href="Login">로그인</a></li>
+					<li><a href="Join1">회원 가입</a></li>
+					</c:if>
+					<c:if test="${!empty loginUser}">
+						<form action="logout" class="logout">
+							<ul >
+								<li>
+									<%-- ${loginUser.nick_name}(${loginUser.email})님 --%>
+									<span><i class="fa fa-user"></i>${loginUser.nick_name}</span>
+									<input style="cursor: pointer;" type="submit" value="로그아웃" class="bot">&nbsp;&nbsp;
+									<input style="cursor: pointer;" type="button" class="bot" value="회원 정보 변경" onclick="location.href='memberUpdate?email=${loginUser.email}'" />
+								</li>
+							</ul>
+						</form>
+					</c:if>
+				</ul>
+
+			</div>
+		</header>
+		<nav>
+			<ul>
+				<li><a href='pclist'>PC방 예약</a>
+				<c:if test="${!empty loginUser}">
+					<ul>
+						<li><a href="pcResvHistory">예약 내역</a></li>
+						<li><a href="pcResvCancel">예약 취소</a></li>
+					</ul></c:if></li>
+				<li><a href='list'>영상 컨텐츠</a>
+					<ul>
+						<li><a href='list'>게임 동영상</a></li>
+						<li><a href='live'>실시간 동영상</a></li>
+					</ul></li>
+				
+				<li><a href='cardBoardList'>갤러리</a></li>
+				<li><a href='boardList.g?category_num=0'>게시판</a>
+					<ul>
+						<li><a href="boardList.g?category_num=0">통합 게시판</a></li>
+						<li><a href="boardList.g?category_num=1">리그오브레전드</a></li>
+						<li><a href="boardList.g?category_num=2">오버 워치</a></li>
+						<li><a href="boardList.g?category_num=3">몬스터 헌터</a></li>
+					</ul></li>
+				<li class='last'><a href="chart">차트</a><li>
+					<div>
+						<form action="pclist" class="search">
+							<input id="url" type="text" name="url" class="search-box" placeholder="PC방 검색" required>
+							<!-- <input type="submit" value="" id="button-search" class="search-button"> -->
+							<button id="button-search" type="submit" class="search-button">
+								<i class="fa fa-search"></i>
+							</button>
+						</form>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</div>
+
+</body>
+</html>

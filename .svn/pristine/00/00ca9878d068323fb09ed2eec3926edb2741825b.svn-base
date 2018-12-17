@@ -1,0 +1,450 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!-- <script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<!-- <link href="boardcss/boardlist_over.css?ver=2" rel="stylesheet"> -->
+<title>게임 게시판</title>
+<style>
+body{background-image: url(images/dia3back.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;}
+section { padding-top: 130px;}
+.wrap {
+	/* border: 1px solid black; */
+ 	width: 960px;
+	margin: auto;
+	background: #000000bd;
+}
+p{
+	color: white;
+	padding: 10px;
+	margin: 10px;
+
+}
+.privacy_table th{
+	border-bottom: 1px solid #fff9f930; 
+	text-align: center;
+    height: 50px;
+    color: #c71a1a;
+}
+.privacy_table td{
+	    border-bottom: 1px solid #fff9f930;
+	    padding:  20px 50px;
+    	text-align: center;
+   		 height: 50px;
+}
+
+.privacy_table{ border-collapse: collapse;
+    			background-color: transparent;
+    			color: white;
+    			background: #00ffff36;
+    			font-size: 13px;}
+   			
+
+.privacy_table1 th{
+	border-bottom: 1px solid #fff9f930; 
+	text-align: center;
+    height: 50px;
+    color: #c71a1a;
+}
+.privacy_table1 td{
+	    border-bottom: 1px solid #fff9f930;
+	    padding:  20px 50px;
+    	text-align: center;
+   		 height: 50px;
+}
+
+.privacy_table1{ border-collapse: collapse;
+    			background-color: transparent;
+    			color: white;
+    			background: #2e1b526b;
+    			font-size: 13px;}
+    			
+    			
+.privacy_table2 th{
+	border-bottom: 1px solid #fff9f930;
+	text-align: center;
+    height: 50px;
+    color: #c71a1a;
+}
+.privacy_table2 td{
+	    border-bottom: 1px solid #fff9f930;
+	    padding:  20px 50px;
+    	text-align: center;
+   		 height: 50px;
+}
+
+.privacy_table2{ border-collapse: collapse;
+    			background-color: transparent;
+    			color: white;
+    			background: #2e1b526b;
+    			font-size: 13px;
+    			background: #5d1f276b;
+    			width: 100%;}
+    			
+.privacy_table3 th{
+	border-bottom: 1px solid #fff9f930; 
+	text-align: center;
+    height: 50px;
+    color: #c71a1a;
+}
+.privacy_table3 td{
+	    border-bottom: 1px solid #fff9f930;
+	    padding:  20px 50px;
+    	text-align: center;
+   		 height: 50px;
+}
+
+.privacy_table3{ border-collapse: collapse;
+    			background-color: transparent;
+    			color: white;
+    			background: #2e1b526b;
+    			font-size: 13px;
+    			background: #1f405d6b;
+    			width: 100%;}   	    			
+    			   			
+.privacy_link li:hover a {color:#c7ce6f; text-shadow: 0 0 5px;}
+.privacy_link li a {color: white; font-size: 14px; text-decoration: none;}
+.privacy_link li a:active{color: red;}
+.privacy_link li {line-height: 30px;}
+</style>
+</head>
+<body>
+	<%@ include file="header.jsp"%>
+	<section>
+		<div class=wrap>
+			<p>개인정보처리방침</p>
+			<p>[개인정보보호 종합포털] 개인정보 처리방침 [개인정보보호 종합포털]이 취급하는 모든 개인정보는 관련
+				법령에 근거하여 수집 · 보유 및 처리되고 있습니다. 「개인정보보호법」은 이러한 개인정보의 취급에 대한 일반적 규범을
+				제시하고 있으며, [개인정보보호 종합포털]은 이러한 법령의 규정에 따라 수집 · 보유 및 처리하는 개인정보를 공공업무의
+				적절한 수행과 이용자의 권익을 보호하기 위해 적법하고 적정하게 취급할 것입니다. 또한, [개인정보보호 종합포털]은 관련
+				법령에서 규정한 바에 따라 보유하고 있는 개인정보에 대한 열람, 정정·삭제, 처리정지 요구 등 이용자의 권익을 존중하며,
+				이용자는 이러한 법령상 권익의 침해 등에 대하여 행정심판법에서 정하는 바에 따라 행정심판을 청구할 수 있습니다.
+
+				[개인정보보호 종합포털]은 개인정보보호법 제 30조에 따라 정보주체의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한
+				이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 개인정보 처리방침을 수립 · 공개하고 있습니다.</p>
+			<p>제1조 (개인정보의 처리 목적)</p>
+			<p>① [개인정보보호 종합포털]은 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의
+				목적이외의 용도로는 사용되지 않으며 이용 목적이 변경되는 경우에는 개인정보 보호법 제18조에 따라 별도의 동의를 받는 등
+				필요한 조치를 이행할 예정입니다. 가. 서비스 제공 교육 콘텐츠 제공, 본인인증, 증명서발급(교육 수료증) 등 서비스
+				제공에 관련한 목적으로 개인정보를 처리합니다. 협박 사례를 적극 신고하시기 바랍니다. 나. 민원처리 개인정보 열람,
+				개인정보 정정·삭제, 개인정보 처리정지 요구, 개인정보 유출사고 신고 등 개인정보와 관련된 민원처리를 목적으로 개인정보를
+				처리합니다.
+				</p>
+			<p>
+				② [개인정보보호 종합포털]이 개인정보 보호법 제32조에 따라 등록·공개하는 개인정보파일의 처리목적은 다음과
+				같습니다.</p>
+			<table class="privacy_table1">
+			<tr>
+				<th>순번</th>
+				<th>개인정보파일의 명칭</th>
+				<th>운영근거</th>
+				<th>처리목적</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>교육서비스 제공 사용자 정보</td>
+				<td>정보주체 동의</td>
+				<td>종합포털 개인정보보호 온라인교육에 대한 본인인증, 교육이력관리, 교육수료증 발급</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>개인정보 열람등요구 처리 사용자 정보</td>
+				<td>개인정보보호법 제35조-제39조</td>
+				<td>개인정보 열람등요구 처리 행정업무의 참고 또는 사실 증명</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>유출사고 신고 처리 사용자 정보</td>
+				<td>개인정보보호법 제34조</td>
+				<td>유출사고 신고 처리 행정업무의 참고 또는 사실 증명</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>개인정보보호 전문강사 명단</td>
+				<td>정보주체 동의</td>
+				<td>개인정보보호 교육지원(강사풀 제공)</td>
+			</tr>
+			</table>
+			
+			<p>제2조 (개인정보의 처리 및 보유 기간)</p>
+			<p>① [개인정보보호 종합포털]은 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집시에
+				동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.
+			</p>
+			<p>	
+				② 각각의 개인정보 처리 및 보유 기간은 다음과
+				같습니다.</p>
+			<table class="privacy_table2">
+			<tr>
+				<th>순번</th>
+				<th>개인정보파일의 명칭</th>
+				<th>운영근거</th>
+				<th>보유기간(목적 달성시)</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>교육서비스 제공 사용자 정보</td>
+				<td>정보주체 동의</td>
+				<td>1년</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>개인정보 열람등요구 처리 사용자 정보</td>
+				<td>개인정보보호법 제35조-제39조</td>
+				<td>3년</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>유출사고 신고 처리 사용자 정보</td>
+				<td>개인정보보호법 제34조</td>
+				<td>3년</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>개인정보보호 전문강사 명단</td>
+				<td>정보주체 동의</td>
+				<td>3년</td>
+			</tr>
+			</table>
+			<p>제3조 (개인정보의 제3자 제공)</p>
+			<p>① [개인정보보호 종합포털]은 정보주체의 동의, 법률의 특별한 규정 등 개인정보 보호법 제17조 및 제18조에 해당하는 경우에만 개인정보를 제3자에게 제공합니다.
+			</p>
+			<p>② [개인정보보호 종합포털]은 민원 신청인이 공공기관에 대하여 신청한 개인정보 열람, 정정·삭제, 처리정지민원을
+				처리하기 위하여 민원 신청인의 개인정보를 개인정보파일 보유기관에게 이송(제공)하고 있으며, [민원사무 처리에 관한
+				법률]에서 정하는 기간 동안 해당 기관에서 보유 및 이용합니다. - 이송(제공)하는 개인정보 항목 : 신청인 성명,
+				생년월일, 전화번호, 주소</p>
+			<p>제4조 (개인정보처리 위탁)</p>
+			<p>① [개인정보보호 종합포털]은 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.<br>
+					가. 위탁처리 기관<br>
+					&nbsp;&nbsp;- 수탁업체명 : 한국인터넷진흥원<br>
+					- 주소 : 전라남도 나주시 진흥길 9 한국인터넷진흥원<br>
+					- 전화 : 061-820-1879<br>
+					- 근무시간 : 09:00 - 18:00<br>
+					- 위탁업무 : 개인정보보호 종합포털 운영<br>
+					나. 위탁처리 수행업체<br>
+					- 수탁업체명 : (주)오더<br>
+					- 주소 : 서울특별시 서초구 방배로 111, 3-5층(방배동, 근복빌딩)<br>
+					- 전화 : 02-403-0074<br>
+					- 근무시간 : 09:00 - 18:00<br>
+					- 위탁업무 : 개인정보보호 종합포털 H/W 및 S/W 유지보수, Help-desk 운영<br>
+					다. 위탁처리 수행업체<br>
+					- 수탁업체명 : (주)컬처메이커스<br>
+					- 주소 : 서울특별시 서초구 서초동 1360-53 거원빌딩 4층<br>
+					- 전화 : 02-2247-7900<br>
+					- 근무시간 : 09:00 - 18:00<br>
+					- 위탁업무 : 개인정보보호 교육 및 전문강사단 운영<br>
+					(안내사항)<br>
+					가. 아이핀 인증 - 한국지역정보개발원<br>
+					나. 휴대폰 인증 - (주)코리아크레딧뷰로</p>
+					
+			<p>제5조 (정보주체와 법정대리인의 권리·의무 및 그 행사방법에 관한 사항)</p>
+			<p>① 정보주체(만 14세 미만인 경우에는 법정대리인을 말함)는 언제든지 [개인정보보호 종합포털]이 보유하고 있는 개인정보에 대하여 개인정보 열람․정정․삭제․처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
+			<p>② 제1항에 따른 권리 행사는 [개인정보보호 종합포털 (www.privacy.go.kr)]의 “개인정보 열람․정정․삭제․처리정지 요구”를 통하여 하실 수 있으며, 이에 대해 지체 없이 조치하겠습니다.</p>
+			<p>☞ 개인정보 열람․정정․삭제․처리정지 요구 <a href="https://www.privacy.go.kr/a3sc/gpin/userAuth.do">바로가기</a><br>
+			기관명은 행정안전부로, 파일명은 “교육서비스 제공 사용자 정보”, “개인정보 열람등요구 처리 사용자 정보”, “유출사고 신고 처리 사용자 정보”, “개인정보보호 전문강사 명단”으로 검색)</p>
+			<p>③ 제1항에 따른 권리 행사는 정보주체의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다. 이 경우 개인정보보호법 시행규칙 별지 제11호 서식에 따른 위임장을 제출하셔야 합니다.</p>
+			<p>④ 개인정보 열람 및 처리정지 요구는 개인정보보호법 제35조 제4항, 제37조 제2항에 의하여 정보주체의 권리가 제한 될 수 있습니다.</p>
+			<p>⑤ 개인정보의 정정 및 삭제 요구는 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.</p>
+			<p>⑥ 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다</p>
+			<p>* [개인정보보호법 시행규칙 별지 제11호] 위임장</p>
+			
+			<p>제6조 (처리하는 개인정보의 항목)</p>
+			<p>[개인정보보호 종합포털]은 다음의 개인정보 항목을 처리하고 있습니다.</p>
+			
+			<table class="privacy_table">
+			<tr>
+				<th>순번</th>
+				<th>개인정보파일의 명칭</th>
+				<th>개인정보파일에 기록되는 개인정보의 항목</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>교육서비스 제공 사용자 정보</td>
+				<td>성명, 기관명, 직위, 전화번호, 이메일</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>개인정보 열람등요구 처리 사용자 정보</td>
+				<td>성명, 생년월일, 전화번호, 주소, 휴대폰번호(선택), fax번호(선택), 이메일(선택)</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>유출사고 신고 처리 사용자 정보</td>
+				<td>성명, 기관명, 부서, 직위, 전화번호, 이메일</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>개인정보보호 전문강사 명단</td>
+				<td>성명, 소속, 직급, 강의경력, 연락처, 이메일, 강의지역</td>
+			</tr>
+			</table>
+			
+			<p>제7조 (개인정보 파기 절차 및 방법)</p>
+			<p>① [개인정보보호 종합포털]은 원칙적으로 개인정보 처리목적이 달성된 경우에는 지체없이 해당 개인정보를
+				파기합니다. 다만, 다른 법률에 따라 보존하여야하는 경우에는 그러하지 않습니다. 파기의 절차, 기한 및 방법은 다음과
+				같습니다.</p>
+			<p>가. 파기절차<br>
+				불필요한 개인정보 및 개인정보파일은 개인정보책임자의 책임 하에 내부방침 절차에 따라 다음과 같이 처리하고 있습니다.<br>
+				- 개인정보의 파기<br>
+				보유기간이 경과한 개인정보는 종료일로부터 지체 없이 파기합니다.<br>
+				- 개인정보파일의 파기<br>
+				개인정보파일의 처리 목적 달성, 해당 서비스의 폐지, 사업의 종료 등 그 개인정보파일이 불필요하게 되었을 때에는 개인정보의 처리가 불필요한 것으로 인정되는 날로부터 지체 없이 그 개인정보파일을 파기합니다.</p>
+			<p>나. 파기방법<br>
+				1) 전자적 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다.<br>
+				2) 종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.
+			</p>
+				
+			<p>제8조 (개인정보 자동 수집 장치의 설치•운영 및 거부에 관한 사항)</p>
+			<p>[개인정보보호 종합포털]은 이용자에게 개별적인 맞춤서비스를 제공하기 위해 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용하지 않습니다.</p>
+
+			<p>제9조 (개인정보의 안전성 확보 조치)</p>
+			<p>
+			[개인정보보호 종합포털]은 「개인정보보호법」 제29조에 따라 다음과 같이 안전성 확보에 필요한 기술적, 관리적, 물리적 조치를 하고 있습니다.<br>
+
+			1. 내부관리계획의 수립 및 시행<br>
+			[개인정보보호 종합포털]의 내부관리계획 수립 및 시행은 행정안전부의 내부관리 지침을 준수하여 시행합니다.<br>
+			
+			2. 개인정보 취급 담당자의 최소화 및 교육<br>
+			개인정보를 취급하는 담당자를 지정하고 최소화하여 개인정보를 관리하는 대책을 시행하고 있습니다.<br>
+			
+			3. 개인정보에 대한 접근 제한<br>
+			개인정보를 처리하는 데이터베이스시스템에 대한 접근권한의 부여, 변경, 말소를 통하여 개인정보에 대한 접근통제를 위하여 필요한 조치를 하고 있으며 침입차단시스템을 이용하여 외부로부터의 무단 접근을 통제하고 있습니다.<br>
+			
+			4. 접속기록의 보관 및 위변조 방지<br>
+			개인정보처리시스템에 접속한 기록(웹 로그, 요약정보 등)을 최소 6개월 이상 보관, 관리하고 있으며, 접속 기록이 위변조 및 도난, 분실되지 않도록 보안기능을 사용하고 있습니다.<br>
+			
+			5. 개인정보의 암호화<br>
+			이용자의 개인정보는 암호화 되어 저장 및 관리되고 있습니다. 또한 중요한 데이터는 저장 및 전송 시 암호화하여 사용하는 등의 별도 보안기능을 사용하고 있습니다.<br>
+			
+			6. 해킹 등에 대비한 기술적 대책<br>
+			[개인정보보호 종합포털]은 해킹이나 컴퓨터 바이러스 등에 의한 개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인 갱신·점검을 하며 외부로부터 접근이 통제된 구역에 시스템을 설치하고 기술적/물리적으로 감시 및 차단하고 있습니다. 또한 네트워크 트래픽의 통제(Monitoring)는 물론 불법적으로 정보를 변경하는 등의 시도를 탐지하고 있습니다.<br>
+			
+			7. 비인가자에 대한 출입 통제<br>
+			개인정보를 보관하고 있는 개인정보시스템의 물리적 보관 장소를 별도로 두고 이에 대해 출입통제 절차를 수립, 운영하고 있습니다.<br>
+			</p>
+			
+			<p>제10조 (권익침해 구제방법)</p>
+			<p>정보주체는 아래의 기관에 대해 개인정보 침해에 대한 피해구제, 상담 등을 문의하실 수 있습니다. ()아래의 기관은 개인정보보호 종합포털과는 별개의 기관으로서, 개인정보보호 종합포털의 자체적인 개인정보 불만처리, 피해구제 결과에 만족하지 못하시거나 보다 자세한 도움이 필요하시면 문의하여 주시기 바랍니다)</p>
+			<p>
+			▶ 개인정보 침해신고센터 (한국인터넷진흥원 운영)<br>
+			- 소관업무 : 개인정보 침해사실 신고, 상담 신청<br>
+			- 홈페이지 : privacy.kisa.or.kr<br>
+			- 전화 : (국번없이) 118<br>
+			- 주소 : 전라남도 나주시 진흥길 9 한국인터넷진흥원<br>
+			▶ 개인정보 분쟁조정위원회<br>
+			- 소관업무 : 개인정보 분쟁조정신청, 집단분쟁조정 (민사적 해결)<br>
+			- 홈페이지 : www.kopico.go.kr<br>
+			- 전화 : 1833-6972<br>
+			- 주소 : 서울특별시 종로구 세종대로 209 정부서울청사 4층<br>
+			▶ 대검찰청 사이버범죄수사단 :<br>
+			- (국번없이) 1301, cid@spo.go.kr (www.spo.go.kr)<br>
+			▶ 경찰청 사이버안전국<br>
+			- (국번없이) 182 (cyberbureau.police.go.kr)<br>
+			또한, 개인정보의 열람, 정정·삭제, 처리정지 등에 대한 정보주체자의 요구에 대하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익을 침해 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.<br>
+			
+			☞ 중앙행정심판위원회(www.simpan.go.kr)의 전화번호 안내 참조
+			</p>
+			<p>제11조(개인정보 열람청구)</p>
+			<p>
+			① 정보주체는 개인정보 보호법 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다. 행정안전부는 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.<br>
+			▶ 개인정보 열람청구 접수·처리 부서<br>
+			부서명 : 개인정보보호협력과<br>
+			담당자 : 정민영<br>
+			연락처 : 전화번호 02-2100-4133,  팩스번호 02-2100-4100
+			</p>
+			<p>
+			② 정보주체께서는 제1항의 열람청구 접수·처리부서 이외에, 행정안전부의 ‘개인정보보호 종합포털’ 웹사이트(www.privacy.go.kr)를 통하여서도 개인정보 열람청구를 하실 수 있습니다.<br>
+			▶ 행정안전부 개인정보보호 종합포털 → 개인정보 민원 → 개인정보 열람등 요구
+			</p>
+			<p>제12조 (개인정보보호 "분야별" 책임관 및 담당자 연락처)</p>
+			<p>[개인정보보호 종합포털]은 개인정보를 보호하고 개인정보와 관련한 불만을 처리하기 위하여 아래와 같이 개인정보 보호책임자 및 실무담당자를 지정하고 있습니다. (개인정보보호법 제31조 제1항에 따른 개인정보 보호책임자)</p>
+			
+			<table class="privacy_table3">
+			<tr>
+				<th>구분</th>
+				<th>부서명</th>
+				<th>성명</th>
+				<th>연락처</th>
+			</tr>
+			<tr>
+				<td>개인정보보호 책임자</td>
+				<td>정보기반보호정책관</td>
+				<td>김혜영</td>
+				<td>02-2100-3960</td>
+			</tr>
+			<tr>
+				<td>개인정보보호 분야별책임관</td>
+				<td>개인정보보호협력과장</td>
+				<td>이윤숙</td>
+				<td>02-2100-4130</td>
+			</tr>
+			<tr>
+				<td>개인정보보호 담당자</td>
+				<td>개인정보보호협력과</td>
+				<td>정민영</td>
+				<td>02-2100-4133</td>
+			</tr>
+			</table>
+			<p>제11조(개인정보 열람청구)</p>
+			<p>① 본 방침은 2018년 10월 1일부터 시행됩니다.</p>
+			<p>② 이전의 개인정보 처리방침은 아래에서 확인하실 수 있습니다.</p>
+			<div class="privacy_link">
+			<ul><li>		
+			<a href="https://www.privacy.go.kr/gud/pis/perRule01.do">- 2011. 9. 30 ~ 2012. 5. 14 적용(클릭)</a>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule03.do">- 2012. 5. 15 ~ 2013. 3. 22 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule04.do">- 2013. 3. 23 ~ 2013. 4. 21 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule05.do">- 2013. 4. 22 ~ 2013. 8. 11 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule02.do">- 2013. 8. 12 ~ 2014. 2. 04 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule07.do">- 2014. 2. 05 ~ 2014. 5. 06 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule06.do">- 2014. 5. 07 ~ 2015. 1. 05 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule08.do">- 2015. 1. 06 ~ 2015. 1. 22 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule09.do">- 2015. 1. 23 ~ 2016. 2. 29 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule10.do">- 2015. 3. 01 ~ 2016. 5. 09 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule11.do">- 2015. 5. 10 ~ 2016. 8. 24 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule12.do">- 2015. 8. 25 ~ 2016. 11. 20 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule13.do">- 2016. 11. 21 ~ 2017. 2. 09 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule14.do">- 2017. 2. 10 ~ 2017. 6. 30 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule15.do">- 2017. 7. 1 ~ 2017. 7. 25 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule16.do">- 2017. 7. 26 ~ 2017. 11. 15 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule17.do">- 2017. 11. 16 ~ 2018. 4. 4 적용(클릭)</a></li>
+			<li>
+			<a href="https://www.privacy.go.kr/gud/pis/perRule18.do">- 2018. 4. 5 ~ 2018. 9. 30 적용(클릭)</a>
+			</li></ul>	
+			</div>
+		</div>
+
+
+
+	</section>
+	<%@ include file="footer.jsp"%>
+</body>
+</html>
+

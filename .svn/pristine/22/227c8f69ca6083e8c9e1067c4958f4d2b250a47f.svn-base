@@ -1,0 +1,44 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.HotPlace.dao.PlayDao;
+import com.HotPlace.dao.Play_ReviewDao;
+import com.HotPlace.vo.PlayVo;
+import com.HotPlace.vo.Play_ReviewVo;
+
+@WebServlet("/utubeview")
+public class Play_UtubeListView extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		String link = req.getParameter("link");
+		
+		req.setAttribute("link", link);
+		
+		PlayDao Dao = PlayDao.getInstance();
+		List<PlayVo>List = Dao.videoList();
+		req.setAttribute("List", List);
+		
+		Play_ReviewDao RDao = Play_ReviewDao.getInstance();
+		List<Play_ReviewVo> reply = RDao.replyList(link);
+		req.setAttribute("replyList", reply);
+		
+		RequestDispatcher dis = req.getRequestDispatcher("video/UtubeView.jsp");
+		dis.forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+}

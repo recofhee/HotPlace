@@ -1,0 +1,343 @@
+package com.HotPlace.dao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.HotPlace.util.DBManager;
+import com.HotPlace.util.SHA256;
+import com.HotPlace.vo.ChartVo;
+import com.HotPlace.vo.GameVO;
+import com.HotPlace.vo.MemberVo;
+
+
+public class ChartDao {
+	private static ChartDao dao = new ChartDao();
+	
+	private ChartDao() {}
+	
+	public static ChartDao getInstance() {
+		return dao;
+	}
+	
+	
+	// 총 회원 수 가져오기
+	public int getMemberCnt() {
+		int result = 0;
+		String sql = "select count(*) from member";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	// 총 PC방 수 가져오기
+	public int getPcCnt() {
+		int result = 0;
+		String sql = "select count(*) from pc";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return result;
+	}
+
+	/*
+	// 연령에 따른 게임 장르 - 방법 1
+	public List<ChartVo> getGameGenreNBirth() { 
+		String sql = "select distinct game_genre, birth from member";
+		
+		List<ChartVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ChartVo cVo = new ChartVo();
+				
+				cVo.setGameGenre(rs.getString("game_genre"));
+				cVo.setBirthdate(rs.getString("birth"));
+				
+				list.add(cVo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+		
+	}
+	*/
+	
+	// 연령에 따른 게임 장르 - 방법 2
+	public List<ChartVo> getGameGenreNBirth() { 
+		String sql = "with A as " + 
+				"(select game_genre, birth, 10000 + to_number(to_char(sysdate, 'MMdd')) as nowmd, 10000 + to_number(substr(birth, 5, 4)) as birthmd, to_number(to_char(sysdate, 'yyyy') -  substr(birth, 1, 4)) + 1 as age " + 
+				"from member) " + 
+				"select game_genre, birth, " + 
+				"    case when birth is null then '응답 안 함' " + 
+				"         when age < 20 or (age = 20 and (nowmd < birthmd or nowmd = birthmd)) then '청소년' " + 
+				"         else '성인' " + 
+				"    end as generation " + 
+				"from A";
+		
+		List<ChartVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ChartVo cVo = new ChartVo();
+				
+				cVo.setGameGenre(rs.getString("game_genre"));
+				cVo.setBirthdate(rs.getString("birth"));
+				cVo.setGeneration(rs.getString("generation"));
+				
+				list.add(cVo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+		
+	}
+	
+	// 월별 예약 수 통계
+	public List<ChartVo> getResvCntByMonth(String year) { 
+		String sql = "SELECT " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '01', 1)) \"1월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '02', 1)) \"2월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '03', 1)) \"3월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '04', 1)) \"4월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '05', 1)) \"5월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '06', 1)) \"6월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '07', 1)) \"7월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '08', 1)) \"8월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '09', 1)) \"9월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '10', 1)) \"10월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '11', 1)) \"11월\", " + 
+				"    COUNT(DECODE(TO_CHAR(resv_date, 'MM'), '12', 1)) \"12월\" " + 
+				//"    COUNT(*) \"전체\" " + 
+				"FROM reservation " + 
+				"WHERE TO_CHAR(resv_date, 'MM') >= '01' AND TO_CHAR(resv_date, 'MM') <= '12' " + 
+				"and TO_CHAR(resv_date, 'yyyy') = '" + year + "'";
+		
+		List<ChartVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+				for(int i = 1; i <= 12; i++) {
+					ChartVo cVo = new ChartVo();
+					cVo.setCnt(rs.getInt(i + "월"));
+					list.add(cVo);
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+		
+	}
+	
+	// 월별 가입자 수 통계
+	public List<ChartVo> getJoinCntByMonth(String year) { 
+		String sql = "SELECT " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '01', 1)) \"1월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '02', 1)) \"2월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '03', 1)) \"3월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '04', 1)) \"4월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '05', 1)) \"5월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '06', 1)) \"6월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '07', 1)) \"7월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '08', 1)) \"8월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '09', 1)) \"9월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '10', 1)) \"10월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '11', 1)) \"11월\", " + 
+				"    COUNT(DECODE(TO_CHAR(reg_date, 'MM'), '12', 1)) \"12월\" " + 
+				//"    COUNT(*) \"전체\" " + 
+				"FROM member " + 
+				"WHERE TO_CHAR(reg_date, 'MM') >= '01' AND TO_CHAR(reg_date, 'MM') <= '12' " + 
+				"and TO_CHAR(reg_date, 'yyyy') = '" + year + "'";
+		
+		List<ChartVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+				for(int i = 1; i <= 12; i++) {
+					ChartVo cVo = new ChartVo();
+					cVo.setCnt(rs.getInt(i + "월"));
+					list.add(cVo);
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+		
+	}
+	
+	// 일별 예약 수 통계
+	public List<ChartVo> getResvCntByDay(int year, int month) { 
+		String sql = "SELECT " + 
+				"    A.resv_date, " + 
+				"    NVL(B.cnt, 0) AS cnt " + 
+				"FROM " + 
+				"    (SELECT " + 
+				"        DECODE(LENGTH(ROWNUM), 1, '0' || TO_CHAR(ROWNUM), TO_CHAR(ROWNUM)) AS resv_date, " + 
+				"        0 cnt " + 
+				"    FROM dual " + 
+				"    CONNECT BY LEVEL <= TO_NUMBER(SUBSTR(LAST_DAY('" + year + (month < 10 ? "0" : "") + month + "' || '01'), 7, 2)) " + 
+				"    ) A " + 
+				"    LEFT OUTER JOIN " + 
+				"    (SELECT  " + 
+				"        TO_CHAR(resv_date, 'dd') AS resv_date, " + 
+				"        count(*) AS cnt  " + 
+				"    FROM reservation " + 
+				"    WHERE TO_CHAR(resv_date, 'yyyymm') >= '" + year + (month < 10 ? "0" : "") + month + "' and TO_CHAR(resv_date, 'yyyymm') < '" + year + (month < 10 ? "0" : "") + (month + 1) + "' " + 
+				"    GROUP BY TO_CHAR(resv_date, 'dd') " + 
+				"    ) B ON(A.resv_date = B.resv_date) " + 
+				"ORDER BY A.resv_date";
+		
+		List<ChartVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+				ChartVo cVo = new ChartVo();
+				cVo.setDate(rs.getString("resv_date"));
+				cVo.setCnt(rs.getInt("cnt"));
+
+				list.add(cVo);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+		
+	}
+	
+	// 일별 가입자 수 통계
+	public List<ChartVo> getJoinCntByDay(int year, int month) { 
+		String sql = "SELECT " + 
+				"    A.reg_date, " + 
+				"    NVL(B.cnt, 0) AS cnt " + 
+				"FROM " + 
+				"    (SELECT " + 
+				"        DECODE(LENGTH(ROWNUM), 1, '0' || TO_CHAR(ROWNUM), TO_CHAR(ROWNUM)) AS reg_date, " + 
+				"        0 cnt " + 
+				"    FROM dual " + 
+				"    CONNECT BY LEVEL <= TO_NUMBER(SUBSTR(LAST_DAY('" + year + (month < 10 ? "0" : "") + month + "' || '01'), 7, 2)) " + 
+				"    ) A " + 
+				"    LEFT OUTER JOIN " + 
+				"    (SELECT  " + 
+				"        TO_CHAR(reg_date, 'dd') AS reg_date, " + 
+				"        count(*) AS cnt  " + 
+				"    FROM member " + 
+				"    WHERE TO_CHAR(reg_date, 'yyyymm') >= '" + year + (month < 10 ? "0" : "") + month + "' and TO_CHAR(reg_date, 'yyyymm') < '" + year + (month < 10 ? "0" : "") + (month + 1) + "' " + 
+				"    GROUP BY TO_CHAR(reg_date, 'dd') " + 
+				"    ) B ON(A.reg_date = B.reg_date) " + 
+				"ORDER BY A.reg_date";
+		
+		List<ChartVo> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+				ChartVo cVo = new ChartVo();
+				cVo.setCnt(rs.getInt("cnt"));
+				
+				list.add(cVo);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+		
+	}
+}

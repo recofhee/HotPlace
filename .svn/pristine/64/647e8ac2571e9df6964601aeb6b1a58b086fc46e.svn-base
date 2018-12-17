@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+body { background-image: url(../images/starback.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;}
+section {
+	padding-top: 130px;
+	
+}
+/* #artcle3{width: 99%; border: 0px solid black; padding:5px;padding-top:90px; display: block;  height: 480px;} */
+aside {
+	width: 250px;
+	border: 0px solid black;
+	padding: 5px;
+	display: block;
+	/*height: 400px;*/
+	float: right;
+}
+
+.wrap {
+	width: 960px;
+	border: 0px solid black;
+	min-height: 720px;
+	margin: auto;
+	padding-top: 75px;
+	position: relative;
+}
+.wrap2 {
+	width: 960px;
+	border: 0px solid black;
+	min-height: 720px;
+	margin: auto;
+	padding-top: 40px;
+	position: relative;
+}
+
+.box1 {
+	width: 100%;
+	display: inline-block;
+	height: 745px;
+	border: 0px solid black;
+	font-size: 13px;
+	box-sizing: border-box;
+	text-align: left;
+	background: #02324aad;
+	overflow-y: scroll;
+	/* height: 350px; */
+}
+
+.box1 li {
+	width: 100%;
+	padding: 7px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* white-space: nowrap; */
+}
+
+.box1 li a {
+	color: white;
+	text-decoration: none;
+}
+
+.box1 li:hover a {
+	color: red;
+}
+
+table {
+	width: 100%;
+	border-top: 1px solid #fff;
+	border-collapse: collapse;
+	margin-bottom: 10px;
+}
+
+th, td {
+	border-bottom: 1px solid #ffffff2b;
+	color: #6bb4de;
+}
+th{
+	padding-left: 10px;
+}
+
+tr:hover {
+	color: white;
+	text-shadow: 0 0 5px;
+}
+
+.reply th {
+	width: 13%;
+}
+
+td {
+	padding-left: 5px;
+	width: auto;
+	height: 30px;
+}
+
+.bt {
+	position: relative;
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: black;
+	background: white;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.bt:hover {
+	border: 1px solid;
+	color: red;
+}
+
+.review_box {
+	margin-top: 20px;
+}
+.input_box{
+	width: 690px;
+}
+#replybox {
+	background: #02324aad;
+	width: 690px;
+	height: 250px;
+	overflow: auto;
+	margin-bottom: 20px;
+}
+::-webkit-scrollbar {display:none;} 

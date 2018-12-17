@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+body{background: url('../images/lolback.jpg') -102px 0px;
+	 /* background-size: cover; */}
+	 
+section {padding-top: 120px;
+		 }
+.wrap{
+	width: 1040px;
+	margin: 0 auto 0px;
+	border: : 1px solid black;
+}
+.bt {
+	position: relative;
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: black;
+	background: white;
+	cursor: pointer;
+	margin: 5px;
+}
+.bt:hover{
+	border:1px solid;
+	color: red;
+}
+h1{
+	color: navy;
+}
+table {
+	/* width: 70%;  */
+	border-collapse: collapse;
+	font-size: 12px;
+	line-height: 15px;
+	
+}
+table td, th{
+	border:  1px solid #90b4e63d;
+	padding: 5px;
+	
+	
+}
+th{
+	background: #9da5b924;
+}
+img{
+	/* width: 220px;
+	height: 300px; */
+}
+a{
+	text-decoration: none;
+	color: black;
+	}
+a:hover {
+	text-decoration: none;
+	color: red;
+	text-shadow: 0 2px 2px #000;
+}
+.td1 td{
+	border-top: 1px solid #90b4e6;
+    border-bottom: 1px solid #90b4e6;
+    background-color: #c3d8f5;
+
+}
+.head {
+	background: url('../images/icon/commonbg.png') no-repeat 0 0;
+	width: 1040px;
+	height: 133px;
+	opacity: .9;
+}
+.center {
+	width: 1040px;
+    /* margin: 0 auto 87px auto; */
+    z-index: 2;
+    margin-left:-1px;
+    position: relative;
+    margin-top: -5px;
+    background: url(../images/icon/contentpt.png) repeat-y left top;
+    background-size: 100% 100%;
+    opacity: .9;
+
+}
+.foot {
+	background: url('../images/icon/commonbg.png') no-repeat -2084px -41px;
+	width: 1030px;
+	margin-left:-1px;
+	height: 113px;
+	opacity: .9;
+}  
+.h1 {
+    background: url(../images/icon/leaguelogo.png) no-repeat 66px -59px;
+    width: 300px;
+    height: 123px;
+    position: absolute;
+    background-size: 60%;
+    /* padding: 0 500px; */
+    /* padding: 9px; */
+    margin-top: -20px;
+   /*  right: 805px; */
+   margin-left: 365px;

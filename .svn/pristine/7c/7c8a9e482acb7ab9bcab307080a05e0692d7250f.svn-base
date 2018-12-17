@@ -1,0 +1,123 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>답글 등록</title>
+<style>
+section{
+   padding-top: 130px;
+}
+.wrap{width: 960px;
+     margin: auto;
+     border: 1px solid black;}
+article{
+   margin: 0;
+   width: 300px;
+   border: 1px solid black;
+}
+.left_section{
+width:300px;
+background: #c6d3e8c2;
+}
+.right_section{
+/* float: right; */
+
+background: #c6d3e8c2;
+
+}
+.bottom-bar{
+   border-bottom: 1px solid black;
+}
+aside {border: 1px solid black;}
+
+
+.box {
+   width:34%;
+   display: inline-block; 
+   border: 0px solid black;
+   font-size: 12px;
+   margin:1px;
+   box-sizing: border-box;
+   text-align: center;
+   color: cornflowerblue;
+   }
+
+.box1 {
+   width:65%;
+   display: inline-block; 
+   border: 0px solid black;
+   font-size: 12px;
+   box-sizing: border-box;
+   text-align: center;
+   color: cornflowerblue;
+   }
+ 
+</style>
+</head>
+<body>
+ <%@ include file="header.jsp" %>
+	<section>
+
+	<div class="wrap">
+			<div class="box">
+				<fieldset>
+					<legend class="bottom-bar">핫플레이스</legend>
+					<p>핫플레이스는 모두에게 열려있습니다. 게임을 사랑하는분들과 관련 사업에 종사하시는 분들의 많은 연락을 기다리고 있습니다.</p>
+				</fieldset>
+				<fieldset>
+					<legend class="bottom-bar">INFORMATION</legend>
+					<p>주소 : </p>
+					<p>연락처 : </p>
+					<p>팩스 : </p>
+					<p>이메일 : </p>
+					<p>은행계좌 : </p>
+					<p>업무시간 : </p>
+				</fieldset>
+				<fieldset>
+					<legend class="bottom-bar">교통편r</legend>
+					<p>지하철 : 5호선 화곡역 7호선에서 도보로 2분.</p>
+				</fieldset>
+			</div>	<!-- class="left_section"끝 -->
+			
+
+			<div class="box1">
+				<form action="contact" method="post" name="frm">
+					<table class="tabl">
+						<tr>
+							<th>회사명</th>
+							<td>
+							<input type="text" name="company" id="company" size="50" placeholder="개인이시면 공백으로 두세요.">
+							</td>
+						</tr>
+						<tr>
+							<th>성명</th>
+							<td><input type="text" name="name" id="name" size="50"></td>
+						</tr>
+						<tr>
+							<th>연락처</th>
+							<td><input type="text" name="tel" id="tel"></td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td><input type="email" name="email" id="email"></td>
+						</tr>
+						<tr>
+							<th>문의 내용</th>
+							<td><textarea rows="20" cols="80" name="content" id="content" style="resize: none;"></textarea></td>
+						</tr>
+					</table>
+					<div class="button">
+						<input type="submit" value="등록" class="bt">
+						<input type="reset" value="다시작성" class="bt">
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<%@ include file="footer.jsp" %> 
+</body>
+</html>

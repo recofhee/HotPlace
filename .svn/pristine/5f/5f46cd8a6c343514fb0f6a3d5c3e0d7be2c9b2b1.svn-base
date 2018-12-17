@@ -1,0 +1,109 @@
+package com.HotPlace.controller;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.DecodeException;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.vo.PaymentVo;
+import com.HotPlace.vo.PcVo;
+import com.HotPlace.vo.ResvVo;
+
+@WebServlet("/pcResvAfter")
+public class pcResvAfter extends HttpServlet{
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		ResvVo vo = new ResvVo();
+		PaymentVo payVo = new PaymentVo();
+		PcDao dao = PcDao.getInstance();
+		String resv = req.getParameter("pc_resv");
+		String s= URLDecoder.decode(resv,"utf-8");
+		String[] pc_resv = s.split(",");
+		String email = pc_resv[0];
+		String pc_num = pc_resv[1];
+		String hours = pc_resv[2];
+		String startDt = pc_resv[3];
+		String endDt = pc_resv[4];
+		String generation= pc_resv[5];
+		String price = pc_resv[6];
+		String maxLen=pc_resv[7];
+		int resv_num = dao.select();
+		String cvc = req.getParameter("cvc");
+		String deposit =req.getParameter("deposit");
+		String payhow;
+		
+		//카드로 결제
+		if(cvc != "") {
+			payhow = req.getParameter("payHow");
+			String[] cardNum = req.getParameterValues("cardNum");
+			String[] valid = req.getParameterValues("valid");
+			System.out.println("입금방법 :: "+payhow);
+			System.out.println("카드번호 :: "+Arrays.toString(cardNum));
+			System.out.println("유효 :: "+Arrays.toString(valid));
+			System.out.println("CVC :: "+cvc);
+			
+			payVo.setEmail(email);
+			payVo.setResv_num(resv_num);
+			payVo.setPay_how(payhow);
+			payVo.setCard_num(cardNum);
+			payVo.setCard_check(valid);
+			dao.insertPayment(payVo);
+		}
+		//무통장 입금
+		else if(deposit != "") {
+			payhow = req.getParameter("payHow1");
+			String bank =req.getParameter("bank");
+			System.out.println("입금방법 :: "+payhow);
+			System.out.println("입금자 :: "+deposit);
+			System.out.println("입금은행 :: "+bank);
+			
+			payVo.setEmail(email);
+			payVo.setResv_num(resv_num);
+			payVo.setPay_how(payhow);
+			payVo.setDepositor(deposit);
+			payVo.setBank(bank);
+			dao.insertPayment1(payVo);
+		}
+		//현장에서 결제
+		else {
+			payhow = req.getParameter("payHow2");
+			System.out.println("입금방법 :: "+payhow);
+			payVo.setEmail(email);
+			payVo.setResv_num(resv_num);
+			payVo.setPay_how(payhow);
+			dao.insertPayment2(payVo);
+		}
+		
+		int max = Integer.parseInt(maxLen);
+		//DB에 좌석별로 저장
+        for(int i=8; i < max+8; i++ ) {
+        	vo.setResv_email(email);
+        	vo.setPc_num(pc_num);
+			vo.setResv_start(startDt);
+			vo.setResv_end(endDt);
+			vo.setSeat_idx(dao.selectOneSeatIdxByNum(pc_num, pc_resv[i]));
+			vo.setResv_price(price);
+			vo.setGeneration(generation);
+			vo.setResv_hours(hours);
+			vo.setSeat_num(pc_resv[i]);
+			vo.setResv_num(resv_num);
+			vo.setMaxLen(maxLen);
+			vo.setPayment(payhow);
+			dao.insertReservation(vo);
+			dao.updateSeatStateOne(pc_num, pc_resv[i]);
+		}
+        
+        vo = dao.selectOneResvViewNum(resv_num);
+		req.setAttribute("resv",vo);
+		req.setAttribute("resv_num", resv_num);
+		req.getRequestDispatcher("pcResvAfter.jsp").forward(req, resp);
+	}
+}

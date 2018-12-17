@@ -1,0 +1,73 @@
+@charset "UTF-8";
+section {padding-top: 120px;}
+.wrap{
+	width: 1040px;
+	margin: 30px auto;
+	border: : 1px solid black;
+	background: url(../images/icon/monhun.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.bt {
+	position: relative;
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: black;
+	background: white;
+	cursor: pointer;
+	margin: 5px;
+}
+.bt:hover{
+	border:1px solid;
+	color: red;
+}
+h1{
+	color: navy;
+}
+table {
+	/* width: 70%;  */
+	border-collapse: collapse;
+	font-size: 12px;
+	line-height: 15px;
+	
+}
+table td, th{
+	border:  1px solid #90b4e63d;
+	padding: 5px;
+	color: white;
+	
+	
+}
+th{
+	background: #9da5b924;
+	 color: #E91E63;
+}
+img{
+	/* width: 220px;
+	height: 300px; */
+}
+a{
+	text-decoration: none;
+	color: black;
+	}
+a:hover {
+	text-decoration: none;
+	color: red;
+	text-shadow: 0 2px 2px #000;
+}
+.td1 td{
+	border-top: 1px solid #90b4e6;
+    border-bottom: 1px solid #90b4e6;
+    background-color: #c3d8f5;
+
+}
+.head {
+	height: 80px;
+    color: #E91E63;
+    text-align: left;
+    font-size: 2em;
+}
+.head img {float: left; width:50px; }
+}
+

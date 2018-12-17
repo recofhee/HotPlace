@@ -1,0 +1,239 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>로그인</title>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
+<script type="text/javascript" src="js/member.js"></script>
+<script type="text/javascript"
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+<script>
+	$(function() {
+		getid();
+		$("#idSaveCheck").click(function() {
+			saveid();
+		}); //#idSaveCheck.click
+		
+	}); //function(){
+
+	function saveid() {
+		var expdate = new Date();
+		// 기본적으로 30일동안 기억하게 함. 일수를 조절하려면 * 30에서 숫자를 조절하면 됨
+		if ($("#idSaveCheck").prop("checked")) {
+			expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30); // 30일
+		} else {
+			expdate.setTime(expdate.getTime() - 1); // 쿠키 삭제조건
+		}
+		setCookie("saveid", $("#email").val(), expdate);
+	} //saveid()
+
+	function setCookie(name, value, expires) {
+		document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expires.toGMTString();
+	} //setCookie(name,value,expires)
+
+	function getCookie(Name) {
+		var search = Name + "=";
+		if (document.cookie.length > 0) { // 쿠키가 설정되어 있다면
+			offset = document.cookie.indexOf(search);
+			if (offset != -1) { // 쿠키가 존재하면
+				offset += search.length;
+				// set index of beginning of value
+				end = document.cookie.indexOf(";", offset);
+				// 쿠키 값의 마지막 위치 인덱스 번호 설정
+				if (end == -1)
+					end = document.cookie.length;
+				return unescape(document.cookie.substring(offset, end));
+			}
+		}
+		return "";
+	} //getCookie(Name)
+
+	function getid() {
+		var saveId = getCookie("saveid");
+		if (saveId != "") {
+			$("#email").val(saveId);
+			$("#idSaveCheck").prop("checked", true);
+		}
+	} //getid()
+</script>
+
+<style type="text/css">
+* {
+	padding: 10px;
+}
+
+body {
+	font-family: "나눔고딕코딩";
+	color: #333;
+}
+
+#login-form {
+	width: 350px;
+	height: 370px;
+	margin: 0 auto;
+	border: 2px solid gray;
+	border-radius: 10px;
+	padding: 15px;
+	background: white;
+}
+
+#login-form input[type='text'], #login-form input[type='password'], .btn
+	{
+	display: block;
+	font-size: x-large;
+	text-align: center;
+}
+
+p {
+	float: right;
+	display: inline;
+	font-size: 12px;
+	margin: 0 auto;
+}
+
+.log {
+	text-align: center;
+	font-size: 50px;
+	padding-top: 150px;
+}
+
+.btn {
+	width: 316px;
+	height: 60px;
+	margin: 40px auto;
+	background: #bf5555;
+	margin-bottom: 10px;
+}
+
+.sig {
+	width: 150px;
+	height: 55px;
+	float: left;
+	font-size: 20px;
+	margin-left: 20px;
+	background: #3535d2;
+}
+
+.sig2 {
+	width: 150px;
+	height: 55px;
+	font-size: 20px;
+	/* 	text-align:center; */
+	float: right;
+	margin-right: 20px;
+	background: #3535d2;
+}
+
+input[type='text'] {
+	border: 2px solid gray;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 20px;
+	background-color: white;
+}
+
+input[type='password'] {
+	border: 2px solid gray;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-left: 20px;
+	background: white;
+}
+#kakao-login-btn{
+	
+}
+</style>
+</head>
+<body>
+	<div class="log">Login</div>
+
+	<form id="login-form" method="post" action="Login" name="frm">
+		<input type="text" id="email" name="email" value="${userid}"
+			placeholder="email"> 
+			<input type="password" name="pw"
+			id="${pw}" placeholder="Password">
+
+		<p>
+			<input id="idSaveCheck" name="chek" type="checkbox" value=""
+				onClick="javascript:saveid(document.new_user_session);">아이디
+			저장
+		</p>
+
+
+		<input class="btn" type="submit" value="로그인" style="color: white;"
+			onclick="return loginCheck()"&nbsp;&nbsp;>
+		<table>
+			<tr>
+				<td><a id="custom-login-btn" href="javascript:loginWithKakao()">
+				<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
+				</a> <a href="http://developers.kakao.com/logout"></a> 
+			<script type='text/javascript'>
+			    Kakao.init('645189b6e3b4fffa603cf981d6189fc4');
+			    function loginWithKakao() {
+			      Kakao.Auth.login({
+			        success: function(authObj) {
+			          alert(JSON.stringify(authObj));
+			        },
+			        fail: function(err) {
+			          alert(JSON.stringify(err));
+			        }
+			      });
+			    };
+			</script>
+					<!-- <script type='text/javascript'>
+						// 사용할 앱의 JavaScript 키를 설정해 주세요.
+						Kakao.init('645189b6e3b4fffa603cf981d6189fc4');
+						// 카카오 로그인 버튼을 생성합니다.
+						Kakao.Auth.createLoginButton({
+							container : '#kakao-login-btn',
+							success : function(authObj) {
+								alert(JSON.stringify(authObj));
+							},
+							fail : function(err) {
+								alert(JSON.stringify(err));
+							}
+						});
+					</script> -->
+					</td>
+			</tr>
+			<tr>
+				<td>
+						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+					<div id="naver_id_login" style="width: 300px"></div><!-- //네이버아이디로로그인 버튼 노출 영역 --> 
+					<script type="text/javascript">
+						var naver_id_login = new naver_id_login("1op0lllS3zEF_7wQvHMV", "http://localhost:8080/hp/login.jsp");
+						var state = naver_id_login.getUniqState();
+						naver_id_login.setButton("green", 3, 45);
+						naver_id_login.setDomain("YOUR_SERVICE_URL");
+						naver_id_login.setState(state);
+						naver_id_login.setPopup();
+						naver_id_login.init_naver_id_login();
+					</script> <script type="text/javascript">
+						var naver_id_login = new naver_id_login("1op0lllS3zEF_7wQvHMV", "http://localhost:8080/hp/login.jsp");
+						// 접근 토큰 값 출력
+						alert(naver_id_login.oauthParams.access_token);
+						// 네이버 사용자 프로필 조회
+						naver_id_login.get_naver_userprofile("naverSignInCallback()");
+						// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+						function naverSignInCallback() {
+							alert(naver_id_login.getProfileData('email'));
+							alert(naver_id_login.getProfileData('nickname'));
+							alert(naver_id_login.getProfileData('age'));
+						}
+					</script>
+				</td>
+			</tr>
+		</table>
+		<input class="sig" type="button" value="회원가입" style="color: white;" onclick="location.href='Join1'">
+			 <input class="sig2" type="button" value="ID/Pass찾기" style="color: white;" onclick="location.href='id_pw'">
+
+		<p align="center">${message}</p>
+	</form>
+</body>
+</html>

@@ -1,0 +1,81 @@
+package com.HotPlace.vo;
+
+import java.sql.Timestamp;
+
+public class ChartVo {
+	private int chartNum;
+	private String gameGenre;
+	private String gameName;
+	private String generation;
+	private String birthdate;
+	private String chartType;
+	
+	public ChartVo() {}
+
+	public ChartVo(int chartNum, String gameGenre, String gameName, String generation, String birthdate,
+			String chartType) {
+		super();
+		this.chartNum = chartNum;
+		this.gameGenre = gameGenre;
+		this.gameName = gameName;
+		this.generation = generation;
+		this.birthdate = birthdate;
+		this.chartType = chartType;
+	}
+
+	public int getChartNum() {
+		return chartNum;
+	}
+
+	public void setChartNum(int chartNum) {
+		this.chartNum = chartNum;
+	}
+
+	public String getGameGenre() {
+		return gameGenre;
+	}
+
+	public void setGameGenre(String gameGenre) {
+		this.gameGenre = gameGenre;
+	}
+
+	public String getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
+	}
+
+	public String getGeneration() {
+		return generation;
+	}
+
+	public void setGeneration(String generation) {
+		this.generation = generation;
+	}
+
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getChartType() {
+		return chartType;
+	}
+
+	public void setChartType(String chartType) {
+		this.chartType = chartType;
+	}
+
+	@Override
+	public String toString() {
+		return "ChartVo [chartNum=" + chartNum + ", gameGenre=" + gameGenre + ", gameName=" + gameName + ", generation="
+				+ generation + ", birthdate=" + birthdate + ", chartType=" + chartType + "]";
+	}
+
+	
+}

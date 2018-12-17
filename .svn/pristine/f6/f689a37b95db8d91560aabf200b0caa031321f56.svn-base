@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(function() {
+$.ajax("PcResvJson",{
+	dataType : 'json',
+	async : false,
+	success : function(data) {
+		var resv = [];
+		resv = data;
+		var htmlstr ="";
+		for (i = 0; i < data.length; i++) {
+			htmlstr +=	'<div class="row-wrap">'
+			htmlstr +=		'<div class="row-left">'
+			htmlstr +=		'<h2><a href="resvView?resv='+resv[i].resv_num+'">'+resv[i].name+'</a></h2>' 
+			htmlstr +=		'</div>'
+			htmlstr += 	'<div class="row-right">'
+			htmlstr +=		'<p>이용 시간 : '+resv[i].resv_start+resv[i].resv_end+'</p>'
+			htmlstr +=		'<p>선택 좌석 : '+resv[i].seat_nums+'</p>'
+			htmlstr +=		'<p>예약한 날짜 : '+resv[i].resv_date+'</p>'
+			htmlstr +=		'<p>결제 방법 : '+resv[i].payment+'</p>'
+			htmlstr +=		'<p>가격 : '+resv[i].resv_price+'원</p>'
+			htmlstr += 	'</div>'
+			htmlstr += 	'</div>'
+		}
+		console.log("ddd::"+htmlstr);
+		$("#id").html(htmlstr);
+	}
+})  
+})
+
+
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id = id></div>
+</body>
+</html>

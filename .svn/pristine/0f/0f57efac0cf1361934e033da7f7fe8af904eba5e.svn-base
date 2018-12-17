@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>총 예약 내역</title>
+<style>
+body{background-image: url(images/starback.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;}
+
+section{
+   padding: 20px;
+   padding-top: 150px;
+   background: #000000a3;
+}
+.wrap{width: 960px;
+     margin: auto;
+     height: 600px;
+     border: 0px solid black;}
+.table{
+      padding-top : 100px;
+      border: 1px solid black;
+      color: white;
+   }
+.table tr{
+      border: 1px solid black;
+   }
+.table th {width: 240px; vertical-align: middle !important; text-align: center;}
+.table th a{text-decoration: none;
+			color: #ffff00d1;}
+.table th:hover a { color: #4eabbbb5;}
+.table th a:active {color: red;	}
+
+</style>
+</head>
+<body>
+<%@ include file="header.jsp"%>
+<section>
+<div class="wrap">
+      <table class="table">
+      <c:forEach var="resv" items="${ResvList}">
+               <tr>
+                  <th>${resv.resv_start} ~ ${resv.resv_end}</th>
+                  <th> <a href="resvView?resv=${resv.resv_num}">${resv.pc_name}</a></th>
+                  <th>${resv.seat_num}</th>
+                  <th>${resv.resv_price}</th>
+                  <th>${resv.resv_date}</th>
+                  
+                  <th>${resv.payment}</th>
+               </tr>
+	</c:forEach> 
+            </table>
+   </div>
+</section>
+<%@ include file="footer.jsp"%>
+</body>
+</html>

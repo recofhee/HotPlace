@@ -1,0 +1,248 @@
+@charset "UTF-8";
+
+section {
+	padding: 150px 0 50px;
+	text-align: center;
+}
+.cb-detail {
+    padding: 0 50px;
+}
+.cbd-header {
+	display: inline-block;
+    text-align: right;
+}
+.cbd-header h1 {
+	font-size: 2.5em;
+	text-align: center;
+}
+.cbd-header span {
+	color: #888;
+}
+.cbd-main {
+    margin: 100px 0;
+}
+.content {
+	border-left: 2px solid #bbb;
+    padding: 10px 20px;
+    line-height: 2;
+    font-size: 18px;
+    text-align: justify;
+}
+.content p {
+	margin: 0 !important;	
+}
+.gallery {
+	margin-bottom: 100px !important;
+}
+.tag {
+	margin: 50px 0;
+	text-align: left;
+}
+.tag a {
+    font-size: 18px;
+    font-weight: bold;
+}
+.cbd-main .writer {
+	display: block;
+    position: relative;
+    padding-top: 40px;
+    font-size: 25px;
+    text-align: right;
+    clear: both;
+}
+.cbd-main .writer:after {
+	display: inline-block;
+    content: "";
+    height: 2px;
+    width: 180px;
+    background: #f8b753;
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+.likeWrap {
+	font-size: 40px;
+}
+.like {
+	outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 40px;
+    color: #666;
+    text-decoration: none;
+    transition: all .3s;
+}
+.like i:hover {
+	opacity: .7;	
+	color: #f8b753;
+}
+.like i:active {
+	color: #f8b753;
+}
+.likeActive {
+	color: #f8b753 !important;
+}
+
+/* 
+ * 2018.10.15 김희수
+ * 일단은 .wrap 하위로 !important 설정
+ */
+.wrap .pagination {
+    display: block !important;
+    border-radius: 0 !important;
+}
+.wrap .pagination a {
+	color: #666 !important;
+}
+.wrap .pagination .cbd-prevBtn {
+	float: left !important;
+}
+.wrap .pagination .cbd-nextBtn {
+	float: right !important;
+}
+.wrap .pagination .cbd-prevBtn i {
+	color: #f8b753 !important;
+	margin-right: 10px !important;
+}
+.wrap .pagination .cbd-nextBtn i {
+	color: #f8b753 !important;
+	margin-left: 10px !important;
+}
+.wrap .pagination .cbd-prevBtn,
+.wrap .pagination .cbd-nextBtn {
+	border: 1px solid #f8b753 !important;
+	padding: 10px 20px !important;
+	transition: all .3s;
+}
+.cb-listBtn {
+	font-size: 30px;
+    position: absolute;
+}
+.cm-write {
+	clear: both;
+    margin-top: 220px;
+}
+.comment {
+	margin: 50px 0;
+	text-align: justify;
+    clear: both;
+}
+.comment > span {
+	font-size: 30px;
+}
+.comment > span i {
+	color: #f8b753;
+	padding-right: 10px;
+}
+.cm-list {
+	clear: both;
+	margin-top: 30px;
+}
+.cm-view {
+    border-left: 4px solid #f8b753;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+.cm-write input {
+	float: right;
+}
+.cm-writer {
+	display: block;
+    font-weight: bold;
+    color: #444;
+    white-space: nowrap;
+}
+.cm-content {
+    display: block;
+    margin-top: 3px;
+    font-size: 14px;
+}
+.cm-writedate {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.fileList {
+	display: inline-block;
+    float: right;
+    text-align: right;
+    font-size: 14px;
+    margin-top: 30px;
+}
+.fileList i {
+	margin-left: 10px;
+	cursor: pointer;
+}
+.fileList i:hover,
+.fileList i:active {
+	color: #f8b753;
+}
+.fl-header {
+	text-align: left;
+    margin-bottom: 5px;
+}
+.fl-header i {
+    margin: 0 10px 0 0;
+    color: #f8b753;
+    cursor: text;
+}
+.addedFileList {
+    margin-top: 20px;
+}
+.addedFileList i {
+	margin-right: 10px;
+}
+.addedFileList span {
+    font-size: 14px;
+}
+.addedFileList li {
+	margin-top: 5px;
+    font-size: 12px;
+}
+
+.replyRow {
+    display: flex;
+    justify-content: space-between;
+}
+.replyBtnRow {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.replyBtnRow span {
+	cursor: pointer;
+}
+.replyBtnRow a:nth-child(2) {
+    margin-left: 5px;
+}
+.replyPagination {
+    margin: 50px 0;
+}
+.replyPagination i {
+    margin-left: 10px;
+    color: #f8b753;
+}
+.moreReplies {
+    background: none;
+    border: 1px solid #f8b753;
+    outline: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 15px 20px;
+    width: 100%;
+}
+
+/* cardBoardWrite */
+.cbWriteForm {
+	text-align: left;
+}
+
+/* cardBoardUpdate */
+.delFile {
+    margin-left: 10px;
+    cursor: pointer;
+}

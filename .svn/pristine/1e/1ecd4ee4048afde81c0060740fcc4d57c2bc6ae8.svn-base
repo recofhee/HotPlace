@@ -1,0 +1,22 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.vo.PcVo;
+@WebServlet("/detail")
+public class PcListDetailServlet extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String pc_num = req.getParameter("pc_num");
+		PcDao dao = PcDao.getInstance();
+		PcVo vo = dao.selectOnePcByNum(pc_num);
+		req.setAttribute("pc", vo);
+		req.getRequestDispatcher("detail.jsp").forward(req, resp);
+	}
+}

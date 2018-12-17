@@ -1,0 +1,89 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.HotPlace.dao.PlayDao;
+import com.HotPlace.dao.Play_ReviewDao;
+import com.HotPlace.vo.PlayVo;
+import com.HotPlace.vo.Play_ReviewVo;
+
+@WebServlet("/list")
+public class Play_UtubeList extends HttpServlet {
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		String url = "https://www.youtube.com/gaming/trending";
+		System.out.println(url + "::list");
+
+		org.jsoup.Connection.Response html = Jsoup.connect(url).method(org.jsoup.Connection.Method.GET).execute();
+		PlayDao Dao = PlayDao.getInstance();
+		PlayVo Vo = null;
+		Document doc = html.parse();
+		Elements els = doc.select("li.channels-content-item");
+
+		int i = 0;
+		for (Element e : els) { // 74
+			String imgUrl = e.select("img").attr("data-thumb");
+			if (imgUrl.length() > 0) {
+				imgUrl = imgUrl.substring(0, imgUrl.indexOf("?"));
+				Elements elements = e.select(".yt-uix-sessionlink.yt-uix-tile-link");
+				Element element = null;
+				String title = "";
+				String href = "";
+				element = elements.first();
+				title = element.text();
+				href = element.attr("href");
+				if (i >= 0 && i <= 11) {
+					Vo = new PlayVo(i + 1, title, href.substring(9), imgUrl);
+					System.out.println(Vo);
+					Dao.updateVideo(Vo);
+				}
+				if (i >= 19 && i <= 30) {
+					Vo = new PlayVo(i - 6, title, href.substring(9), imgUrl);
+					System.out.println(Vo);
+					Dao.updateVideo(Vo);
+				}
+				if (i == 30) {
+					break;
+				}
+				i++;
+			}
+		}
+
+		List<PlayVo> List = new ArrayList<>(Dao.videoList());
+		req.setAttribute("List", List);
+
+		int r = (int)(Math.random()*12);
+		PlayVo one = List.get(r);
+		req.setAttribute("one", one);
+		
+		Play_ReviewDao RDao = Play_ReviewDao.getInstance();
+		List<Play_ReviewVo> reply = RDao.replyList(one.getVideo_url());
+		req.setAttribute("replyList", reply);
+
+		System.out.println(r);
+		
+		RequestDispatcher dis = req.getRequestDispatcher("video/Utube.jsp");
+		dis.forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+}

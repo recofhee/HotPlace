@@ -1,0 +1,189 @@
+@charset "UTF-8";
+body{background: url(../images/monsterbackground.jpg);
+	 background-attachment: fixed;
+	/* background-size: cover; */}
+
+section {
+	padding: 15px;
+	padding-top: 120px;
+	
+}
+
+.sort {
+	text-align: right;
+	font-size: 12px;
+}
+
+.warp {
+	width: 950px;
+	margin: 0 auto;
+	padding: 0;
+	height: 600px;
+	border: 0px solid black;
+	/* background: url(../images/icon/monstergu.jpg); */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	opacity: .8;
+	background: #000000c4;
+}
+
+.warp h1 {
+	text-align: center;
+}
+
+.tabl {
+	width: 950px;
+	font-size: 13px;
+	/*  border-collapse: collapse; */
+}
+
+.tabl tr, tr td {
+	border-bottom: 1px solid #00000030;
+	text-align: center;
+	padding: 5px 10px;
+	text-align: center;
+	color: white;
+}
+
+.tabl th {
+	height: 34px;
+	padding: 0px 0px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.tabl tr td a {color: white;}
+
+.num {margin: 0;
+    display: inline-block;
+    padding: 0;
+	}
+
+.num ul {
+	text-align: center;
+	margin-top: -40px;
+	/* padding: 0 450px  */
+	display: inline-block;
+}
+
+.num ul li {
+	display: block;
+	vertical-align: middle;
+	/* float: left; */
+	text-align: center;
+}
+
+.num ul li a {
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px;
+	margin-right: 3px;
+	width: 25px !important;
+	color: white;
+	font: bold 12px tahoma;
+	border: 1px solid #eee;
+	text-align: center;
+	text-decoration: none;
+	width: 26px;
+}
+
+
+.num ul li a.now {
+	color: red;
+	
+	border: 1px solid;
+}
+
+.num ul li a:hover /* , ul li a:focus */ {
+	color: red;
+	border: 1px solid;
+	
+}
+
+.sel {
+	clear: both;
+	float: left;
+	height: 20px;
+	line-height: 22px;
+	border: 1px solid #D0D0D0;
+	color: #666;
+	font-size: 11px;
+	margin-right: -1px;
+}
+
+.st {
+	width: 90%;
+	padding: 14px 0 10px;
+	text-align: left;
+	font-size: 13px;
+}
+
+.bt {
+	position: relative;
+	border: 1px solid white;
+	background: rgb(198,47,99);
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: white;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.bt:hover {
+	border: 1px solid;
+	color: black;
+	background: #b51f8d;
+	font-weight: bold;
+}
+
+.title {
+	text-align: center;
+}
+
+.inp {
+	float: left;
+	width: 170px;
+	padding: 0 0 0 6px;
+	height: 20px;
+	background: #F5F5F5;
+	border: 1px solid #D0D0D0;
+}
+
+.btn1 {
+	float: left;
+	position: relative;
+	width: 35px;
+	height: 20px;
+	font-size: 12px;
+	color: #fff;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	background-color: #acacac;
+}
+
+/* .search1 {
+	position: absolute;
+	margin-left: 360px;
+	margin-top: 40px;
+} */
+.head {height: 80px;
+       color: #E91E63;
+       text-align: left;
+       font-size: 2em;
+}
+.h1 {
+	background: url(../images/icon/monboar.png) no-repeat 15px 20px;
+    width: 583px;
+    height: 85px;
+    background-size: 60%;
+    float: left;
+}
+.searchbar{position: relative;
+    margin: auto;
+   padding-bottom: 30px;
+    width: 293px;}
+/* .back{background: #000000c4;} */

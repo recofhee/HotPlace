@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.seat-wrap {
+	position: relative;
+	text-align: center;
+	width: 892px;
+    height: 492px;
+    margin: 50px auto;
+    clear: both;
+}
+.seat-position {
+	/* width: 327px; */
+    margin: 0 auto;
+}
+.seat-position button {
+	position: absolute;
+    display: block;
+    float: none;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 17px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: tahoma, dotum, sans-serif;
+    cursor: pointer;
+    text-align: center;
+}
+.seat-normal {
+	background: #777;
+	outline: none;
+}
+.seat-normal:hover,
+.seat-normal:active,
+.seat-selected {
+	background: #f8b753;
+	outline: none;
+}
+.seat-normal:focus {
+	outline: none;
+}
+.seat-done {
+	background: #ccc;
+	cursor: default !important;
+	outline: none;
+}
+.seat-done:focus {
+	outline: none;
+}

@@ -1,0 +1,382 @@
+@charset "UTF-8";
+
+.seat-wrap {
+	position: relative;
+	text-align: center;
+	width: 892px;
+    height: 492px;
+    margin: 50px auto;
+    clear: both;
+}
+.seat-position {
+	/* width: 327px; */
+    margin: 0 auto;
+}
+.seat-position button {
+	position: absolute;
+    display: block;
+    float: none;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 17px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: tahoma, dotum, sans-serif;
+    cursor: pointer;
+    text-align: center;
+}
+.seat-normal {
+	background: #777;
+	outline: none;
+}
+.seat-normal:hover,
+.seat-normal:active,
+.seat-selected {
+	background: #f8b753;
+	outline: none;
+}
+.seat-normal:focus {
+	outline: none;
+}
+.seat-done {
+	background: #ccc;
+	cursor: default !important;
+	outline: none;
+}
+.seat-done:focus {
+	outline: none;
+}
+
+/* seat A */
+#A1 {top: 0px; left: 0px;}
+#A2 {top: 0px; left: 50px;}
+#A3 {top: 0px; left: 100px;}
+#A4 {top: 0px; left: 150px;}
+#A5 {top: 0px; left: 200px;}
+#A6 {top: 0px; left: 250px;}
+#A7 {top: 0px; left: 300px;}
+#A8 {top: 0px; left: 350px;}
+#A9 {top: 0px; left: 400px;}
+#A10 {top: 0px; left: 450px;}
+#A11 {top: 0px; left: 500px;}
+#A12 {top: 0px; left: 550px;}
+#A13 {top: 0px; left: 600px;}
+#A14 {top: 0px; left: 650px;}
+#A15 {top: 0px; left: 700px;}
+#A16 {top: 0px; left: 750px;}
+#A17 {top: 0px; left: 800px;}
+#A18 {top: 0px; left: 850px;}
+#A19 {top: 100px; left: 850px;}
+#A20 {top: 100px; left: 800px;}
+#A21 {top: 100px; left: 750px;}
+#A22 {top: 100px; left: 700px;}
+#A23 {top: 100px; left: 650px;}
+#A24 {top: 100px; left: 600px;}
+#A25 {top: 100px; left: 550px;}
+#A26 {top: 100px; left: 500px;}
+#A27 {top: 100px; left: 350px;}
+#A28 {top: 100px; left: 300px;}
+#A29 {top: 100px; left: 250px;}
+#A30 {top: 100px; left: 200px;}
+#A31 {top: 100px; left: 150px;}
+#A32 {top: 100px; left: 100px;}
+#A33 {top: 100px; left: 50px;}
+#A34 {top: 100px; left: 0px;}
+#A35 {top: 150px; left: 0px;}
+#A36 {top: 150px; left: 50px;}
+#A37 {top: 150px; left: 100px;}
+#A38 {top: 150px; left: 150px;}
+#A39 {top: 150px; left: 200px;}
+#A40 {top: 150px; left: 250px;}
+#A41 {top: 150px; left: 300px;}
+#A42 {top: 150px; left: 350px;}
+#A43 {top: 150px; left: 500px;}
+#A44 {top: 150px; left: 550px;}
+#A45 {top: 150px; left: 600px;}
+#A46 {top: 150px; left: 650px;}
+#A47 {top: 150px; left: 700px;}
+#A48 {top: 150px; left: 750px;}
+#A49 {top: 150px; left: 800px;}
+#A50 {top: 150px; left: 850px;}
+#A51 {top: 300px; left: 850px;}
+#A52 {top: 300px; left: 800px;}
+#A53 {top: 300px; left: 750px;}
+#A54 {top: 300px; left: 700px;}
+#A55 {top: 300px; left: 650px;}
+#A56 {top: 300px; left: 600px;}
+#A57 {top: 300px; left: 550px;}
+#A58 {top: 300px; left: 500px;}
+#A59 {top: 300px; left: 350px;}
+#A60 {top: 300px; left: 300px;}
+#A61 {top: 300px; left: 250px;}
+#A62 {top: 300px; left: 200px;}
+#A63 {top: 300px; left: 150px;}
+#A64 {top: 300px; left: 100px;}
+#A65 {top: 300px; left: 50px;}
+#A66 {top: 300px; left: 0px;}
+#A67 {top: 350px; left: 0px;}
+#A68 {top: 350px; left: 50px;}
+#A69 {top: 350px; left: 100px;}
+#A70 {top: 350px; left: 150px;}
+#A71 {top: 350px; left: 200px;}
+#A72 {top: 350px; left: 250px;}
+#A73 {top: 350px; left: 300px;}
+#A74 {top: 350px; left: 350px;}
+#A75 {top: 350px; left: 500px;}
+#A76 {top: 350px; left: 550px;}
+#A77 {top: 350px; left: 600px;}
+#A78 {top: 350px; left: 650px;}
+#A79 {top: 350px; left: 700px;}
+#A80 {top: 350px; left: 750px;}
+#A81 {top: 350px; left: 800px;}
+#A82 {top: 350px; left: 850px;}
+#A83 {top: 450px; left: 850px;}
+#A84 {top: 450px; left: 800px;}
+#A85 {top: 450px; left: 750px;}
+#A86 {top: 450px; left: 700px;}
+#A87 {top: 450px; left: 650px;}
+#A88 {top: 450px; left: 600px;}
+#A89 {top: 450px; left: 550px;}
+#A90 {top: 450px; left: 500px;}
+#A91 {top: 450px; left: 450px;}
+#A92 {top: 450px; left: 400px;}
+#A93 {top: 450px; left: 350px;}
+#A94 {top: 450px; left: 300px;}
+#A95 {top: 450px; left: 250px;}
+#A96 {top: 450px; left: 200px;}
+#A97 {top: 450px; left: 150px;}
+#A98 {top: 450px; left: 100px;}
+#A99 {top: 450px; left: 50px;}
+#A100 {top: 450px; left: 0px;}
+
+/* seat B */
+#B1 {top: 0px; left: 0px;}
+#B2 {top: 0px; left: 50px;}
+#B3 {top: 0px; left: 100px;}
+#B4 {top: 0px; left: 150px;}
+#B5 {top: 0px; left: 200px;}
+#B6 {top: 0px; left: 250px;}
+#B7 {top: 0px; left: 300px;}
+#B8 {top: 0px; left: 350px;}
+#B9 {top: 0px; left: 400px;}
+#B10 {top: 0px; left: 450px;}
+#B11 {top: 0px; left: 500px;}
+#B12 {top: 0px; left: 550px;}
+#B13 {top: 0px; left: 600px;}
+#B14 {top: 0px; left: 650px;}
+#B15 {top: 0px; left: 700px;}
+#B16 {top: 0px; left: 750px;}
+#B17 {top: 0px; left: 800px;}
+#B18 {top: 0px; left: 850px;}
+#B19 {top: 100px; left: 850px;}
+#B20 {top: 150px; left: 850px;}
+#B21 {top: 200px; left: 850px;}
+#B22 {top: 250px; left: 850px;}
+#B23 {top: 300px; left: 850px;}
+#B24 {top: 350px; left: 850px;}
+#B25 {top: 450px; left: 850px;}
+#B26 {top: 450px; left: 800px;}
+#B27 {top: 450px; left: 750px;}
+#B28 {top: 450px; left: 700px;}
+#B29 {top: 450px; left: 650px;}
+#B30 {top: 450px; left: 600px;}
+#B31 {top: 450px; left: 550px;}
+#B32 {top: 450px; left: 500px;}
+#B33 {top: 450px; left: 450px;}
+#B34 {top: 450px; left: 400px;}
+#B35 {top: 450px; left: 350px;}
+#B36 {top: 450px; left: 300px;}
+#B37 {top: 450px; left: 250px;}
+#B38 {top: 450px; left: 200px;}
+#B39 {top: 450px; left: 150px;}
+#B40 {top: 450px; left: 100px;}
+#B41 {top: 450px; left: 50px;}
+#B42 {top: 450px; left: 0px;}
+#B43 {top: 350px; left: 750px;}
+#B44 {top: 350px; left: 700px;}
+#B45 {top: 350px; left: 650px;}
+#B46 {top: 350px; left: 600px;}
+#B47 {top: 350px; left: 550px;}
+#B48 {top: 350px; left: 500px;}
+#B49 {top: 350px; left: 450px;}
+#B50 {top: 350px; left: 400px;}
+#B51 {top: 350px; left: 350px;}
+#B52 {top: 350px; left: 300px;}
+#B53 {top: 350px; left: 250px;}
+#B54 {top: 350px; left: 200px;}
+#B55 {top: 350px; left: 150px;}
+#B56 {top: 350px; left: 100px;}
+#B57 {top: 300px; left: 750px;}
+#B58 {top: 300px; left: 700px;}
+#B59 {top: 300px; left: 650px;}
+#B60 {top: 300px; left: 600px;}
+#B61 {top: 300px; left: 550px;}
+#B62 {top: 300px; left: 500px;}
+#B63 {top: 300px; left: 450px;}
+#B64 {top: 300px; left: 400px;}
+#B65 {top: 300px; left: 350px;}
+#B66 {top: 300px; left: 300px;}
+#B67 {top: 300px; left: 250px;}
+#B68 {top: 300px; left: 200px;}
+#B69 {top: 300px; left: 150px;}
+#B70 {top: 300px; left: 100px;}
+#B71 {top: 150px; left: 750px;}
+#B72 {top: 150px; left: 700px;}
+#B73 {top: 150px; left: 650px;}
+#B74 {top: 150px; left: 600px;}
+#B75 {top: 150px; left: 550px;}
+#B76 {top: 150px; left: 500px;}
+#B77 {top: 150px; left: 450px;}
+#B78 {top: 150px; left: 400px;}
+#B79 {top: 150px; left: 350px;}
+#B80 {top: 150px; left: 300px;}
+#B81 {top: 150px; left: 250px;}
+#B82 {top: 150px; left: 200px;}
+#B83 {top: 150px; left: 150px;}
+#B84 {top: 150px; left: 100px;}
+#B85 {top: 100px; left: 750px;}
+#B86 {top: 100px; left: 700px;}
+#B87 {top: 100px; left: 650px;}
+#B88 {top: 100px; left: 600px;}
+#B89 {top: 100px; left: 550px;}
+#B90 {top: 100px; left: 500px;}
+#B91 {top: 100px; left: 450px;}
+#B92 {top: 100px; left: 400px;}
+#B93 {top: 100px; left: 350px;}
+#B94 {top: 100px; left: 300px;}
+#B95 {top: 100px; left: 250px;}
+#B96 {top: 100px; left: 200px;}
+#B97 {top: 100px; left: 150px;}
+#B98 {top: 100px; left: 100px;}
+#B99 {top: 100px; left: 0px;}
+#B100 {top: 150px; left: 0px;}
+#B101 {top: 200px; left: 0px;}
+#B102 {top: 250px; left: 0px;}
+#B103 {top: 300px; left: 0px;}
+#B104 {top: 350px; left: 0px;}
+
+/* seat C */
+#C1 {top: 0px; left: 0px;}
+#C2 {top: 0px; left: 50px;}
+#C3 {top: 0px; left: 100px;}
+#C4 {top: 0px; left: 150px;}
+#C5 {top: 0px; left: 200px;}
+#C6 {top: 0px; left: 250px;}
+#C7 {top: 0px; left: 300px;}
+#C8 {top: 0px; left: 350px;}
+#C9 {top: 0px; left: 400px;}
+#C10 {top: 0px; left: 450px;}
+#C11 {top: 0px; left: 500px;}
+#C12 {top: 0px; left: 550px;}
+#C13 {top: 0px; left: 600px;}
+#C14 {top: 0px; left: 650px;}
+#C15 {top: 0px; left: 700px;}
+#C16 {top: 0px; left: 750px;}
+#C17 {top: 0px; left: 800px;}
+#C18 {top: 0px; left: 850px;}
+#C19 {top: 100px; left: 850px;}
+#C20 {top: 150px; left: 850px;}
+#C21 {top: 200px; left: 850px;}
+#C22 {top: 250px; left: 850px;}
+#C23 {top: 300px; left: 850px;}
+#C24 {top: 350px; left: 850px;}
+#C25 {top: 450px; left: 850px;}
+#C26 {top: 450px; left: 800px;}
+#C27 {top: 450px; left: 750px;}
+#C28 {top: 450px; left: 700px;}
+#C29 {top: 450px; left: 650px;}
+#C30 {top: 450px; left: 600px;}
+#C31 {top: 450px; left: 550px;}
+#C32 {top: 450px; left: 500px;}
+#C33 {top: 450px; left: 450px;}
+#C34 {top: 450px; left: 400px;}
+#C35 {top: 450px; left: 350px;}
+#C36 {top: 450px; left: 300px;}
+#C37 {top: 450px; left: 250px;}
+#C38 {top: 450px; left: 200px;}
+#C39 {top: 450px; left: 150px;}
+#C40 {top: 450px; left: 100px;}
+#C41 {top: 450px; left: 50px;}
+#C42 {top: 450px; left: 0px;}
+#C43 {top: 100px; left: 0px;}
+#C44 {top: 150px; left: 0px;}
+#C45 {top: 200px; left: 0px;}
+#C46 {top: 250px; left: 0px;}
+#C47 {top: 300px; left: 0px;}
+#C48 {top: 350px; left: 0px;}
+#C49 {top: 100px; left: 100px;}
+#C50 {top: 150px; left: 100px;}
+#C51 {top: 200px; left: 100px;}
+#C52 {top: 250px; left: 100px;}
+#C53 {top: 300px; left: 100px;}
+#C54 {top: 350px; left: 100px;}
+#C55 {top: 100px; left: 150px;}
+#C56 {top: 150px; left: 150px;}
+#C57 {top: 200px; left: 150px;}
+#C58 {top: 250px; left: 150px;}
+#C59 {top: 300px; left: 150px;}
+#C60 {top: 350px; left: 150px;}
+#C61 {top: 100px; left: 250px;}
+#C62 {top: 150px; left: 250px;}
+#C63 {top: 200px; left: 250px;}
+#C64 {top: 250px; left: 250px;}
+#C65 {top: 300px; left: 250px;}
+#C66 {top: 350px; left: 250px;}
+#C67 {top: 100px; left: 300px;}
+#C68 {top: 150px; left: 300px;}
+#C69 {top: 200px; left: 300px;}
+#C70 {top: 250px; left: 300px;}
+#C71 {top: 300px; left: 300px;}
+#C72 {top: 350px; left: 300px;}
+#C73 {top: 100px; left: 400px;}
+#C74 {top: 150px; left: 400px;}
+#C75 {top: 200px; left: 400px;}
+#C76 {top: 250px; left: 400px;}
+#C77 {top: 300px; left: 400px;}
+#C78 {top: 350px; left: 400px;}
+#C79 {top: 100px; left: 450px;}
+#C80 {top: 150px; left: 450px;}
+#C81 {top: 200px; left: 450px;}
+#C82 {top: 250px; left: 450px;}
+#C83 {top: 300px; left: 450px;}
+#C84 {top: 350px; left: 450px;}
+#C85 {top: 100px; left: 400px;}
+#C86 {top: 150px; left: 400px;}
+#C87 {top: 200px; left: 400px;}
+#C88 {top: 250px; left: 400px;}
+#C89 {top: 300px; left: 400px;}
+#C90 {top: 350px; left: 400px;}
+#C91 {top: 100px; left: 450px;}
+#C92 {top: 150px; left: 450px;}
+#C93 {top: 200px; left: 450px;}
+#C94 {top: 250px; left: 450px;}
+#C95 {top: 300px; left: 450px;}
+#C96 {top: 350px; left: 450px;}
+#C97 {top: 100px; left: 550px;}
+#C98 {top: 150px; left: 550px;}
+#C99 {top: 200px; left: 550px;}
+#C100 {top: 250px; left: 550px;}
+#C101 {top: 300px; left: 550px;}
+#C102 {top: 350px; left: 550px;}
+#C103 {top: 100px; left: 600px;}
+#C104 {top: 150px; left: 600px;}
+#C105 {top: 200px; left: 600px;}
+#C106 {top: 250px; left: 600px;}
+#C107 {top: 300px; left: 600px;}
+#C108 {top: 350px; left: 600px;}
+#C109 {top: 100px; left: 700px;}
+#C110 {top: 150px; left: 700px;}
+#C111 {top: 200px; left: 700px;}
+#C112 {top: 250px; left: 700px;}
+#C113 {top: 300px; left: 700px;}
+#C114 {top: 350px; left: 700px;}
+#C115 {top: 100px; left: 750px;}
+#C116 {top: 150px; left: 750px;}
+#C117 {top: 200px; left: 750px;}
+#C118 {top: 250px; left: 750px;}
+#C119 {top: 300px; left: 750px;}
+#C120 {top: 350px; left: 750px;}

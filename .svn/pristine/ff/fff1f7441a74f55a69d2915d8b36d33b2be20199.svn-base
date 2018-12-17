@@ -1,0 +1,97 @@
+package com.HotPlace.controller;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import com.HotPlace.dao.BoardDAO;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.dao.PlayDao;
+import com.HotPlace.vo.BoardVO;
+import com.HotPlace.vo.PcVo;
+import com.HotPlace.vo.PlayVo;
+import com.HotPlace.vo.ResvVo;
+@WebServlet("/main")
+public class MainServlet extends HttpServlet {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		
+	
+		String url ="section.jsp";
+		HttpSession session =req.getSession();
+		System.out.println(session.getAttribute("loginUser"));
+		if(session.getAttribute("loginUser")!= null) {
+			url="section.jsp";
+		}
+		
+		String authObj = req.getParameter("authObj");
+		System.out.println(authObj);
+		
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		List<BoardVO> vo = dao.gameBoardList();
+		req.setAttribute("boardList", vo);
+		
+		String play = "https://www.youtube.com/gaming/trending";
+		org.jsoup.Connection.Response html = Jsoup.connect(play).method(org.jsoup.Connection.Method.GET).execute();
+
+		PlayDao pDao = PlayDao.getInstance();
+		PlayVo pVo = null;
+		Document doc = html.parse();
+		Elements els = doc.select("li.channels-content-item");
+		int i = 0;
+		for (Element e : els) { // 74
+			String imgUrl = e.select("img").attr("data-thumb");
+			if (imgUrl.length() > 0) {
+				imgUrl = imgUrl.substring(0, imgUrl.indexOf("?"));
+				Elements elements = e.select(".yt-uix-sessionlink.yt-uix-tile-link");
+				Element element = null;
+				String title = ""; 
+				String href = "";
+				element = elements.first();
+				title = element.text();
+				href = element.attr("href");
+				pVo = new PlayVo(i + 1, title, href.substring(9), imgUrl);
+				if (i == 23) {
+					break;
+				}
+				i++;
+			}
+			pDao.updateVideo(pVo);
+		}
+		
+		System.out.println("loginUser");
+		
+		List<PlayVo> List = new ArrayList<>(pDao.videoList3());
+		List<PlayVo> Live = new ArrayList<>(pDao.liveList3());
+		req.setAttribute("List", List);
+		req.setAttribute("Live", Live);
+		
+		req.getRequestDispatcher(url).forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String email = req.getParameter("email");
+		PcDao pcdao = PcDao.getInstance();
+		List<ResvVo> resvVo = pcdao.selectResvByNum(email);
+		System.out.println("email::: "+email);
+		System.out.println("resv ::: "+resvVo);
+		req.setAttribute("resvVo", resvVo);
+		
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		List<BoardVO> vo = dao.gameBoardList();
+		req.setAttribute("boardList", vo);
+		req.getRequestDispatcher("section.jsp").forward(req, resp);
+	}
+}

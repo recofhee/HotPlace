@@ -1,0 +1,50 @@
+package com.HotPlace.controller;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.vo.ResvVo;
+@WebServlet("/pcResvAfter")
+public class pcResvAfter extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String s = req.getParameter("pc_resv");
+		//System.out.println(s);
+		String[] pc_resv = s.split(",");
+		String email = pc_resv[0];
+		String pc_num = pc_resv[1];
+		String hours = pc_resv[2];
+		String startDt = pc_resv[3];
+		String endDt = pc_resv[4];
+		String generation= pc_resv[5];
+		String price = pc_resv[6];
+		String maxLen=pc_resv[7];
+		
+		ResvVo vo = new ResvVo();
+		PcDao dao = PcDao.getInstance();
+		int resv_num = dao.select();
+		
+		int max = Integer.parseInt(maxLen);
+        for(int i=8; i < max+8; i++ ) {
+        	vo.setResv_email(email);
+        	vo.setPc_num(pc_num);
+			vo.setResv_start(startDt);
+			vo.setResv_end(endDt);
+			vo.setResv_price(price);
+			vo.setGeneration(generation);
+			vo.setResv_hours(hours);
+			vo.setSeat_num(pc_resv[i]);
+			vo.setResv_num(resv_num);
+			dao.insertReservation(vo);
+		}
+        
+		req.getRequestDispatcher("pcResvAfter.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	}
+	
+}

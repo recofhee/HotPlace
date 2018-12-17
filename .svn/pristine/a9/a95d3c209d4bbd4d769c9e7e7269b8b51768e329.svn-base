@@ -1,0 +1,29 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.vo.PaymentVo;
+import com.HotPlace.vo.ResvVo;
+@WebServlet("/pcresvdelete")
+public class PcResvDelete extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PcDao dao = PcDao.getInstance();
+		ResvVo vo =new ResvVo();
+		PaymentVo payvo = new PaymentVo();
+		
+		//dao.deleteResv(code);
+		//dao.deleteResv(code);
+		
+		
+		req.getRequestDispatcher("main").forward(req, resp);
+	}
+}

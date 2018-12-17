@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+body {
+	background-image: url(../images/dia3back.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+
+section {
+	padding-top: 130px;
+}
+.wrap {
+	
+	width: 960px;
+	border: 1px solid white;
+	min-height: 720px;
+	margin: auto;
+	position: relative;
+}
+
+.layer1 {
+color: white;
+} 
+
+.heading {
+margin: 1px;
+color: #fff;
+padding: 3px 10px;
+cursor: pointer;
+position: relative;
+background-color:#c30;
+}
+.content {
+padding: 5px 10px;
+background-color:#fafafa;
+}
+p { padding: 5px 0; }
+
+.service {
+	width:35%;
+	display: inline-block; 
+	border: 1px solid white;
+	font-size: 20px;
+	box-sizing: border-box;
+	text-align: center;
+	color: cornflowerblue;
+	}
+.service1 {
+	width:64%;
+	display: inline-block; 
+	border: 1px solid white;
+	font-size: 12px;
+	box-sizing: border-box;
+	text-align: center;
+	color: cornflowerblue;
+	}
+.service p {font-size: 12px;}

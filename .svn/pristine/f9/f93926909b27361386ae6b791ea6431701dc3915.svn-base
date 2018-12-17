@@ -1,0 +1,427 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<title>Card Board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Serif+JP|Roboto">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+<link rel="stylesheet" href="css/bootstrap-grid.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/cardBoardDetail.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	var ready = 0;
+	if(ready++ == 0) {
+		reList();
+	}
+	
+	var page = 1;
+
+	var isRun = false;
+	var delFunc = function(e){
+		//console.log(e.target.closest('.cm-list'));
+		var replyCnt = parseInt($('.replyCnt').text());
+	
+		isRun = confirm('삭제 시 복구가 불가합니다.\n삭제하시겠습니까 ?');
+		
+		if(isRun) {
+			$.ajax({
+				url: 'replyDelete',
+				type: 'GET',
+				//async: false,
+				data: {
+					reNum: $(this).attr('id').substr(8),
+					cbNum: '${board.cbNum}'
+				},
+				success: function(){
+					replyCnt--;
+					e.target.closest('.cm-list').remove();
+					$('.replyCnt').replaceWith('<span class="replyCnt"><i class="fas fa-comment"></i>'+replyCnt+'</span>');
+					
+					/* 중복 방지 */
+					isRun = false;
+/* 					setTimeout(function() {
+						isRun = false;
+					}, 10000); */
+				}
+			});
+		} else {
+			return false;
+		}
+	}
+	
+	function reList(){
+		$.ajax({
+			url: 'replyList',
+			type: 'GET',
+			dataType: 'json',
+			//async: false,
+			data: {
+				cb_num: '${board.cbNum}',
+				page: page
+			},
+			success: function(data){
+				var count = 0;
+				var pageCnt = 0;
+				var paginationList = ''; 
+				var reNum = 0;
+				var result = '';
+				
+				if(data != null && data.length > 0) {
+					$.each(data, function(index, item){
+						/* if(page == 1 && count++ == 0) {
+							//result += '<span class="replyCnt"><i class="fas fa-comment"></i>'+item.replyCnt+'</span>'; 
+							$('.comment').append('<span class="replyCnt"><i class="fas fa-comment"></i>'+item.replyCnt+'</span>');
+						} */
+						result += '<ul class="cm-list"><li class="cm-view">';
+						result += '<span class="cm-writer">'+item.name+'</span>';
+						result += '<span class="cm-content">'+item.content+'</span>';
+						
+						if('${loginUser.email}' != item.email) {
+							result += '<span class="cm-writedate">'+item.writeDate+'</span>';
+						} else if (${not empty loginUser} && '${loginUser.email}' == item.email) {
+							result += '<div class="replyRow"><span class="cm-writedate">'+item.writeDate+'</span>';
+							result += '<div class="replyBtnRow"><span class="reDelBtn reDel'+item.reNum+'" id="delReNum'+item.reNum+'">삭제</span></div></div>';
+						}
+						
+						result += '</li></ul>';
+						
+						/* if(count++ == 0) {
+							$('.comment').append(head);
+						} */
+						
+						//$('.comment').append(result);
+						
+						/* if(pageCnt++ == 0) {
+							paginationList += '<div class="replyPagination">';
+							if(item.nextPageNo != item.pageNo) {
+								paginationList += '<button type="button" class="moreReplies"><span>댓글 더 보기</span><i class="fas fa-angle-down"></i></button>';
+							}
+							if(item.nextPageNo != item.pageNo && scrollTop + windowHeight + 260 > documentHeight) {
+								reList();
+							}
+						} */
+						
+						$(window).scroll(function(){
+							//$('.replyPagination').remove();
+							//reList();
+							
+							var scrollTop = $(this).scrollTop();
+							var windowHeight = $(this).height();
+							var documentHeight = $(document).height();
+							
+							// scrollbar의 thumb가 바닥 전 260px까지 도달하면 댓글 추가 목록을 보여 줌
+							if(item.nextPageNo != item.pageNo && scrollTop + windowHeight + 260 > documentHeight) {
+								if(pageCnt++ == 0) {
+									//reList();
+									$('.comment').append(reList());
+								}
+							}
+	
+						});
+					});
+				} else {
+					result += '<div class="row noReply" style="margin: 0;"><span style="margin: 0 auto;">댓글이 없습니다.</span></div>';
+				}
+				$('.comment').append(result);
+				//$('.comment').html(result);
+				page++;
+				
+				//$('.comment').append(paginationList + '</div>');
+				
+				
+				
+				// 댓글 더 보기 클릭할 시 추가 목록
+				/* $('.moreReplies').click(function(){
+					$('.replyPagination').remove();
+					reList();
+					//$('.cm-list').last().after(moreReplies);
+				}); */
+				
+				/* $(window).scroll(function(){
+					//$('.replyPagination').remove();
+					//reList();
+					
+					var scrollTop = $(this).scrollTop();
+					var windowHeight = $(this).height();
+					var documentHeight = $(document).height();
+					
+					// scrollbar의 thumb가 바닥 전 260px까지 도달하면 댓글 추가 목록을 보여 줌
+					if(scrollTop + windowHeight + 260 > documentHeight){
+						reList();
+					}
+
+				}); */
+
+				$('.reDelBtn').unbind("click").click(delFunc); // unbind() : 중복 이벤트 방지
+			}
+		});
+	};
+	
+	
+	/* function moreReplies(e){
+		$.ajax({
+			url: 'replyList',
+			type: 'GET',
+			//async: false,
+			data: {
+				cb_num: '${board.cbNum}',
+				page: page,
+				more: 10
+			},
+			success: reList()
+		});
+	}; */
+		
+	/* xxs 공격 방어 */
+	// 받은 입력 값 특수 문자 변환 처리
+	function XFN_ChangeInputValue(pValue) {
+	    var strReturenValue = "";
+	    strReturenValue = pValue.replace(/&/gi, '&amp;').replace(/</gi, '&lt;').replace(/>/gi, '&gt;').replace(/"/gi, '&quot;').replace(/'/gi, '&apos;');
+	    return strReturenValue;
+	}
+
+	// 받은 입력 값 특수 문자 변환 처리
+	function ChangeOutputValue(pValue) {
+	    var strReturenValue = "";
+	    strReturenValue = pValue.replace(/&amp;/gi, '&').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&quot;/gi, '"').replace(/&apos;/gi, '\'').replace(/&nbsp;/gi, ' ');
+	    return strReturenValue;
+	}
+	$('#replySubmit').click(function(e){
+		
+		$('#replyContent').val(XFN_ChangeInputValue($('#replyContent').val()));
+
+		var insertData = $(e.target.closest('form')).serialize();
+
+		
+		if($('#replyContent').val().trim() === ''){
+    		alert('댓글을 입력해 주세요.');
+    		$('#replyContent').val('').focus();
+    		return false;
+    	}else{
+			$.ajax({
+				url: 'replyWrite',
+				type: 'POST',
+				data: insertData,
+				success: function(data){
+					//var temp = $(data).find('.comment').children();
+					//$('.comment').html(reList());
+					//reList();
+					
+					$('.noReply').hide();
+					
+					var replyCnt = parseInt($('.replyCnt').text());
+					var add = '';
+					$('#replyContent').val('');
+					$.each(JSON.parse(data), function(index, item){
+						add += '<ul class="cm-list"><li class="cm-view">';
+						add += '<span class="cm-writer">'+item.name+'</span>';
+						add += '<span class="cm-content">'+item.content+'</span>';
+						
+						if('${loginUser.email}' != item.email) {
+							add += '<span class="cm-writedate">'+item.writeDate+'</span>';
+						} else if (${not empty loginUser} && '${loginUser.email}' == item.email) {
+							add += '<div class="replyRow"><span class="cm-writedate">'+item.writeDate+'</span>';
+							add += '<div class="replyBtnRow"><span class="reDelBtn reDel'+item.reNum+'" id="delReNum'+item.reNum+'">삭제</span></div></div>';
+						}
+						
+						add += '</li></ul>';
+						
+					});
+					replyCnt++;
+					$('.replyCnt').after(add);
+					$('.replyCnt').replaceWith('<span class="replyCnt"><i class="fas fa-comment"></i>'+replyCnt+'</span>');
+					
+					$('.reDelBtn').unbind("click").click(delFunc); // unbind() : 중복 이벤트 방지
+				}
+			});
+    	}
+	});
+
+	
+	
+	
+	$('.like').click(function(){
+		if($(this).hasClass('liked')){
+			$.ajax({
+				url: 'cardBoardDecrLike',
+				type: 'POST',
+				data: {
+					//like_num: '${like.likeNum}',
+					cb_num: '${board.cbNum}',
+					email: '${loginUser.email}'
+				},
+				success: function(data){
+					$('.like').removeClass('liked');
+					$('.like i').removeClass('likeActive');
+					$('.like').next().text(data);
+				}
+			});
+		} else {
+			$.ajax({
+				url: 'cardBoardIncrLike',
+				type: 'POST',
+				data: {
+					cb_num: '${board.cbNum}',
+					email: '${loginUser.email}'
+				},
+				success: function(data){
+					$('.like').addClass('liked');
+					$('.like i').addClass('likeActive');
+					$('.like').next().text(data);
+				}
+			});
+		}
+	});
+	
+	$('.downloadFile').click(function(){
+		var result = confirm('다운로드 하시겠습니까 ?');
+		
+		if(result) {
+			location.href = 'fileDownload?file_name=' + $(this).attr('id');
+			//console.log($(this).attr('id'));
+		} else {
+			return false;
+		}
+	});
+	
+	$('#delConfirm').click(function(){
+		var result = confirm('삭제 시 복구가 불가합니다.\n삭제하시겠습니까 ?');
+		
+		if(result) {
+			location.href = 'cardBoardServlet?command=board_delete&cb_num='+'${board.cbNum}';
+		} else {
+			return false;
+		}
+	});
+	
+	
+});
+</script>
+</head>
+<body>
+<%@ include file="header.jsp" %> 
+	<section>
+	<div class="wrap">
+		<div class="cb-detail container">
+			<div class="cbd-header">
+				<h1>${board.title}</h1>
+				<span><fmt:formatDate value="${board.writeDate}" pattern="yyyy.MM.dd, HH:mm:ss"/></span>
+			</div>
+			
+			<div class="cbd-main">
+				<c:if test="${not empty board.thumbnail}">
+					<div class="gallery">
+						<div class="images">
+							<c:forEach items="${galleryList}" var="gallery">
+								<c:if test="${not empty gallery.src}">
+									<img alt="${gallery.src}" src="upload/${gallery.src}">
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+				</c:if>
+				
+				<c:if test="${not empty board.content}">
+					<div class="content">
+							${board.content}
+					</div>
+				</c:if>
+				
+				<!-- <div class="tag">
+					<a href="#">#액션</a>
+					<a href="#">#라라라라</a>
+					<a href="#">#태그</a>
+				</div> -->
+				
+				<c:if test="${not empty board.thumbnail}">
+					<div class="fileList">
+						<div class="fl-header">
+							<i class="far fa-folder-open"></i><span>첨부된 파일</span>
+						</div>
+						<c:forEach items="${galleryList}" var="gallery">
+							<c:if test="${not empty gallery.originSrc}">
+								<%-- <li value="${gallery.galleryNum}"><a href="fileDownload?file_name=${gallery.src}" title="파일 다운로드">${gallery.originSrc} <i class="fas fa-download"></i></a></li> --%>
+								<li value="${gallery.galleryNum}"><span>${gallery.originSrc}<i class="fas fa-download downloadFile" id="${gallery.src}" title="파일 다운로드"></i></span></li>
+							</c:if>
+						</c:forEach>
+					</div>
+				</c:if>
+
+				<span class="writer">${board.name}</span>
+				
+				<div class="likeWrap">
+					<!-- <a href="#"><i class="far fa-thumbs-up"></i></a> -->
+					<c:if test="${not empty loginUser && loginUser.email eq like.email}">
+						<button class="like liked"><i class="far fa-thumbs-up likeActive"></i></button>
+					</c:if>
+					<c:if test="${empty loginUser || loginUser.email != like.email}">
+						<button class="like"><i class="far fa-thumbs-up"></i></button>
+					</c:if>
+					<span>${board.likeCnt}</span>
+				</div>
+				
+				<c:if test="${not empty loginUser && loginUser.email eq board.email}">
+				<div class="btnRow">
+					<a href="cardBoardServlet?command=board_update_form&page=${page}&cb_num=${board.cbNum}"><button type="button" class="whiteBtn">수정</button></a>
+					<a href="cardBoardServlet?command=board_delete&page=${page}&cb_num=${board.cbNum}"><button type="button" class="whiteBtn delConfirm" id="delConfirm">삭제</button></a>
+				</div>
+				</c:if>
+			</div>
+			
+			<div class="cbd-bottom">
+				<div class="pagination">
+					<c:if test="${nextPage != 0}">
+						<a href="cardBoardServlet?command=board_view&page=${page}&cb_num=${nextPage}" class="cbd-prevBtn" title="이전 글"><i class="fas fa-angle-left"></i>PREV</a>
+					</c:if>
+					<c:if test="${prevPage != 0}">
+						<a href="cardBoardServlet?command=board_view&page=${page}&cb_num=${prevPage}" class="cbd-nextBtn" title="다음 글">NEXT<i class="fas fa-angle-right"></i></a>
+					</c:if>
+				</div>
+				<a href="cardBoardList?page=${page}" class="cb-listBtn" title="목록으로 돌아가기"><i class="fas fa-bars"></i></a>
+			</div>
+			
+			<form method="post" class="cm-write">
+				<input type="hidden" name="cb_num" value="${board.cbNum}"/>
+				<input type="hidden" name="email" value="${loginUser.email}"/>
+				<input type="hidden" name="name" value="${loginUser.nick_name}"/>
+				<textarea id="replyContent" name="content" placeholder="댓글을 입력해 주세요." style="resize: none; width: 100%; margin-top: 10px; font-size: 12px;"></textarea>
+				<input type="button" id="replySubmit" value="입력" class="whiteBtn"/>
+			</form>
+			
+			<div class="comment">
+				<span class="replyCnt"><i class="fas fa-comment"></i>${replyCnt}</span>
+			</div>
+		</div>
+		</div>
+	</section>
+	
+<%@ include file="footer.jsp" %> 
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="slick/slick.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.images').slick({
+	   dots: true,
+	   infinite: true,
+	   fade: true,
+	   cssEase: 'linear',
+	   speed: 500,
+	   slidesToShow: 1,
+	   adaptiveHeight: true,
+	   autoplay: true,
+	   autoplaySpeed: 5000
+	   
+	});
+});
+</script>
+</body>
+</html>

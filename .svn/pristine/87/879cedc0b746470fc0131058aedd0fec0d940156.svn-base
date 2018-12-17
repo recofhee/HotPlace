@@ -1,0 +1,73 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.HotPlace.dao.PlayDao;
+import com.HotPlace.vo.PlayVo;
+
+@WebServlet("/live")
+public class Play_LiveList extends HttpServlet {
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		String url = null;
+		url = "https://www.youtube.com/gaming/trending";
+		System.out.println(url);
+		
+		Document documentoc = Jsoup.connect(url).header("User-Agent", "Mozilla/5.0").get();
+
+		Elements contents = documentoc.select(".yt-lockup-title a");
+		
+		String allHtml = contents.outerHtml();
+		String[] title = new String[10];
+		String[] href = new String[10];
+
+		PlayDao Dao = PlayDao.getInstance();
+		PlayVo vo = null;
+		int i = 0;
+
+		for (i = 0; i < 10; i++) {
+			int t_start = allHtml.indexOf("title=");
+			int t_end = allHtml.indexOf("aria-describedby=");
+			int h_start = allHtml.indexOf("href=");
+			int h_end = allHtml.indexOf("rel=");
+			int restart = allHtml.indexOf("</a>");
+
+			title[i] = allHtml.substring(t_start + 7, t_end - 2);
+			href[i] = allHtml.substring(h_start + 6 + 9, h_end - 2);
+			allHtml = allHtml.substring(restart + 4);
+
+			//vo = new PlayVo(i + 1, title[i], href[i]);
+
+			//System.out.println(vo);
+			//Dao.insertVideo(vo);
+			Dao.updateVideo(vo);
+		}
+		List<PlayVo> List = Dao.videoList();
+		req.setAttribute("List", List);
+
+		RequestDispatcher dis = req.getRequestDispatcher("video/Utube.jsp");
+		dis.forward(req, resp);
+	}
+
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+}

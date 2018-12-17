@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Noto Sans KR', sans-serif;
+	/* font-family: 'Roboto', sans-serif;
+	font-family: 'Noto Serif JP', sans-serif; */
+	color: #555;
+}
+section {
+	padding-top: 130px;
+}
+.wrap {
+	margin: 0 auto;
+	padding: 0;
+	height: auto;
+	border: 0px solid black;
+	position: relative;
+	/* background: #eee; */
+   /*  padding: 100px 0; */
+    background: #000000b5;
+    width: 960px;
+}
+button:focus,
+button:active {
+	outline: none !important;
+}
+.wrap a,
+i[class^="fa"] {
+    color: #666;
+	text-decoration: none !important;
+    transition: all .3s;
+}
+.card2 a:focus, .card2 a:active, .card2 a:hover,
+a i[class^="fa"]:focus, a i[class^="fa"]:active, a i[class^="fa"]:hover {
+    color: #f8b753 !important;
+}
+label {
+	cursor: pointer;
+}
+
+/* 
+ * 2018.10.15 김희수
+ * 일단은 .wrap 하위로 설정
+ */
+.wrap input[type="text"],
+.wrap input[type="email"],
+.wrap input[type="password"],
+.wrap select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0 22px 0;
+    display: inline-block;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.wrap input[type="text"]:focus,
+.wrap input[type="email"]:focus,
+.wrap input[type="password"]:focus,
+.wrap select:focus {
+    background-color: #fff;
+    outline: none;
+    border: 1px solid #f8b753;
+}
+.whiteBtn {
+	width: 70px;
+    height: 36px;
+    border: 1px solid #f8b753;
+    background: #fff;
+    color: #f8b753;
+    cursor: pointer;
+}
+.wrap input[type="button"],
+.wrap input[type="submit"] {
+    width: 70px;
+    height: 36px;
+    border: 1px solid #f8b753;
+    background: #f8b753;
+    color: #fff;
+    cursor: pointer;
+}
+.wrap textarea {
+	resize: none;
+    height: 80px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    outline: none;
+}
+ul, li {
+	list-style: none;
+}
+footer {
+	clear: both;
+}
+.btnRow {
+	display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.btnRow a:nth-child(2) {
+    margin-left: 5px;
+}
+.file-drop-area {
+	position: relative;
+	max-width: 100%;
+	margin-top: 10px;
+	background-color: rgba(248, 183, 83, 0.1);
+    border: 1px solid #f8b753;
+    text-align: center;
+    padding: 20px;
+}
+.file-msg {
+	font-size: small;
+	font-weight: 300;
+	line-height: 1.4;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.file-input {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	opacity: 0;
+	&:focus {
+	  outline: none;
+	}
+}

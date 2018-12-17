@@ -1,0 +1,111 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="no index">
+<title>A best Video</title>
+<link href="css/video.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#writeReplyBtn").click(function() {
+			if ($("#re_content").val().trim() == "") {
+				alert("댓글을 입력하세요.");
+				$("#re_content").focus();
+			} else {
+				$.ajax({
+					url : "/hp/playreview",
+					type : "post",
+					data : {
+						play_url : $("#play_url").val(),
+						user_id : $("#user_id").val(),
+						re_content : $("#re_content").val()
+					},
+					success : function() {
+						$("#re_content").val("");
+					}
+				}).then(function() {
+					$.ajax({
+						url : "/hp/reviewlist",
+						data : {
+							play_url : encodeURIComponent($("#play_url").val())
+						},
+						dataType : "json",
+						success : function(a) {
+							var str = '<tr>';
+							str += '<th>' + a.id + '</th><td>' + a.content + '</td><td>'+a.date+'</td>';
+							str += '</tr>';
+	
+							$('.reply tr').eq(0).before(str);
+						}
+					})
+				});
+			}
+		})
+	})
+</script>
+</head>
+<body>
+	<%@ include file="../header.jsp"%>
+	<section>
+		<article id="artcle3" style="margin-top: 90px;">
+			<iframe width="560" height="315" style="margin-top: -25px;"
+				src="https://www.youtube.com/embed/${link}" frameborder="0"
+				allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+			<aside>
+				<div class="box1">
+						<c:forEach var="List" items="${List}">
+						<ul>
+							<li><a href="utubeview?link=${List.video_url}">${List.video_title}</a></li>
+						</ul>
+					</c:forEach>
+				</div>
+				
+				
+				
+			</aside>
+		</article>
+		
+		<article class="review_box">
+			<div>
+				<h3 style="color: gray;">댓글</h3>
+				<input type="hidden" id="play_url" name="play_url" value="${link}">
+				<input type="text" id="user_id" name="user_id" value="${loginUser.nick_name}" readonly="readonly">
+				<input type="text" id="re_content" name="re_content" size="70">
+				<input class="bt" type="button" id="writeReplyBtn" value="등록">
+			</div>
+			<table class="reply">
+				<tr></tr>
+				<c:forEach var="reply" items="${replyList}">
+					<tr>
+						<th style="text-align: center;">${reply.user_id}</th>
+						<td>${reply.re_content}</td>
+						<td>${reply.reg_date}
+							<c:if test="${loginUser.nick_name} == ${reply.user_id}">
+								<a href="#">[삭제]</a>
+							</c:if>
+						</td>
+					<tr>
+				</c:forEach>
+			</table>
+
+			<!-- 
+			<c:if test="${loginUser.nick_name}==null">
+			여기서 비로그인시 보이게 해준다.
+			</c:if>
+			<c:if test="${loginUser.nick_name}!=null">
+			여기서 로그인시 보이게 해준다.
+			</c:if>
+			 -->
+
+		</article>
+		
+	</section>
+	<%@ include file="../footer.jsp"%>
+</body>
+</html>

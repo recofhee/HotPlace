@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;hp&apos;&#x0D;&#x0A;- Original project: &apos;hp&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     BoardDAO.java.mine&#x0D;&#x0A;     BoardDAO.java.r939&#x0D;&#x0A;     BoardDAO.java.r944" description="Delete elements" element1="src/com/HotPlace/dao/BoardDAO.java.mine" element2="src/com/HotPlace/dao/BoardDAO.java.r939" element3="src/com/HotPlace/dao/BoardDAO.java.r944" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="3" stamp="1541701226288" subPackages="false" version="1.0"/>
+</session>

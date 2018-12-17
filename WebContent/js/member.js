@@ -1,0 +1,65 @@
+function updateCheck() {
+	if (document.frm.pw.value.length < 5) {
+		alert("암호는 5글자 이상으로 적어주세요.!");
+		frm.pw.focus();
+		return false;
+	}
+
+	if (document.frm.pw.value == 0) {
+		alert("암호를 입력해주세요.");
+		frm.pw.focus();
+		return false;
+	}
+	if (document.frm.pw.value != document.frm.pw_check.value) {
+		alert("암호가 일치하지 않습니다.");
+		frm.pw_check.focus();
+		return false;
+	}
+	return true;
+}
+
+function loginCheck() {
+	if (document.frm.email.value.length == 0) {
+		alert("아이디를 써주세요");
+		frm.email.focus();
+		return false;
+	}
+	if (document.frm.pw.value == "") {
+		alert("암호는 반드시 입력해야 합니다.");
+		frm.pw.focus();
+		return false;
+	}
+	return true;
+}
+
+function deleteCheck() {
+	if (document.frm.email.value.length != 0) {
+		confirm("정말로 탈퇴 하시겠습니까?");
+		return true
+	} else {
+		frm.email.focus();
+		return false;
+	}
+}
+/*
+ * function idCheck(){ if(document.frm.nickname.value.length==""){ alert("닉네임을
+ * 입력해주세요"); document.frm.userid.focus(); return; } var
+ * url="idCheck.do?nickname=" + document.frm.nickname.value; window.open(url,
+ * "_blank_1", "toolbar=no, menubar=no, scrollbars=yes, resizabel=no," +
+ * "width=450, hegiht=200");
+ *  } function idok(){ opener.frm.nickname.value=document.frm.nickname.value;
+ * opener.frm.reid.value=document.frm.nickname.value; self.close();
+ *  } function joinCheck(){ if(document.frm.email.value.length==0){ alert("이메일은
+ * 반드시 입력해야 합니다."); frm.email.focus(); return false; }
+ * if(document.frm.nickname.value.length == 0){ alert("닉네임을 써주세요.");
+ * frm.name.focus(); return false; }
+ * 
+ * if(document.frm.pwd.value == 0){ alert("암호를 입력해주세요."); frm.pwd.focus();
+ * return false; } if(document.frm.pwd.value != document.frm.pwd_check.value){
+ * alert("암호가 일치하지 않습니다."); frm.pwd.focus(); return false; }
+ * 
+ * if(document.frm.reid.value.length=0){ alert("중복 체크를 하지 않았습니다.");
+ * frm.userid.focus(); return false;
+ *  } return true; }
+ * 
+ */

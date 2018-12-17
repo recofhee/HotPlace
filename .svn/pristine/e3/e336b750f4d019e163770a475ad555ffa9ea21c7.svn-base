@@ -1,0 +1,90 @@
+@charset "UTF-8";
+body{background: url(../images/monsterbackground.jpg);
+	 background-attachment: fixed;
+	 /* background-size: cover; */}
+section {padding: 15px;
+		 padding-top: 120px;
+		 }
+.wrap{
+	width: 960px;
+	margin: 30px auto;
+	border:  1px solid black;
+	/* background: url(../images/icon/monstergu.jpg); */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	opacity: .9;
+	background: #000000c4;
+}
+.bt {
+	position: relative;
+	width: 80px;
+	height: 25px;
+	font-size: 12px;
+	color: black;
+	background: white;
+	cursor: pointer;
+	margin: 10px;
+	}
+.bt:hover {
+	border: 1px solid;
+	color: black;
+	background: #b51f8d;
+	font-weight: bold;
+}
+
+
+table {
+	/* width: 70%;  */
+	border-collapse: collapse;
+	font-size: 12px;
+	line-height: 15px;
+	
+}
+table td, th{
+	border:  1px solid #90b4e63d;
+	padding: 5px;
+	color: white;
+	
+	
+}
+th{
+	background: #9da5b924;
+	color: white;
+}
+img{
+	/* width: 220px;
+	height: 300px; */
+}
+a{
+	text-decoration: none;
+	color: black;
+	}
+a:hover {
+	text-decoration: none;
+	color: red;
+	text-shadow: 0 2px 2px #000;
+}
+.td1 td{
+	border-top: 1px solid #90b4e6;
+    border-bottom: 1px solid #90b4e6;
+    background-color: #c3d8f5;
+
+}
+.head {
+	height: 80px;
+    color: white;
+    text-align: left;
+    font-size: 2em;
+}
+/* .head img {float:left; vertical-align: top; width: 50px;} */
+.center {margin: 30px;}
+.h1 {
+	background: url(../images/icon/monboar.png) no-repeat 15px 20px;
+    width: 440px;
+    height: 85px;
+    background-size: 60%;
+    float: left;
+}
+
+h3{padding-top: 60px;}
+	

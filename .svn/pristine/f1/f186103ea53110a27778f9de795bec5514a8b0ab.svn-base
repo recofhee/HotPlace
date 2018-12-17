@@ -1,0 +1,80 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONArray;
+
+import com.HotPlace.dao.BookmarkDao;
+import com.HotPlace.dao.MemberDao;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.util.SHA256;
+import com.HotPlace.vo.MemberVo;
+
+
+@WebServlet("/memberWithdrawal")
+public class MemberWithdrawalServlet  extends HttpServlet{
+	private static final long serialVersionUID = 1L;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			
+		HttpSession session =req.getSession();
+		String email = "";
+		String url= "memberWithdrawal.jsp";
+		if(session.getAttribute("loginUser")!= null) {
+			MemberVo vo1 = (MemberVo) session.getAttribute("loginUser");
+			email = vo1.getEmail();
+			url="memberWithdrawal.jsp";
+		}
+		MemberDao dao = MemberDao.getInstance();
+		MemberVo vo = dao.getMember(email);
+		req.setAttribute("vo", vo);
+		System.out.println(vo);
+		RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+		dispatcher.forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		SHA256 sha = new SHA256();
+		String email = req.getParameter("email");
+		String pw = sha.testSHA256(req.getParameter("pw"));
+		
+		
+		System.out.println("pw ::"+pw);
+		System.out.println("email::" +email);
+		
+		String url = "memberWithdrawal.jsp";
+		MemberDao dao = MemberDao.getInstance();
+		PcDao pcdao = PcDao.getInstance();
+		BookmarkDao bdao = BookmarkDao.getInstance();
+		int result = dao.userCheck(email, pw);
+		if(result ==1) {
+			bdao.deleteAllBookMarkLike(email);
+			dao.deleteMember(email);
+			JSONArray array = pcdao.selectResvByNum(email);
+			if(array != null) {
+				url = "memberWithdrawal";
+				resp.sendRedirect(url);
+			}
+			HttpSession session = req.getSession();
+			session.invalidate();
+			url = "main";
+			
+		}else if(result ==0){
+			//req.setAttribute("message", "비밀번호가 맞지 않습니다.");
+			url = "memberWithdrawal";
+		}
+
+		resp.sendRedirect(url);
+	}
+}

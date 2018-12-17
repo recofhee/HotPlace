@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<title>Card Board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Serif+JP|Roboto">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+<link rel="stylesheet" href="css/bootstrap-grid.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/cardBoardDetail.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://cdn.ckeditor.com/4.10.1/standard-all/ckeditor.js"></script>
+<script type="text/javascript" src="js/file.js"></script>
+</head>
+<body>
+<%@ include file="header.jsp" %> 
+	<section>
+		<div class="wrap">
+			<div class="cb-detail container">
+				<form action="cardBoardWrite" method="post" class="cbWriteForm" id="cbWriteForm" enctype="multipart/form-data">
+					<!-- <input type="hidden" name="command" value="board_write"/> -->
+					
+					<input type="hidden" value="email@email.com" name="email" id="email"/>
+					<input type="hidden" value="email" name="name" id="name"/>
+					<input type="hidden" value="1" name="pw" id="pw"/>
+					<input type="text" name="title" id="title" placeholder="제목을 입력해 주세요."/>
+					<textarea name="content"></textarea>
+					<div class="file-drop-area">
+						<span class="file-msg">이 영역을 클릭하여 파일 선택 (드래그하여 첨부 가능)</span>
+						<!-- <input type="file" class="file-input" name="file" multiple="multiple"/> -->
+						<input type="file" class="file-input" name="file" multiple="multiple"/>
+					</div>
+					<!-- <input type="text" name="tag" id="tag" placeholder="태그는 쉼표(,)를 이용하여 구분해 주세요."/> -->
+					
+					<div class="btnRow">
+						<input type="submit" id="submitBtn" value="작성"/>
+						<a href="cardBoardList?page=${page}"><button type="button" class="whiteBtn">취소</button></a>
+					</div>
+					<!-- <a href="#"><i class="fas fa-bars"></i></a> -->
+			</form>
+			</div>
+		</div>
+	</section>
+	
+<%@ include file="footer.jsp" %> 
+<script type="text/javascript">
+$(function(){
+	//textarea editor
+	CKEDITOR.replace('content');
+	
+	$('#cbWriteForm').submit(function(){
+		CKEDITOR.instances.content.updateElement();
+	});
+});
+</script>
+</body>
+</html>

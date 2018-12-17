@@ -1,0 +1,97 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/footnav.css?ver=2" rel="stylesheet">
+<style type="text/css">
+footer{width: 100%; height: 0 auto; border: 0px solid black; text-align: center; color: white; margin: auto; background: #092d4a;}
+</style>
+</head>
+<body>
+<footer>	
+<div class="bar">
+		<ul>
+			<li><a href="#">제휴문의</a></li>
+			<li><a href="#">이용약관</a></li>
+			<li><a href="#">개인정보처리방침</a></li>
+			<li><a href="#">고객센터</a></li>
+		</ul>
+
+
+<div class="icon">
+	<ul>	
+		<li><a href="https://ko-kr.facebook.com/"><i class="fa fa-facebook-f fa-1x"></i></a>
+		<li><a href="https://twitter.com/?lang=ko"><i class="fa fa-twitter fa-1x"></i></a>
+		<li><a href="https://www.youtube.com/?gl=KR"><i class="fa fa-youtube fa-1x"></i></a>
+	</ul>
+</div>
+<div >
+<ul id="nav">
+   	<li><a title="패밀리사이트" style="cursor:pointer">패밀리사이트</a>
+      <ul class="sub">
+         <li><a href="#" title="family">사이트1</a></li>
+         <li><a href="#" title="family">사이트2</a></li>
+         <li><a href="#" title="family">사이트3</a></li>
+      </ul>
+   	</li></ul>
+ </div>  	
+</div>
+
+<div class="logo">
+	<a href="main"><img src="images/icon/HotPlace.png"></a>
+</div>
+
+<p>(주)HotPlace 주소  :서울특별시 강서구 화곡로 149, 3층~5층 (화곡동, 심당빌딩)</p>
+<p>대표전화 : 02-1234-5678 | FAX : 02-1234-5678 | (주)HotPlace 대표자 : 홍길동</p>
+<p>사업자등록번호 : 000-00-00000 | 통신판매업신고번호 : 제 1111 - 서울화곡 - 11111호</p>
+<p>사업자정보확인 | 개인정보관리책임자 : 홍길동</p>
+ <p>©HotPlace . All rights reserved.</p>
+ <p>HotPlace Team Project By | </p>
+<div class="iconbox">
+<ul>
+	<li>
+	<img src="images/icon/ico_battle.png" style="width: 50px; height: 50px; padding: 8px;">BATTLE GROUNDS
+	</li>
+</ul>	
+</div>
+<div class="iconbox">
+<ul>
+	<li>
+	<img src="images/icon/ow.png">OVER WATCH
+	</li>
+</ul>
+</div>	
+<div class="iconbox">
+<ul>
+	<li>
+	<img src="images/icon/sc2.png">STAR CRAFTⅡ
+	</li>
+</ul>
+</div>	
+<div class="iconbox">
+<ul>
+	<li>
+	<img src="images/icon/wow.png">WORLD OF WARCRAFT
+	</li>
+</ul>	
+</div>
+<div class="iconbox">
+<ul>
+	<li>
+	<img src="images/icon/lolic.png" style="width: 50px; height: 50px;">LEAGUE OF LEGENDS
+	</li>
+</ul>	
+</div>
+<div class="iconbox">
+<ul>
+	<li>
+	<img src="images/icon/md3.png">DIABLOⅢ
+	</li>
+</ul>	
+</div>
+</footer>
+</body>
+</html>

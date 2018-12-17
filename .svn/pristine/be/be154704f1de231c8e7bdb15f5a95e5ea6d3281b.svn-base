@@ -1,0 +1,171 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>예약 완료</title>
+<style type="text/css">
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+section {
+    padding: 100px 500px;
+}
+.pricing-wrapper {
+    position: relative;
+    list-style: none;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
+    padding: 30px;
+}
+.pricing-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 7px;
+    color: #666;
+    font-size: 14px;
+}
+.pricing-header {
+    padding: 0 0 50px;
+    text-align: center;
+    background-color: transparent;
+}
+.columns {
+	margin: 0 auto;
+}
+.columns .pricing-header .price {
+    color: #f8b753 !important;
+    background-color: transparent;
+}
+.pricing-header h2 {
+    font-size: 1.8em;
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-top: 40px;
+}
+.pcInfo {
+	margin-bottom: 30px;
+	color: #666;
+}
+.currency,
+.value {
+	font-size: 3rem;
+	font-weight: 300;
+}
+.value {
+    font-size: 5em;
+    font-weight: 300;
+}
+.currency {
+    color: #f8b753;
+}
+.columns .currency {
+	color: #666;
+}
+.currency {
+    display: inline-block;
+    margin-top: 10px;
+    vertical-align: top;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.pricing-body {
+	color: #666;
+}
+.pricing-features:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.pricing-features span {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: 600;
+}
+.pricing-features li {
+    padding: 1em;
+    font-size: 18px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pricing-features span {
+    display: inline-block;
+    margin-bottom: 0;
+}
+.pricing-footer {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 80px;
+	width: 100%;
+}
+.pricing-footer {
+    position: relative;
+    height: auto;
+    padding: 1.8em 0;
+    text-align: center;
+}
+.pricing-footer::after {
+    display: none;
+}
+.columns .button {
+    display: inline-block;
+    padding: 1em 2em;
+    color: #f8b753;
+    border-radius: 8px;
+    font-size: 20px;
+    text-indent: 0;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all .6s;
+    width: 70%;
+}
+.columns .button {
+    background-color: #f8b753;
+	color: #ffffff;
+}
+.columns .button:hover {
+	opacity: .8;
+}
+</style>
+</head>
+<body>
+	<section>
+		<div class="columns">
+			<ul class="pricing-wrapper">
+				<li class="pricing-label">No. 예약 번호</li>
+				<li>
+					<div class="pricing-header">
+						<div class="pcInfo">
+							<h2>PC방 이름</h2>
+							<span>(위치)</span>
+						</div>
+						<div class="price">
+							<span class="currency">\</span>
+							<span class="value">8000</span>
+						</div>
+					</div>
+					<div class="pricing-body">
+						<ul class="pricing-features">
+							<li>이용 시간 : <span>4</span> 시간</li>
+							<li>이용 일시 : <span>2018.10.17 16:00</span> ~ <span>2018.10.17 20:00</span></li>
+							<li>선택 좌석 : <span>7</span></li>
+							<li>결제 방법 : <span>카드</span></li>
+						</ul>
+					</div>
+					<div class="pricing-footer">
+						<a class="button" href="#">홈으로</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
+</body>
+</html>

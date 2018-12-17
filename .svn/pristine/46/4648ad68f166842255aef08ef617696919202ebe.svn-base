@@ -1,0 +1,68 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.HotPlace.dao.BoardDAO;
+import com.HotPlace.vo.BoardVO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+
+@WebServlet("/boardWrite.g")
+public class BoardWriteServlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		RequestDispatcher dispatcher = req.getRequestDispatcher("boardWrite.jsp");
+		dispatcher.forward(req, resp);
+		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		
+		ServletContext context = getServletContext();
+
+		
+		
+		String path = context.getRealPath("upload");
+		String encType = "utf-8";
+		int sizeLimit = 20 * 1024 * 1024;
+		
+		MultipartRequest multi = new MultipartRequest(req, path, sizeLimit, encType, new DefaultFileRenamePolicy());
+		
+		String title = multi.getParameter("title");
+		String fileName = multi.getFilesystemName("file_modi");
+		String content = multi.getParameter("content");
+		String nick_name = multi.getParameter("nick_name");
+		
+		
+		int category = Integer.parseInt(multi.getParameter("category"));
+		System.out.println("category : " + category);
+
+		BoardVO vo = new BoardVO();
+		vo.setTitle(title);
+		vo.setFile_modi(fileName);
+		vo.setContent(content);
+		vo.setCategory_num(category);
+		vo.setNick_name(nick_name);;
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		dao.boardWrite(vo);
+		
+		req.setAttribute("loginUser", nick_name);
+		resp.sendRedirect("boardList.g?category_num="+category);
+		
+		
+	}
+	
+}

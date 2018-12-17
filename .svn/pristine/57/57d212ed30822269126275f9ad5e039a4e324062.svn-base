@@ -1,0 +1,143 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<title>SEAT</title>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Serif+JP|Roboto" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="css/bootstrap-grid.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/seat.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+});
+</script>
+</head>
+<body>
+	<header>
+		<h1>HEADER</h1>
+	</header>
+
+	<section>
+		<div class="seat-wrap">
+			<div class="seat-position">
+				<button type="button" class="seat-normal" title="1(예약 가능)" id="" style="left: 0px; top: 0px;">1</button>
+				<button type="button" class="seat-normal" title="2(예약 가능)" id="" style="left: 50px; top: 0px;">2</button>
+				<button type="button" class="seat-normal" title="3(예약 가능)" id="" style="left: 100px; top: 0px;">3</button>
+				<button type="button" class="seat-done" title="4(예약 불가)" id="" style="left: 150px; top: 0px;">4</button>
+				<button type="button" class="seat-normal" title="5(예약 가능)" id="" style="left: 200px; top: 0px;">5</button>
+				<button type="button" class="seat-normal" title="6(예약 가능)" id="" style="left: 250px; top: 0px;">6</button>
+				<button type="button" class="seat-normal" title="7(예약 가능)" id="" style="left: 300px; top: 0px;">7</button>
+				<button type="button" class="seat-normal" title="8(예약 가능)" id="" style="left: 350px; top: 0px;">8</button>
+				<button type="button" class="seat-normal" title="9(예약 가능)" id="" style="left: 400px; top: 0px;">9</button>
+				<button type="button" class="seat-normal" title="10(예약 가능)" id="" style="left: 450px; top: 0px;">10</button>
+				<button type="button" class="seat-normal" title="11(예약 가능)" id="" style="left: 500px; top: 0px;">11</button>
+				<button type="button" class="seat-normal" title="12(예약 가능)" id="" style="left: 550px; top: 0px;">12</button>
+				<button type="button" class="seat-normal" title="13(예약 가능)" id="" style="left: 600px; top: 0px;">13</button>
+				<button type="button" class="seat-normal" title="14(예약 가능)" id="" style="left: 650px; top: 0px;">14</button>
+				<button type="button" class="seat-normal" title="15(예약 가능)" id="" style="left: 700px; top: 0px;">15</button>
+				<button type="button" class="seat-normal" title="16(예약 가능)" id="" style="left: 750px; top: 0px;">16</button>
+				<button type="button" class="seat-normal" title="17(예약 가능)" id="" style="left: 800px; top: 0px;">17</button>
+				<button type="button" class="seat-normal" title="18(예약 가능)" id="" style="left: 850px; top: 0px;">18</button>
+				<button type="button" class="seat-normal" title="20(예약 가능)" id="" style="left: 850px; top: 100px;">20</button>
+				<button type="button" class="seat-normal" title="21(예약 가능)" id="" style="left: 850px; top: 150px;">21</button>
+				<button type="button" class="seat-normal" title="22(예약 가능)" id="" style="left: 850px; top: 200px;">22</button>
+				<button type="button" class="seat-normal" title="23(예약 가능)" id="" style="left: 850px; top: 250px;">23</button>
+				<button type="button" class="seat-normal" title="24(예약 가능)" id="" style="left: 850px; top: 300px;">24</button>
+				<button type="button" class="seat-normal" title="25(예약 가능)" id="" style="left: 850px; top: 350px;">25</button>
+				<button type="button" class="seat-normal" title="27(예약 가능)" id="" style="left: 850px; top: 450px;">27</button>
+				<button type="button" class="seat-normal" title="28(예약 가능)" id="" style="left: 800px; top: 450px;">28</button>
+				<button type="button" class="seat-normal" title="29(예약 가능)" id="" style="left: 750px; top: 450px;">29</button>
+				<button type="button" class="seat-normal" title="30(예약 가능)" id="" style="left: 700px; top: 450px;">30</button>
+				<button type="button" class="seat-normal" title="31(예약 가능)" id="" style="left: 650px; top: 450px;">31</button>
+				<button type="button" class="seat-normal" title="32(예약 가능)" id="" style="left: 600px; top: 450px;">32</button>
+				<button type="button" class="seat-normal" title="33(예약 가능)" id="" style="left: 550px; top: 450px;">33</button>
+				<button type="button" class="seat-normal" title="34(예약 가능)" id="" style="left: 500px; top: 450px;">34</button>
+				<button type="button" class="seat-normal" title="35(예약 가능)" id="" style="left: 450px; top: 450px;">35</button>
+				<button type="button" class="seat-normal" title="36(예약 가능)" id="" style="left: 400px; top: 450px;">36</button>
+				<button type="button" class="seat-normal" title="37(예약 가능)" id="" style="left: 350px; top: 450px;">37</button>
+				<button type="button" class="seat-normal" title="38(예약 가능)" id="" style="left: 300px; top: 450px;">38</button>
+				<button type="button" class="seat-normal" title="39(예약 가능)" id="" style="left: 250px; top: 450px;">39</button>
+				<button type="button" class="seat-normal" title="40(예약 가능)" id="" style="left: 200px; top: 450px;">40</button>
+				<button type="button" class="seat-normal" title="41(예약 가능)" id="" style="left: 150px; top: 450px;">41</button>
+				<button type="button" class="seat-normal" title="42(예약 가능)" id="" style="left: 100px; top: 450px;">42</button>
+				<button type="button" class="seat-normal" title="43(예약 가능)" id="" style="left: 50px; top: 450px;">43</button>
+				<button type="button" class="seat-normal" title="44(예약 가능)" id="" style="left: 0px; top: 450px;">44</button>
+				<button type="button" class="seat-normal" title="45(예약 가능)" id="" style="left: 750px; top: 350px;">45</button>
+				<button type="button" class="seat-normal" title="46(예약 가능)" id="" style="left: 700px; top: 350px;">46</button>
+				<button type="button" class="seat-normal" title="47(예약 가능)" id="" style="left: 650px; top: 350px;">47</button>
+				<button type="button" class="seat-normal" title="48(예약 가능)" id="" style="left: 600px; top: 350px;">48</button>
+				<button type="button" class="seat-normal" title="49(예약 가능)" id="" style="left: 550px; top: 350px;">49</button>
+				<button type="button" class="seat-normal" title="50(예약 가능)" id="" style="left: 500px; top: 350px;">50</button>
+				<button type="button" class="seat-normal" title="51(예약 가능)" id="" style="left: 450px; top: 350px;">51</button>
+				<button type="button" class="seat-normal" title="52(예약 가능)" id="" style="left: 400px; top: 350px;">52</button>
+				<button type="button" class="seat-normal" title="53(예약 가능)" id="" style="left: 350px; top: 350px;">53</button>
+				<button type="button" class="seat-normal" title="54(예약 가능)" id="" style="left: 300px; top: 350px;">54</button>
+				<button type="button" class="seat-normal" title="55(예약 가능)" id="" style="left: 250px; top: 350px;">55</button>
+				<button type="button" class="seat-normal" title="56(예약 가능)" id="" style="left: 200px; top: 350px;">56</button>
+				<button type="button" class="seat-normal" title="57(예약 가능)" id="" style="left: 150px; top: 350px;">57</button>
+				<button type="button" class="seat-normal" title="58(예약 가능)" id="" style="left: 100px; top: 350px;">58</button>
+				<button type="button" class="seat-normal" title="59(예약 가능)" id="" style="left: 750px; top: 300px;">59</button>
+				<button type="button" class="seat-normal" title="60(예약 가능)" id="" style="left: 700px; top: 300px;">60</button>
+				<button type="button" class="seat-normal" title="61(예약 가능)" id="" style="left: 650px; top: 300px;">61</button>
+				<button type="button" class="seat-normal" title="62(예약 가능)" id="" style="left: 600px; top: 300px;">62</button>
+				<button type="button" class="seat-normal" title="63(예약 가능)" id="" style="left: 550px; top: 300px;">63</button>
+				<button type="button" class="seat-normal" title="64(예약 가능)" id="" style="left: 500px; top: 300px;">64</button>
+				<button type="button" class="seat-normal" title="65(예약 가능)" id="" style="left: 450px; top: 300px;">65</button>
+				<button type="button" class="seat-normal" title="66(예약 가능)" id="" style="left: 400px; top: 300px;">66</button>
+				<button type="button" class="seat-normal" title="67(예약 가능)" id="" style="left: 350px; top: 300px;">67</button>
+				<button type="button" class="seat-normal" title="68(예약 가능)" id="" style="left: 300px; top: 300px;">68</button>
+				<button type="button" class="seat-normal" title="69(예약 가능)" id="" style="left: 250px; top: 300px;">69</button>
+				<button type="button" class="seat-normal" title="70(예약 가능)" id="" style="left: 200px; top: 300px;">70</button>
+				<button type="button" class="seat-normal" title="71(예약 가능)" id="" style="left: 150px; top: 300px;">71</button>
+				<button type="button" class="seat-normal" title="72(예약 가능)" id="" style="left: 100px; top: 300px;">72</button>
+				<button type="button" class="seat-normal" title="73(예약 가능)" id="" style="left: 750px; top: 150px;">73</button>
+				<button type="button" class="seat-normal" title="74(예약 가능)" id="" style="left: 700px; top: 150px;">74</button>
+				<button type="button" class="seat-normal" title="75(예약 가능)" id="" style="left: 650px; top: 150px;">75</button>
+				<button type="button" class="seat-normal" title="76(예약 가능)" id="" style="left: 600px; top: 150px;">76</button>
+				<button type="button" class="seat-normal" title="77(예약 가능)" id="" style="left: 550px; top: 150px;">77</button>
+				<button type="button" class="seat-normal" title="78(예약 가능)" id="" style="left: 500px; top: 150px;">78</button>
+				<button type="button" class="seat-normal" title="79(예약 가능)" id="" style="left: 450px; top: 150px;">79</button>
+				<button type="button" class="seat-normal" title="80(예약 가능)" id="" style="left: 400px; top: 150px;">80</button>
+				<button type="button" class="seat-normal" title="81(예약 가능)" id="" style="left: 350px; top: 150px;">81</button>
+				<button type="button" class="seat-normal" title="82(예약 가능)" id="" style="left: 300px; top: 150px;">82</button>
+				<button type="button" class="seat-normal" title="83(예약 가능)" id="" style="left: 250px; top: 150px;">83</button>
+				<button type="button" class="seat-normal" title="84(예약 가능)" id="" style="left: 200px; top: 150px;">84</button>
+				<button type="button" class="seat-normal" title="85(예약 가능)" id="" style="left: 150px; top: 150px;">85</button>
+				<button type="button" class="seat-normal" title="86(예약 가능)" id="" style="left: 100px; top: 150px;">86</button>
+				<button type="button" class="seat-normal" title="87(예약 가능)" id="" style="left: 750px; top: 100px;">87</button>
+				<button type="button" class="seat-normal" title="88(예약 가능)" id="" style="left: 700px; top: 100px;">88</button>
+				<button type="button" class="seat-normal" title="89(예약 가능)" id="" style="left: 650px; top: 100px;">89</button>
+				<button type="button" class="seat-normal" title="90(예약 가능)" id="" style="left: 600px; top: 100px;">90</button>
+				<button type="button" class="seat-normal" title="91(예약 가능)" id="" style="left: 550px; top: 100px;">91</button>
+				<button type="button" class="seat-normal" title="92(예약 가능)" id="" style="left: 500px; top: 100px;">92</button>
+				<button type="button" class="seat-normal" title="93(예약 가능)" id="" style="left: 450px; top: 100px;">93</button>
+				<button type="button" class="seat-normal" title="94(예약 가능)" id="" style="left: 400px; top: 100px;">94</button>
+				<button type="button" class="seat-normal" title="95(예약 가능)" id="" style="left: 350px; top: 100px;">95</button>
+				<button type="button" class="seat-normal" title="96(예약 가능)" id="" style="left: 300px; top: 100px;">96</button>
+				<button type="button" class="seat-normal" title="97(예약 가능)" id="" style="left: 250px; top: 100px;">97</button>
+				<button type="button" class="seat-normal" title="98(예약 가능)" id="" style="left: 200px; top: 100px;">98</button>
+				<button type="button" class="seat-normal" title="99(예약 가능)" id="" style="left: 150px; top: 100px;">99</button>
+				<button type="button" class="seat-normal" title="100(예약 가능)" id="" style="left: 100px; top: 100px;">100</button>
+				<button type="button" class="seat-normal" title="101(예약 가능)" id="" style="left: 0px; top: 100px;">101</button>
+				<button type="button" class="seat-normal" title="102(예약 가능)" id="" style="left: 0px; top: 150px;">102</button>
+				<button type="button" class="seat-normal" title="103(예약 가능)" id="" style="left: 0px; top: 200px;">103</button>
+				<button type="button" class="seat-normal" title="104(예약 가능)" id="" style="left: 0px; top: 250px;">104</button>
+				<button type="button" class="seat-normal" title="105(예약 가능)" id="" style="left: 0px; top: 300px;">105</button>
+				<button type="button" class="seat-normal" title="106(예약 가능)" id="" style="left: 0px; top: 350px;">106</button>
+			</div>
+		</div>
+	</section>
+
+	<footer>
+		<h1>FOOTER</h1>
+	</footer>
+</body>
+</html>

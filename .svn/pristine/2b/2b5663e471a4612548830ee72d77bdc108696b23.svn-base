@@ -1,0 +1,813 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<style type="text/css">
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+body{background-image: url(images/starback.jpg);
+    /* background-repeat: no-repeat; */
+    background-size: 100% 100%}
+
+section { 
+padding-top: 130px;
+		 /*  background-image: url(images/starback.jpg);
+   		  background-repeat: no-repeat;
+   		  background-size: cover; */
+   		  }
+
+#canvas {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+#chartjs-tooltip {
+	opacity: 1;
+	position: absolute;
+	background: rgba(0, 0, 0, .7);
+	color: white;
+	border-radius: 3px;
+	-webkit-transition: all .1s ease;
+	transition: all .1s ease;
+	pointer-events: none;
+	-webkit-transform: translate(-50%, 0);
+	transform: translate(-50%, 0);
+}
+
+.chart-canvas {
+	margin: 0 auto;
+}
+
+.chartjs-tooltip-key {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin-right: 10px;
+}
+
+.chart-wrap {
+	width: 1100px !important;
+	padding: 100px 0;
+	margin: 0 auto;
+}
+
+.chart-wrap .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.chart-wrap .row-cards>[class*='col-'] {
+	display: flex;
+}
+
+.chart-wrap .card {
+	position: relative;
+	width: 100%;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
+	box-shadow: 0px 0px 10px rgba(69, 101, 173, 0.1);
+	border-radius: 7px;
+	margin-bottom: 1.5rem;
+	background: rgba(255,255,255,0.9);
+}
+
+.chart-wrap .card-body {
+	flex: 1 1 auto;
+	margin: 0;
+	padding: 1.5rem 1.5rem;
+	position: relative;
+}
+
+.chart-wrap .card-body:last-child {
+	margin-bottom: 0;
+}
+
+.chart-wrap .col {
+	flex-basis: 0;
+	flex-grow: 1;
+	max-width: 100%;
+}
+
+.chart-wrap .text-muted {
+	color: #999 !important;
+}
+
+.chart-wrap .col h3 {
+	margin: 0;
+}
+
+.align-self-center {
+	align-self: center !important;
+}
+
+.chart-circle {
+	display: block;
+	position: relative;
+	margin: 0 auto;
+}
+
+.chart-circle-xs {
+	height: 2.5rem;
+	width: 2.5rem;
+	font-size: .8rem;
+}
+
+.chart-circle canvas {
+	margin: 0 auto;
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.chart-wrap h2 {
+	color: #444;
+	margin-bottom: 40px;
+	font-size: 27px;
+}
+
+.hidden {
+	display: none;
+}
+
+.active {
+	color: #fff !important;
+	background: #f8b753 !important;
+}
+
+.button {
+	height: 100%;
+	border: 1px solid #f8b753;
+	background: #fff;
+	color: #f8b753;
+	padding: 10px 20px;
+}
+
+.nowYear {
+	border: none;
+	color: #f8b753;
+	font-size: 40px;
+	width: 100px;
+	background: transparent;
+}
+
+.nowYear+span {
+	color: #f8b753;
+	align-self: center;
+	font-size: 18px;
+}
+
+.selMonth {
+	height: 100%;
+	border: 1px solid #666;
+	background: #fff;
+	color: #666;
+	padding: 10px 20px;
+	margin: 10px 0;
+}
+
+.daily:hover, .daily:active,
+.monthly:hover, .monthly:active, 
+.selMonth:hover, .selMonth:active {
+	outline: none;
+	cursor: pointer;
+}
+
+.flex-end {
+	justify-content: flex-end;
+	width: 100%;
+	margin: 0 !important;
+}
+
+.ml-20 {
+	margin-left: 20px;
+}
+
+.period {
+	text-align: right;
+	margin-bottom: 20px;
+}
+
+.radarCanvas-wrap {
+	width: 600px;
+    height: 650px;
+    margin: 0 auto;
+}
+</style>
+<title>차트</title>
+<link rel="stylesheet" href="css/bootstrap-grid.css">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript"> 
+
+$(function() {
+	
+   // 총 회원 수
+   var ctxMemCnt = $('#memberCntCanvas');
+   var memCnt = ${memberCnt};
+   var memCntLen = Math.floor(Math.log10(memCnt) + 1);
+   var memCntMax = Math.pow(10, memCntLen);
+   new Chart(ctxMemCnt, {
+       type: 'doughnut',
+       data: {
+         datasets: [
+           {
+             backgroundColor: ["#9585ad"],
+             data: [memCntMax, memCnt]
+           }
+         ]
+       },
+       options: {
+          responsive : true,
+          maintainAspectRatio: true, 
+          tooltips: {
+             enabled: false
+          },
+           hover: {
+              mode: null
+           },
+           animationEasing: 'easeOutQuint',
+           animateScale: true,
+           title: {
+              display: false,
+           },
+           legend: {
+              display: false, //hide legend
+         }
+       }
+   });
+   
+   // 총 PC방 수
+   var ctxPcCnt = $('#pcCntCanvas');
+   var pcCnt = ${pcCnt};
+   var pcCntLen = Math.floor(Math.log10(pcCnt) + 1);
+   var pcCntMax = Math.pow(10, pcCntLen);
+   new Chart(ctxPcCnt, {
+       type: 'doughnut',
+       data: {
+         datasets: [
+           {
+             backgroundColor: ["#e89d5f"],
+             data: [pcCntMax, pcCnt]
+           }
+         ]
+       },
+       options: {
+          responsive : true,
+          maintainAspectRatio: true, 
+          tooltips: {
+             enabled: false
+          },
+           hover: {
+              mode: null
+           },
+           animationEasing: 'easeOutQuint',
+           animateScale: true,
+           title: {
+              display: false,
+           },
+           legend: {
+            display: false, //hide legend
+         }
+       }
+   });
+   
+   // 연령별 게임 장르 선호도
+   $.ajax('chartOne', {
+      type : 'POST',
+      dataType : 'json',
+      success : function(data) {
+
+         // 장르별 수 - 성인
+         var rpgLenA = 0;
+         var rtsLenA = 0;
+         var raceSportLenA = 0;
+         var fpsLenA = 0;
+
+         // 장르별 수 - 청소년
+         var rpgLenT = 0;
+         var rtsLenT = 0;
+         var raceSportLenT = 0;
+         var fpsLenT = 0;
+
+         // 장르별 수 - 응답 안 함
+         var rpgLenN = 0;
+         var rtsLenN = 0;
+         var raceSportLenN = 0;
+         var fpsLenN = 0;
+
+         for (var i in data) {
+
+            if (data[i].birthdate != null) {
+
+               // 성인
+               if (data[i].genre === 'RPG' && data[i].generation === '성인') {
+                  rpgLenA++;
+               } else if (data[i].genre === 'RTS' && data[i].generation === '성인') {
+                  rtsLenA++;
+               } else if (data[i].genre === '레이싱/스포츠' && data[i].generation === '성인') {
+                  raceSportLenA++;
+               } else if (data[i].genre === 'FPS' && data[i].generation === '성인') {
+                  fpsLenA++;
+               }
+
+               // 청소년
+               if (data[i].genre === 'RPG' && data[i].generation === '청소년') {
+                  rpgLenT++;
+               } else if (data[i].genre === 'RTS' && data[i].generation === '청소년') {
+                  rtsLenT++;
+               } else if (data[i].genre === '레이싱/스포츠' && data[i].generation === '청소년') {
+                  raceSportLenT++;
+               } else if (data[i].genre === 'FPS' && data[i].generation === '청소년') {
+                  fpsLenT++;
+               }
+
+            } else {
+
+               // 응답 안 함
+               if (data[i].genre === 'RPG' && data[i].generation === '응답 안 함') {
+                  rpgLenN++;
+               } else if (data[i].genre === 'RTS' && data[i].generation === '응답 안 함') {
+                  rtsLenN++;
+               } else if (data[i].genre === '레이싱/스포츠' && data[i].generation === '응답 안 함') {
+                  raceSportLenN++;
+               } else if (data[i].genre === 'FPS' && data[i].generation === '응답 안 함') {
+                  fpsLenN++;
+               }
+
+            }
+         }
+
+         var chartData = {
+            labels : [ 'RPG', 'RTS', '레이싱/스포츠', 'FPS' ],
+            datasets : [
+               {
+                  label : "성인",
+                  lineTension : 0.1,
+                  backgroundColor : "rgba(102, 153, 204, 0.2)",
+                  borderColor : "rgba(102, 153, 204, 1)",
+                  pointBackgroundColor : "rgba(102, 153, 204, 1)",
+                  pointBorderColor : "#fff",
+                  pointHoverRadius : 5,
+                  pointHoverBackgroundColor : "#fff",
+                  pointHoverBorderColor : "rgba(102, 153, 204, 1)",
+                  data : [ rpgLenA, rtsLenA, raceSportLenA, fpsLenA ]
+               },
+               {
+                  label : "청소년",
+                  lineTension : 0.1,
+                  backgroundColor : "rgba(255, 204, 102, 0.2)",
+                  borderColor : "rgba(255, 204, 102, 1)",
+                  pointBackgroundColor : "rgba(255, 204, 102, 1)",
+                  pointBorderColor : "#fff",
+                  pointHoverRadius : 5,
+                  pointHoverBackgroundColor : "#fff",
+                  pointHoverBorderColor : "rgba(255, 204, 102, 1)",
+                  data : [ rpgLenT, rtsLenT, raceSportLenT, fpsLenT ]
+               },
+               {
+                  label : "응답 안 함",
+                  lineTension : 0.1,
+                  backgroundColor : "rgba(179, 181, 198, 0.2)",
+                  borderColor : "rgba(179, 181, 198, 1)",
+                  pointBackgroundColor : "rgba(179, 181, 198, 1)",
+                  pointBorderColor : "#fff",
+                  pointHoverRadius : 5,
+                  pointHoverBackgroundColor : "#fff",
+                  pointHoverBorderColor : "rgba(179, 181, 198, 1)",
+                  data : [ rpgLenN, rtsLenN, raceSportLenN, fpsLenN ]
+               }
+            ]
+         };
+
+         var ctxOne = $('#canvasOne');
+
+         var radarChart = new Chart(ctxOne, {
+            type : 'radar',
+            data : chartData,
+            options : {
+               responsive : true,
+               scale : {
+                  angleLines : {
+                     display : true,
+                     lineWidth : 0.5,
+                     color : 'rgba(128, 128, 128, 0.2)'
+                  },
+                  pointLabels : {
+                     fontSize : 20,
+                     fontStyle : '300',
+                     fontColor : 'rgba(204, 204, 204, 1)',
+                     fontFamily : '"Lato", sans-serif'
+                  },
+                  ticks : {
+                     beginAtZero : true,
+                     maxTicksLimit : 3,
+                     min : 0,
+                     //max : 20,
+                     display : false
+                  }
+               },
+               legend : {
+                  display: true,
+                  //position: 'left',
+                  labels: {
+
+                  }
+               }
+            }
+         });
+		}
+	});
+   
+	// 일별 함수
+	var dailyFunc = function(data) {
+		// 월에 해당하는 총 일 수
+		var dateArr = [];
+		
+		// 선택한 월에 해당하는 예약 수 배열에 할당
+		var resvArr = [];
+		
+		for(var i in data) {
+			if(data[i].resvCnt != undefined) {
+				resvArr.push(data[i].resvCnt);
+				dateArr.push(data[i].date);
+			}
+		}
+		
+		// 선택한 월에 해당하는 가입자 수 배열에 할당
+		var joinArr = [];
+		
+		for(var i in data) {
+			if(data[i].joinCnt != undefined) {
+				joinArr.push(data[i].joinCnt);
+			}
+		}
+	
+		// 가입자 수와 예약 수 중 누가 더 큰지 판별 후 차트의 max 지정
+		var resvMax = Math.max(...resvArr);
+		var joinMax = Math.max(...joinArr);
+		var max = Math.max(resvMax, joinMax);
+		
+		$('#canvasDaily').remove(); 
+		$('iframe.chartjs-hidden-iframe').remove(); 
+		$('.canvasDaily').html('<canvas id="canvasDaily" width="900" height="400"><canvas>');
+		
+		var ctxD = $('#canvasDaily');
+		var myChart = new Chart(ctxD, {
+           type: 'bar',
+           data: {
+				labels: dateArr,
+				datasets: [{
+                    label: '가입자 수',
+                    yAxisID: "y-axis-2",
+                    data: joinArr,
+                    type: 'line',
+                    fill: false,
+                    backgroundColor: 'rgba(137, 171, 227, 0.7)',
+                    borderColor: 'rgba(137, 171, 227, 1)'
+				},
+				{
+                    label: '예약 수',
+						backgroundColor: 'rgba(247, 202, 201, 0.7)',
+	                     borderColor: 'rgba(247, 202, 201, 1)',
+	                     hoverBackgroundColor : 'rgba(247, 202, 201, 1)',
+	                     yAxisID: "y-axis-1",
+	                     data: resvArr
+				}]
+			},
+           options: {
+				responsive: true,
+				title:{
+					display: false
+				},
+				tooltips: {
+				    mode: 'index',
+				    intersect: true
+				},
+				scales: {
+					xAxes: [{
+						stacked: true
+					}],
+					yAxes: [{
+						type: "linear",
+						stacked: true,
+					        display: true,
+					        position: "left",
+					        id: "y-axis-1",
+						ticks: {
+							beginAtZero: true,
+							suggestedMin: 0,
+							suggestedMax: max,
+							min: 0
+						}
+				    },
+				    {
+						type: "linear",
+						display: false,
+						id: "y-axis-2",
+						ticks: {
+							beginAtZero: true,
+							suggestedMin: 0,
+							suggestedMax: max,
+							min: 0
+						}
+					}]
+				}
+			}
+		});
+		//myChart.destroy();
+	}
+   
+	// 현재 연도 할당
+	var year = new Date().getFullYear();
+	$('#nowYear').val(year);
+
+	var month = new Date().getMonth() + 1;
+
+	// 일별 가입자 수 / 예약 수
+	$('.daily').click(function(){
+		$('#canvasMonthly').hide();
+		$('#canvasDaily').show();
+		$('.selMonth').show();
+		$('.monthly').removeClass('active');
+		
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+		} else {
+			$(this).addClass('active');
+		}
+
+		$('#selMonth option:eq(' + month + ')').prop('selected', true);
+		chartDailyAjax(month);
+		
+	});
+	
+	function chartDailyAjax(month) {
+		$.ajax('chartDaily', {
+			type: 'POST',
+			dataType: 'json',
+			//async: false,
+			data: {
+				//nowYear: year,
+				month: month
+			},
+			success: dailyFunc
+		});
+	}
+	
+	function changeMonth(){
+		 
+		month = $('#selMonth option:selected').val();
+		chartDailyAjax(month);
+	}
+	
+	$('#selMonth').change(changeMonth);
+	
+	// 월별 함수
+	var monthlyFunc = function(data) {
+		
+		// 예약 수 배열에 할당
+		var resvArr = [];
+		
+		for(var i in data) {
+			if(data[i].resvCnt != undefined) {
+				resvArr.push(data[i].resvCnt);
+			}
+		}
+		
+		// 가입자 수 배열에 할당
+		var joinArr = [];
+		
+		for(var i in data) {
+			if(data[i].joinCnt != undefined) {
+				joinArr.push(data[i].joinCnt);
+			}
+		}
+	
+		// 가입자 수와 예약 수 중 누가 더 큰지 판별 후 차트의 max 지정
+		var resvMax = Math.max(...resvArr);
+		var joinMax = Math.max(...joinArr);
+		var max = Math.max(resvMax, joinMax);
+
+		var ctxM = $('#canvasMonthly');
+		var myChart = new Chart(ctxM, {
+            type: 'bar',
+            data: {
+				labels: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+				datasets: [{
+                     label: '가입자 수',
+                     yAxisID: "y-axis-2",
+                     data: joinArr,
+                     type: 'line',
+                     fill: false,
+                     backgroundColor: 'rgba(137, 171, 227, 0.7)',
+                     borderColor: 'rgba(137, 171, 227, 1)'
+				},
+				{
+                     label: '예약 수',
+						backgroundColor: 'rgba(247, 202, 201, 0.7)',
+	                     borderColor: 'rgba(247, 202, 201, 1)',
+	                     hoverBackgroundColor : 'rgba(247, 202, 201, 1)',
+	                     yAxisID: "y-axis-1",
+	                     data: resvArr
+				}]
+			},
+            options: {
+				responsive: true,
+				title:{
+					display: false
+				},
+				tooltips: {
+				    mode: 'index',
+				    intersect: true
+				},
+				scales: {
+					xAxes: [{
+						stacked: true
+					}],
+					yAxes: [{
+						type: "linear",
+						stacked: true,
+					        display: true,
+					        position: "left",
+					        id: "y-axis-1",
+						ticks: {
+							beginAtZero: true,
+							suggestedMin: 0,
+							suggestedMax: max,
+							min: 0
+						}
+				    },
+				    {
+						type: "linear",
+						display: false,
+						id: "y-axis-2",
+						ticks: {
+							beginAtZero: true,
+							suggestedMin: 0,
+							suggestedMax: max,
+							min: 0
+						}
+					}]
+				}
+			}
+		});
+	}
+
+	$('#canvasDaily').hide();
+	// 최초 한 번만 실행
+	var monthlyCnt = 0;
+	if(monthlyCnt++ == 0) {
+		$.ajax('chartMonthly', {
+			type : 'POST',
+			dataType : 'json',
+			async: false,
+			data: {
+				nowYear: year
+			},
+			success : monthlyFunc
+		});
+	}
+			
+	// 월별 가입자 수 / 예약 수
+	$('.monthly').click(function(){
+		$('#canvasDaily').hide();
+		$('#canvasMonthly').show();
+		$('.selMonth').hide();
+		$('.daily').removeClass('active');
+		
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+		} else {
+			$(this).addClass('active');
+		}
+	
+		$.ajax('chartMonthly', {
+			type : 'POST',
+			dataType : 'json',
+			data: {
+				nowYear: year
+			},
+			success : monthlyFunc
+		});
+	});
+});
+
+</script>
+</head>
+<body style="">
+
+	<%@ include file="header.jsp" %>
+	
+	<section>
+		<div class="col-12 chart-wrap">
+			<div class="row row-cards">
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col">
+									<div class="text-muted">총 회원 수</div>
+									<h3>
+										<b>${memberCnt}</b>
+									</h3>
+								</div>
+								<div class="col-auto align-self-center">
+									<div class="chart-circle chart-circle-xs">
+										<canvas id="memberCntCanvas" width="100" height="100"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col">
+									<div class="text-muted">총 PC방 수</div>
+									<h3>
+										<b>${pcCnt}</b>
+									</h3>
+								</div>
+								<div class="col-auto align-self-center">
+									<div class="chart-circle chart-circle-xs">
+										<canvas id="pcCntCanvas" width="100" height="100"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<h2>
+						<input type="text" id="nowYear" class="nowYear" value=""
+							readonly="readonly" /><span>년</span> 가입자 / 예약 현황
+					</h2>
+					<div class="period">
+						<div class="row flex-end">
+							<button type="button" class="button ml-20 monthly active">월별</button>
+
+							<button type="button" class="button ml-20 daily">일별</button>
+						</div>
+						<select id="selMonth" class="button selMonth hidden">
+							<option>월</option>
+							<option value="01">1월</option>
+							<option value="02">2월</option>
+							<option value="03">3월</option>
+							<option value="04">4월</option>
+							<option value="05">5월</option>
+							<option value="06">6월</option>
+							<option value="07">7월</option>
+							<option value="08">8월</option>
+							<option value="09">9월</option>
+							<option value="10">10월</option>
+							<option value="11">11월</option>
+							<option value="12">12월</option>
+						</select>
+					</div>
+
+					<div class="stats-canvas">
+						<div class="canvasMonthly">
+							<canvas id="canvasMonthly" class="chart-canvas chartjs-render-monitor" width="900" height="400"></canvas>
+						</div>
+						<div class="canvasDaily">
+							<canvas id="canvasDaily" class="chart-canvas chartjs-render-monitor" width="900" height="400"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<h2>연령별 게임 장르 선호도</h2>
+					<div class="radarCanvas-wrap">
+						<canvas id="canvasOne" class="chart-canvas chartjs-render-monitor"
+							width="600" height="650"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+	
+	<%@ include file="footer.jsp" %>
+
+</body>
+</html>

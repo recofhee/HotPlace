@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Noto Sans KR', sans-serif;
+	/* font-family: 'Roboto', sans-serif;
+	font-family: 'Noto Serif JP', sans-serif; */
+	color: #555;
+
+a,
+i[class^="fa"] {
+    color: #666;
+	text-decoration: none;
+    transition: all .3s;
+}
+a:focus, a:active, a:hover,
+a i[class^="fa"]:focus, a i[class^="fa"]:active, a i[class^="fa"]:hover {
+    color: #f8b753;
+}
+label {
+	cursor: pointer;
+}
+.inputhee[type="text"],
+.inputhee[type="email"],
+.inputhee[type="password"],
+select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0 22px 0;
+    display: inline-block;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.inputhee[type="text"]:focus,
+.inputhee[type="email"]:focus,
+.inputhee[type="password"]:focus,
+select:focus {
+    background-color: #fff;
+    outline: none;
+    border: 1px solid #f8b753;
+}
+.whiteBtn {
+	width: 70px;
+    height: 36px;
+    border: 1px solid #f8b753;
+    background: #fff;
+    color: #f8b753;
+    cursor: pointer;
+}
+.inputhee[type="button"],
+.inputhee[type="submit"] {
+    width: 70px;
+    height: 36px;
+    border: 1px solid #f8b753;
+    background: #f8b753;
+    color: #fff;
+    cursor: pointer;
+}
+.textarea {
+	resize: none;
+    height: 80px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    outline: none;
+}
+ul, li {
+	list-style: none;
+}
+
+}
+.btnRow {
+	display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.btnRow input {
+    margin: 0 5px;
+}
+.file-drop-area {
+	position: relative;
+	max-width: 100%;
+	margin-top: 10px;
+	background-color: rgba(248, 183, 83, 0.1);
+    border: 1px solid #f8b753;
+    text-align: center;
+    padding: 20px;
+}
+.file-msg {
+	font-size: small;
+	font-weight: 300;
+	line-height: 1.4;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.file-input {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	opacity: 0;
+	&:focus {
+	  outline: none;
+	}
+}

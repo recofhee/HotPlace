@@ -1,0 +1,214 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>회원 수정</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/member.js"></script>
+<style>
+h2 {
+	text-align:center;
+	margin-top: 100px;
+}
+
+h3 {
+	text-align: center;
+	margin: 0 auto;
+
+} 
+
+.container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.person {
+	height: 380px;
+	width: 775px;
+	margin: 0 auto;
+	border: 2px solid gray;
+}
+
+.box{
+	width: 775px;
+	height: 140px;
+	border: 2px solid gray;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	
+
+}
+
+table td {
+	/* text-align: left; */
+	border: 1px solid gray;
+	font-size: 15px;
+	padding: 5px;
+}
+
+.button {
+	display: inline-block;
+	vertical-align: top;
+	height: 35px;
+	width: 120px;
+	line-height: 34px;
+	padding: 0 25px;
+	font-size: 12px;
+	color: #bbb;
+	text-align: center;
+	text-decoration: none;
+	background-color: #303030;
+	border-radius: 10px;
+	margin-left: 10px;
+	background-image: linear-gradient(to bottom, #3d3d3d, #272727);
+}
+
+#container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.button:active, .button.active {
+	line-height: 34px;
+	color: #ccc;
+}
+
+input[type='text'] {
+	width: 200px;
+	height: 30px;
+	border: 1px solid gray;
+	float: left;
+	font-size: 15px;
+	margin-left: 20px;
+}
+
+input[type='password'] {
+	width: 200px;
+	height: 30px;
+	border: 1px solid gray;
+	float: left;
+	font-size: 15px;
+	margin-left: 20px;
+}
+
+.signUpButton {
+	position: relative;
+	vertical-align: top;
+	width: 10%;
+	height: 50px;
+	padding: 0;
+	margin-left: 5%;
+	font-size: 17px;
+	color: white;
+	text-align: center;
+	background: #d43b79eb;
+	border: 0;
+	cursor: pointer;
+}
+.signUpButton2 {
+	position: relative;
+	vertical-align: top;
+	width: 10%;
+	height: 50px;
+	padding: 0;
+	font-size: 17px;
+	color: white;
+	text-align: center;
+	background: #e60d0d6b;
+	border: 0;
+	cursor: pointer;
+	
+}
+</style>
+<script>
+$(function() {
+	$("form").submit(updateCheck);
+});
+</script>
+<script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+<!-- <script>
+	function joinCheck(){
+		if(document.frm.pw.value.length <5){
+			alert("암호는 5글자 이상으로 적어주세요.!");
+			frm.pw.focus();
+			return false;
+		}
+		
+		if(document.frm.pw.value == 0){
+			alert("암호를 입력해주세요.");
+			frm.pw.focus();
+			return false;
+		}
+		if(document.frm.pw.value != document.frm.pw_check.value){
+			alert("암호가 일치하지 않습니다.");
+			frm.pw_check.focus();
+			return false;
+		}
+		return true;
+}
+</script> -->
+
+</head>
+<body>
+	<div class="container">
+		<h2 align="center">회원 탈퇴</h2>
+		
+			<div class="box" style="background: url(images/password.jpg);">
+				
+		</div>
+		<form action="MemberUpdate" method="post" name="frm" id="frm">
+			
+			<table class="person">
+
+				<tr>
+					<th style="text-align: left; height: 40px;">개인정보탈퇴</th>
+				</tr>
+				<tr>
+					<td height="20px" align="center">이메일</td>
+					<td><input
+						style="margin-left: 20px; height: 30px; width: 197px;" type="text"
+						name="email" id="email" size="20" value="${vo.email}" readonly></td>
+				</tr>
+				<tr>
+					<td height="20px" align="center">닉네임</td>
+					<td><input type="text" name="nick_name" size="20"
+						value="${vo.nick_name}" readonly></td>
+				</tr>
+				<!-- <tr>
+					<td height="20px" align="center">임시비밀번호</td>
+					<td><input type="password" name="random_pwd" size="20">임시비밀번호를
+						입력해주세요.</td>
+				</tr> -->
+				<tr>
+					<td height="20px" align="center">새비밀번호</td>
+					<td><input type="password" name="pw" size="20"></td>
+				</tr>
+				<tr>
+					<td height="20px" align="center">새비밀번호 확인</td>
+					<td><input type="password" name="pw_check" size="20"></td>
+				</tr>
+
+				<tr>
+					<td height="20px" align="center">휴대전화</td>
+					<td><input type="text" value="${vo.phone}" name="phone"
+						size="20"></td>
+				</tr>
+
+			</table>
+				<h3>회원 탈퇴 시 회원님의 모든 정보가 바로 삭제되어집니다.^^</h3>
+			
+			
+				<div style="text-align: center; padding-top: 30px; margin-right: 55px;">
+					<input type="submit" value="수정" class="signUpButton"> &nbsp;&nbsp;&nbsp;&nbsp; 
+						<input type="button" onclick="location.href='main'" value="취소" class="signUpButton2">
+				</div>
+		</form>
+	</div>
+</body>
+</html>

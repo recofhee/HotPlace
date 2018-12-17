@@ -1,0 +1,60 @@
+package com.HotPlace.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import com.HotPlace.dao.BoardDAO;
+import com.HotPlace.dao.BookmarkDao;
+import com.HotPlace.dao.MemberDao;
+import com.HotPlace.dao.PcDao;
+import com.HotPlace.dao.PlayDao;
+import com.HotPlace.util.SHA256;
+import com.HotPlace.vo.BoardVO;
+import com.HotPlace.vo.BookmarkVo;
+import com.HotPlace.vo.MemberVo;
+import com.HotPlace.vo.PcVo;
+import com.HotPlace.vo.PlayVo;
+import com.HotPlace.vo.ResvVo;
+@WebServlet("/Login")
+public class LoginServlet extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("login.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		
+		SHA256 sha = new SHA256();
+		String url = "main";
+		
+		String email = req.getParameter("email").trim();
+		String pw = sha.testSHA256(req.getParameter("pw").trim());
+		//System.out.println("loginPw : " + pw);
+		
+		MemberDao dao = MemberDao.getInstance();
+		int result = dao.userCheck(email, pw);
+		//System.out.println(result);
+		if(result==1) {
+			MemberVo vo = dao.getMember(email);
+			HttpSession session = req.getSession();
+			session.setMaxInactiveInterval(60 * 60);	// 세션 유지시간 설정. (초*분 인듯..)
+			session.setAttribute("loginUser", vo);
+			
+		}else if(result ==0) {
+			req.setAttribute("message", "비밀번호가 맞지 않습니다");
+			url = "login.jsp";
+		}else if(result==-1) {
+			req.setAttribute("message", "존재하지 않는 회원입니다.");
+			url = "login.jsp";
+		}
+		resp.sendRedirect(url);
+	}
+}

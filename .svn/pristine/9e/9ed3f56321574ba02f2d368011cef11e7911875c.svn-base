@@ -1,0 +1,158 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<style type="text/css">
+section { padding-top: 130px;}
+.wrap {
+    width: 960px;
+    margin: 0 auto;
+    padding: 0 0 100px;
+    border: 0px solid black;
+    position: relative;
+    text-align: center;
+}
+.pc-img {
+	width: 100%;
+    height: 400px;
+}
+.pc-info {
+	display: flex;
+    margin: 10px 0 40px;
+}
+.map {
+	/* flex: 1; */
+	width: 350px; 
+	height: 350px;
+}
+.detail {
+	flex: 1;
+	margin-left: 10px;
+}
+.detail table {
+    width: 100%;
+    height: 350px;
+   /*  border: 1px solid #fff; */
+}
+.detail td{
+   	border: 1px solid #ffffff12 ;
+	color: #fff; 
+}
+/* .detail tr {border-bottom: 1px solid #ffffff17;} */
+.btn-row {
+	clear: both;
+}
+.btn-row button {
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.btn-row button:last-child {
+    background: rgba(255, 255, 255, .4);
+}
+
+</style>
+</head>
+<script type="text/javascript">
+function userCheck() {
+	var user = "<%=session.getAttribute("loginUser") %>";
+	if (user == 'null') {
+		alert("로그인 후 이용해주세요.")
+	}
+}
+</script>	
+<body>
+<%@ include file="header.jsp" %>
+	<section>
+		<div class="wrap">
+			<img alt="pc방 사진" src="upload/${pc.pictureurl}" class="pc-img">
+			<div class="pc-info">
+				<div id="map" class="map"></div>
+		
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=645189b6e3b4fffa603cf981d6189fc4"></script>
+				<script>
+						var infowindow = new daum.maps.InfoWindow({
+							zIndex : 1
+						});
+						var x = ${pc.x};
+						var y = ${pc.y};
+						var name = '${pc.pc_name}';
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						    mapOption = { 
+						        center: new daum.maps.LatLng(y, x), // 지도의 중심좌표
+						        level: 3 // 지도의 확대 레벨
+						    };
+						var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+						// 마커가 표시될 위치입니다 
+					
+						var markerPosition  = new daum.maps.LatLng(y, x); 
+						
+						// 마커를 생성합니다
+						var marker = new daum.maps.Marker({
+						    position: markerPosition
+						});
+						
+					 	var iwContent = '<div style="padding:5px;">' + name + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+						iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+			
+						// 인포윈도우를 생성합니다
+						var infowindow = new daum.maps.InfoWindow({
+							content : iwContent,
+							removable : iwRemoveable
+						}); 
+						infowindow.open(map, marker);
+						// 마커가 지도 위에 표시되도록 설정합니다
+						marker.setMap(map);
+				</script> 
+				<div class="detail">
+					<form action="pcResvBefore" method="get" onsubmit="return userCheck()">
+					<%-- loginUser.email  ===== ${loginUser.email } --%>
+					<input type="hidden" id="email" name="email" value="${loginUser.email }">
+					<input type="hidden" id="pc_num" name="pc_num" value="${pc.pc_num}">
+						<table>
+							<tr>
+								<td colspan="2" style="background: #46b47d45">${pc.pc_name}</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="background: #ffff002b; width: 80px;">주소</td>
+								<td style="background: #ffff002b;">${pc.pc_addr}</td>
+							</tr>
+							<tr>
+								<td style="background: #ffff002b; width: 80px;">사양</td>
+								<td style="background: #ffff002b;">${pc.pc_imf}</td>
+							</tr>
+							<tr>
+								<td style="background: #ffff002b; width: 80px;">요금(시간)</td>
+								<td style="background: #ffff002b;">${pc.price}원</td>
+							</tr>
+						</table>
+					<div class="btn-row">
+						<button type="button">취소</button>
+						<button type="submit" class="resv-btn">예약</button>
+						
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<%@ include file="footer.jsp" %> 
+
+
+<script type="text/javascript">
+/* $(function(){
+	$('.resv-btn').click(function(){
+		location.href = 'pcResvBefore?pc_num='+${pc.pc_num};
+	});
+}); */
+</script>
+</body>
+</html>

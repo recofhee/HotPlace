@@ -1,0 +1,101 @@
+package com.HotPlace.vo;
+
+public class ChartVo {
+	private int chartNum;
+	private String gameGenre;
+	private String gameName;
+	private String generation;
+	private String birthdate;
+	private String chartType;
+	private String date;
+	private int cnt;
+	
+	public ChartVo() {}
+
+
+	public ChartVo(int chartNum, String gameGenre, String gameName, String generation, String birthdate,
+			String chartType, String date, int cnt) {
+		super();
+		this.chartNum = chartNum;
+		this.gameGenre = gameGenre;
+		this.gameName = gameName;
+		this.generation = generation;
+		this.birthdate = birthdate;
+		this.chartType = chartType;
+		this.date = date;
+		this.cnt = cnt;
+	}
+
+	public int getChartNum() {
+		return chartNum;
+	}
+
+	public void setChartNum(int chartNum) {
+		this.chartNum = chartNum;
+	}
+
+	public String getGameGenre() {
+		return gameGenre;
+	}
+
+	public void setGameGenre(String gameGenre) {
+		this.gameGenre = gameGenre;
+	}
+
+	public String getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
+	}
+
+	public String getGeneration() {
+		return generation;
+	}
+
+	public void setGeneration(String generation) {
+		this.generation = generation;
+	}
+
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getChartType() {
+		return chartType;
+	}
+
+	public void setChartType(String chartType) {
+		this.chartType = chartType;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ChartVo [chartNum=" + chartNum + ", gameGenre=" + gameGenre + ", gameName=" + gameName + ", generation="
+				+ generation + ", birthdate=" + birthdate + ", chartType=" + chartType + ", date=" + date + ", cnt="
+				+ cnt + "]";
+	}
+
+}
